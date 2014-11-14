@@ -18,6 +18,8 @@
 
 
 \examples{
+library(RJSONIO)
+library(RCurl)
 output.df <- dbquery(
  query = "START ko=node:koid('ko:\"ko:K00020\"') return ko.ko,ko.definition",
  params = FALSE, 
