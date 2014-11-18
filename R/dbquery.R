@@ -2,7 +2,8 @@ dbquery<-structure(function(#Function for querying metamaps DB
 ###Takes variable queries with table output ie. no nodes no rels
 query,	##<< Cypher Query, rmbr to escape double quotes if any 
 params = FALSE, ##<< a list object. If no parameters, let params = False.
-cypherurl ## The address of the graph database eg. metamaps.scelse.nus.edu.sg:7474
+cypherurl = "metamaps.scelse.nus.edu.sg:7474/db/data/cypher", ## The address of the graph database eg. metamaps.scelse.nus.edu.sg:7474
+...
 ){
 #Checks if the params is given
 if(is.list(params)){
