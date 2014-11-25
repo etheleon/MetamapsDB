@@ -13,9 +13,10 @@ if(is.list(params)){
 }
 
 result = fromJSON(getURL(cypherurl, customrequest = "POST", httpheader = c(`Content-Type` = "application/json"), postfields = post))
-inbetween = as.data.frame(
-    do.call(rbind,lapply(result$data, function(x) matrix(x, nrow=1) )))
-    as.data.frame(t(apply(inbetween,1,unlist))) #problematic df structure
+
+setNames(
+    data.frame(lapply(result$data[[1]], function(x) { matrix(x, ncol=1) })), 
+    result$columns)
 }, ex=function(x){ 
     output.df <- dbquery(
      query = "START ko=node:koid('ko:\"ko:K00020\"') return ko.ko,ko.definition",
