@@ -1,4 +1,4 @@
-metamaps
+MetamapsDB
 ========
 
 Structured Queries to metamaps DB

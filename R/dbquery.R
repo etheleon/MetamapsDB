@@ -17,8 +17,8 @@ if(length(result$data)>1){
 setNames(data.frame(do.call(rbind,lapply(result$data, function(x) matrix(x, nrow=1)))), result$columns)
 }else{
 setNames(data.frame(lapply(result$data[[1]], function(x){
-if(length(x) == 0){matrix(NA, nrow=1)}else{matrix(x, nrow=1)}
-})), result$columns)
+if(length(x) == 0){matrix(NA, ncol=1)}else{matrix(x, ncol=1)}
+})), make.names(result$columns))
 }
 }, ex=function(x){ 
     output.df <- dbquery(
