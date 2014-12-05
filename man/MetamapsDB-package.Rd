@@ -13,7 +13,8 @@ License: \tab GPL-2\cr
 Title: \tab MetamapsDB\cr
 Imports: \tab 
 RJSONIO,
-RCurl\cr}
+RCurl,
+igraph\cr}
 }
 \author{uesu}
 

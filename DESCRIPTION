@@ -7,4 +7,5 @@ Title: MetamapsDB
 Description: For integration with neo4j's REST API
 Imports:
     RJSONIO,
-    RCurl
+    RCurl,
+    igraph
