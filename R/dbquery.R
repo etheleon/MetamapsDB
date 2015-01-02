@@ -14,13 +14,18 @@ if(is.list(params)){
 
 result = fromJSON(getURL(cypherurl, customrequest = "POST", httpheader = c(`Content-Type` = "application/json"), postfields = post))
 if(length(result$data)>1){
-setNames(data.frame(do.call(rbind,lapply(result$data, function(x) matrix(x, nrow=1)))), result$columns)
+    setNames(data.frame(do.call(rbind,lapply(result$data, function(x) matrix(x, nrow=1)))), result$columns)
+
 }else if(length(result$data)==1){
-setNames(data.frame(lapply(result$data[[1]], function(x){
-if(length(x) == 0){matrix(NA, ncol=1)}else{matrix(x, ncol=1)}
-})), make.names(result$columns))
+    setNames(data.frame(lapply(result$data[[1]], function(x){
+        if(length(x) == 0){
+            matrix(NA, ncol=1)
+        }else{
+            matrix(x, ncol=1)
+        }
+    })), make.names(result$columns))
 }else{
-return(NA)
+    return(NA)
 }
 }, ex=function(x){ 
     output.df <- dbquery(

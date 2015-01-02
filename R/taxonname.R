@@ -5,14 +5,14 @@ taxname<-structure(function #List Pathways
     params=list(taxonname=taxon)
     if(name)
     {
-        query = "MATCH (taxa:Taxon {name:{taxonName}}) RETURN taxa.taxid AS taxID, taxa.name AS name"
+        query = "MATCH (taxa:Taxon {name:{taxonName}}) RETURN taxa.taxid AS taxID, taxa.name AS name, head(labels(taxa)) as rank"
         params = list(taxonName = taxon)
         dbquery(query=query, params=params)
     }else{
     query = "START 
                 taxa=node:ncbitaxid(taxid={taxonname}) 
             RETURN 
-                taxa.name, taxa.taxid"
+                taxa.name, taxa.taxid, head(labels(taxa)) as rank"
     dbquery(query=query, params=params)
     }
     }, ex= function(){
