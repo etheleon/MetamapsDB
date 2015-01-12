@@ -8,12 +8,12 @@ koname<-structure(function #List Pathways
         query = "START 
         ko=node:koid(ko={koname}) 
         RETURN 
-        ko.name, ko.definition"
+        ko.ko, ko.name, ko.definition"
     }else{
     query = "START 
         ko=node:koid(ko={koname}) 
     RETURN 
-        ko.name, ko.definition, ko.pathway, ko.`pathway.name`"
+        ko.ko, ko.name, ko.definition, ko.pathway, ko.`pathway.name`"
     }
     dbquery(query=query, params=params)
     }, ex= function(){

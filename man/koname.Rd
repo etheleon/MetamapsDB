@@ -2,9 +2,11 @@
 \alias{koname}
 \title{List Pathways}
 
-\usage{koname(ko = "K00001", ...)}
+\usage{koname(ko = "K00001", minimal = TRUE, ...)}
 \arguments{
-  \item{ko}{The default is K00001, accepts both with or without the ko: prefix}
+  \item{ko}{
+}
+  \item{minimal}{The default is K00001, accepts both with or without the ko: prefix}
   \item{\dots}{
 }
 }
