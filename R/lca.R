@@ -42,7 +42,7 @@ lca<-structure(function #Finds the lowest common ancestor
         }
     }, ex= function(){
         lcaTaxID <- lca(taxon1="10090", taxon2='9096', recurse=FALSE);
-        df <- lca(taxon1="10090", taxon2='9096', recurse=F);
+        df <- lca(taxon1="10090", taxon2='9096', recurse=FALSE);
 
         #recursion when you have 3 or more taxIDs
         taxa = c(314146,9598,10090)
