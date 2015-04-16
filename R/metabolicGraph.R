@@ -38,7 +38,8 @@ fulldata = do.call(rbind, lapply(kos, function(ko)
         if(!is.na(df2))
             df = rbind(df,df2)
                     }))
-fulldata2 = do.call(cbind,apply(fulldata, 2, function(x) unlist(x)))
+fulldata2 = make.data.frame(fulldata)
+#fulldata2 = do.call(cbind,apply(fulldata, 2, function(x) unlist(x)))
 fulldata2 = fulldata[complete.cases(fulldata2),]
 #3. Vertices & Edgelist
 vertex.data <- with(fulldata2,
@@ -49,9 +50,20 @@ vertex.data <- with(fulldata2,
      )
 
 g=simplify(graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
+g$layout = layout.fruchterman.reingold(g)
+g
 ##<< Description 
 ##Takes in KO and outputs the metabolic graph with 
 }, ex=function(x) { 
     data(top500kos)
-    mb_graph<-grepgraph(top500kos)
+    mbgraph<-grepgraph(top500kos)
+    p1 = plot(
+    mbgraph, 
+    vertex.label=V(g)$name, 
+    vertex.size = 1,
+    edge.arrow.size=0.1,
+    vertex.frame.color="#FFFFFF00", 
+    vertex.color=c("grey","red")
+
+)
 })
