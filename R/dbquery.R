@@ -27,7 +27,7 @@ if(length(result$data)>1){
 }else{
     return(NA)
 }
-}, ex=function(x){ 
+}, ex=function(x){
     output.df <- dbquery(
      query = "START ko=node:koid('ko:\"ko:K00020\"') return ko.ko,ko.definition",
      params = FALSE, 
