@@ -4,13 +4,26 @@ adjacentPairs<-structure(function #Convert igraph to ggvis object
     ...
     ){
         kos      =  grepl("ko:", V(g)$name) %>% which
-        kopairs  =  neighborhood(graph=g, nodes=kos, order=1)   #immediate pairs
+
+        #Finding true biological reactions
+#TODO: non-ko2ko directin is still not configured
+test = do.call(rbind,lapply(c("out","in"), function(direction){
+        kopairs     =   neighborhood(graph=g, nodes=kos, order=1, mode = direction)   #immediate pairs
+        kopairs     =   kopairs[sapply(kopairs, length) != 1]
 
         #function to find the connected KOs given intermediate cpds
             findNextKO = function(VectorID, graph, originalKO){
-                neighborhood(graph = graph, nodes = VectorID, order = 1)         %>% # connectedKOs
-                lapply(function(cpd) data.frame(ko1 = originalKO, ko2= cpd[-1])) %>%
-                       do.call(rbind, .)
+                connectedKO = neighborhood(graph = graph, nodes = VectorID, order = 1, mode=direction)
+                #removes nodes without outgoing/incoming connections
+                connectedKO = connectedKO[sapply(connectedKO, length) != 1]
+
+                do.call(rbind,lapply(connectedKO,function(cpd){
+                data.frame(
+                        ko1       = originalKO,
+                        ko2       = cpd[-1],
+                        direction = direction
+                        )
+                    }))
             }
 
         pairDF = do.call(rbind,lapply(kopairs, function(ko){
@@ -18,15 +31,17 @@ adjacentPairs<-structure(function #Convert igraph to ggvis object
             if(ko2ko){
                 findNextKO(ko[-1], g, originKO)
             }else{
-                data.frame(ko= originKO, # ko nodes
+                data.frame(ko  = originKO, # ko nodes
                            cpd = ko[-1]  # Cpd nodes
                            )
             }
         #there should be one more step where repeat pairs are removed
         }))
-        pairDF[apply(pairDF, 1, function(x) paste0(sort(x), collapse=""))                              %>%
-        duplicated                                                                              %>%
-        ifelse(FALSE, TRUE) ,]                                           # this inverses the list 
+        pairDF[
+        apply(pairDF, 1, function(x) paste0(sort(x), collapse=""))                         %>%
+        duplicated                                                                                %>%
+        ifelse(FALSE, TRUE),]                                           # this inverses the list
+        }))
     }, ex= function(){
         ...
     })
