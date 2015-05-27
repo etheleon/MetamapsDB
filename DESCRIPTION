@@ -8,4 +8,6 @@ Description: For integration with neo4j's REST API
 Imports:
     RJSONIO,
     RCurl,
-    igraph
+    igraph, 
+    rgexf,
+    magrittr

@@ -9,7 +9,7 @@ And selects for components with at least 1 outgoing edge and no inbound edges.}
 }
 }
 
-\value{Data.frame of source component, entites, linker connection to non-member}
+\value{Data.frame of source component, entites, linker connection to non-member KOs/CPDs in other components.}
 
 \author{uesu}
 

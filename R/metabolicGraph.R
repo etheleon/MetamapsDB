@@ -1,10 +1,14 @@
 grepgraph<-structure(function(#Generates metabolic network as IGRAPH object from input vector KOs
 ###Takes in a vector list of KO ids and generates a metabolic graph as a igraph object
 kos, ##<< this will take the input KOs 
+fullGraph=FALSE,
 ...){
 ##author<< Wesley Goi
 #Processing
 #1. Cypher Queries 
+if(fullGraph){
+
+}else{
 query_cpd2ko="
 START 
     ko=node:koid(ko={koid}) 
@@ -54,7 +58,9 @@ g$layout = layout.fruchterman.reingold(g)
 g
 ##<< Description 
 ##Takes in KO and outputs the metabolic graph with 
-}, ex=function(x) { 
+}
+}
+, ex=function(x) { 
     data(top500kos)
     mbgraph<-grepgraph(top500kos)
     p1 = plot(

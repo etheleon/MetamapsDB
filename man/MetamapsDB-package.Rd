@@ -14,7 +14,9 @@ Title: \tab MetamapsDB\cr
 Imports: \tab 
 RJSONIO,
 RCurl,
-igraph\cr}
+igraph,
+rgexf,
+magrittr\cr}
 }
 \author{uesu}
 

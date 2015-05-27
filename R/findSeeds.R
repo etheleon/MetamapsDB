@@ -44,7 +44,7 @@ findSeeds <- structure(function(#To find all seed compounds in the metabolic gra
                !is.na(nonmember)
                )
 
-        possibleSCC = apply(possibleSCC, 1, function(x){
+        possibleSCC %>% apply(1, function(x){
               outbound = sum(which(V(mbgraph)$name == x["nonmember"]) %in% neighborhood(mbgraph, 1, x["member"], "out")[[1]][-1])
               inbound  = sum(which(V(mbgraph)$name == x["nonmember"]) %in% neighborhood(mbgraph, 1, x["member"], "in" )[[1]][-1])
                      #check If the non-member is inbound or outbound node
@@ -55,7 +55,7 @@ findSeeds <- structure(function(#To find all seed compounds in the metabolic gra
                                 inbound
                                 )
                }) %>% do.call(rbind, .)
-###    Data.frame of source component, entites, linker connection to non-member
+###    Data.frame of source component, entites, linker connection to non-member KOs/CPDs in other components.
     },
     ex = function() {
         ...
