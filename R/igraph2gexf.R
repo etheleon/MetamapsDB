@@ -3,6 +3,9 @@ function(mbgraph,  #igraph Obj
          opacity=1 #Opacity of the nodes
          ){
 write.gexf(
+      gdata = get.data.frame(mbgraph, what="both")
+      tmpedges <- gdata$edges
+      tmpnodes <- gdata$vertices
       nodes =   tmpnodes %>% select(name, Definition),
       edges =   tmpedges %>% select(from:to),
       nodesVizAtt = list(
