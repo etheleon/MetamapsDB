@@ -15,7 +15,7 @@ function(mbgraph  #igraph Obj
 
               position  =   cbind(
                                 data.frame(mbgraph$layout), 
-                                opacity) %>%
+                                0) %>%
                             setNames(c("X","Y","Z")), #%>% head
               size = V(mbgraph)$size
                )
