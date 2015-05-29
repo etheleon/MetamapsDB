@@ -3,9 +3,9 @@ function(mbgraph,  #igraph Obj
          opacity=1 #Opacity of the nodes
          ){
     gdata     = igraph::get.data.frame(mbgraph, what="both")
-      tmpedges  = gdata$edges
-      tmpnodes  = gdata$vertices
-write.gexf(
+    tmpedges  = gdata$edges
+    tmpnodes  = gdata$vertices
+    write.gexf(
             nodes     = tmpnodes %>% select(name, Definition),
       edges     = tmpedges %>% select(from:to),
       nodesVizAtt = list(
@@ -17,7 +17,8 @@ write.gexf(
               position  =   cbind(
                                 data.frame(mbgraph$layout), 
                                 opacity) %>%
-                            setNames(c("X","Y","Z")) #%>% head
+                            setNames(c("X","Y","Z")), #%>% head
+              size = V(mbgraph)$size
                )
     )
 }, ex=function(){
