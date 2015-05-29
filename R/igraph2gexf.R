@@ -1,6 +1,5 @@
 igraph2gexf <- structure( ##Function for converting igraph 2 gexf obj
-function(mbgraph,  #igraph Obj
-         opacity=1 #Opacity of the nodes
+function(mbgraph  #igraph Obj
          ){
     gdata     = igraph::get.data.frame(mbgraph, what="both")
     tmpedges  = gdata$edges
@@ -11,7 +10,7 @@ function(mbgraph,  #igraph Obj
       nodesVizAtt = list(
               color     =   cbind(
                                 V(mbgraph)$color %>% col2rgb %>% t %>% data.frame,
-                                opacity) %>%
+                                V(mbgraph)$opacity) %>%
                             setNames(c("R", "G", "B", "A")), #%>% head
 
               position  =   cbind(

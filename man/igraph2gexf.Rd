@@ -2,11 +2,9 @@
 \alias{igraph2gexf}
 \title{igraph Obj}
 
-\usage{igraph2gexf(mbgraph, opacity = 1)}
+\usage{igraph2gexf(mbgraph)}
 \arguments{
   \item{mbgraph}{
-}
-  \item{opacity}{
 }
 }
 
