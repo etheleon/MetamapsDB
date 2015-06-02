@@ -4,6 +4,7 @@ function(mbgraph  #igraph Obj
     gdata     = igraph::get.data.frame(mbgraph, what="both")
     tmpedges  = gdata$edges
     tmpnodes  = gdata$vertices
+    tmpnodes$Definition %<>% sapply(function(x) gsub("[[:punct:]]", " ", x))
     write.gexf(
             nodes     = tmpnodes %>% select(name, Definition),
       edges     = tmpedges %>% select(from:to),
