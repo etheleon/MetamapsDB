@@ -15,7 +15,7 @@ koname<-structure(function #List Pathways
     RETURN 
         ko.ko, ko.name, ko.definition, ko.pathway, ko.`pathway.name`"
     }
-    dbquery(query=query, params=params)
+    dbquery(query=query, params=params, ...)
     }, ex= function(){
    pathwayDF = koname(ko="K00001");
    })
