@@ -13,7 +13,7 @@ RETURN
     extract(n in nodes(path)| head(labels(n))) AS rank 
 "
 params = list(taxID = taxID)
-listquery(query=query, params = params)
+listquery(query=query, params = params, ...)
 }, ex=function() { 
 df = path2kingdom(taxID='79255')
 df2 = lapply(df$data[[1]], function(x) matrix(x, ncol=1))

@@ -13,7 +13,7 @@ taxname<-structure(function #List Pathways
                 taxa=node:ncbitaxid(taxid={taxonname}) 
             RETURN 
                 taxa.name, taxa.taxid, head(labels(taxa)) as rank"
-    dbquery(query=query, params=params)
+    dbquery(query=query, params=params, ...)
     }
     }, ex= function(){
    Asperigillus= taxname(taxon="5062");
