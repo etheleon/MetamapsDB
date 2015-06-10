@@ -47,8 +47,7 @@ query="
         reduce(sum=0, FPKM in extract(n in collect(DISTINCT c3) |n.cDNAFPKM) | sum + FPKM) AS C3FPKM
 "
 dbquery(query = query,list(koid = KOI), ...)
-}
-, example(x){
+}, ex = function(){
     df <- trio(ko:K00001)
 
 # Plot1: Number of genes for TRIO --------------------------------------#
