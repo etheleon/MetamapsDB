@@ -17,7 +17,8 @@ RJSONIO,
 RCurl,
 igraph,
 rgexf,
-magrittr\cr}
+magrittr,
+ggvis\cr}
 }
 \author{uesu}
 
