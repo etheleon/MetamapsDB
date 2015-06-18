@@ -6,7 +6,7 @@ df##<< the data.frame output from dbquery
         sapply(df[,column], function(x) {ifelse(is.null(x), NA, x)})
     })                       %>%
     do.call(cbind,.)         %>%
-    data.frame               %>%
+    data.frame(stringsAsFactors=FALSE)               %>%
     setNames(colnames(df))
 }, ex=function(x){
     output.df <- dbquery(
