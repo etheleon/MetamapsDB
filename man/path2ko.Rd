@@ -1,0 +1,22 @@
+\name{path2ko}
+\alias{path2ko}
+\title{Finds all KOs belonging to a Pathways}
+
+\usage{path2ko(pathway = "path:ko00010", ...)}
+\arguments{
+  \item{pathway}{
+}
+  \item{\dots}{
+}
+}
+
+
+
+\author{uesu}
+
+
+
+
+\examples{
+kos.in.pathway = path2ko(pathway="path:K00982")
+}

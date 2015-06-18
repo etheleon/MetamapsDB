@@ -17,7 +17,7 @@ lca<-structure(function #Finds the lowest common ancestor
         result = listquery(query=query, params=params)
 
         if(length(result$data)>0){
-        df = dbquery(query=query, params=params)
+        df = dbquery(query=query, params=params, ...)
         if(recurse){return(df$taxid)}else{return(df)}
         }else{
             #Find out who's the head
@@ -31,7 +31,7 @@ lca<-structure(function #Finds the lowest common ancestor
                 count(p) as taxOneChildOfTwo, 
                 tax1.name, tax1.taxid, head(labels(tax1)) as rank1,
                 tax2.name, tax2.taxid, head(labels(tax2)) as rank2"
-            altResult = dbquery(query=query, params=params)
+            altResult = dbquery(query=query, params=params, ...)
             if(altResult$taxOneChildOfTwo>0){
             df = data.frame(name = altResult$tax2.name, taxid = altResult$tax2.taxid, rank = altResult$rank2)
             if(recurse){return(df$taxid)}else{return(df)}

@@ -12,7 +12,12 @@ if(is.list(params)){
         post = toJSON(list(query = query))
 }
 
-result = fromJSON(getURL(cypherurl, customrequest = "POST", httpheader = c(`Content-Type` = "application/json"), postfields = post))
+result = fromJSON(getURL(
+cypherurl, 
+customrequest = "POST", 
+httpheader = c('Content-Type' = 'application/json'), 
+postfields = post))
+
 if(length(result$data)>1){
     setNames(data.frame(do.call(rbind,lapply(result$data, function(x) matrix(x, nrow=1)))), result$columns)
 
@@ -27,7 +32,7 @@ if(length(result$data)>1){
 }else{
     return(NA)
 }
-}, ex=function(x){ 
+}, ex=function(x){
     output.df <- dbquery(
      query = "START ko=node:koid('ko:\"ko:K00020\"') return ko.ko,ko.definition",
      params = FALSE, 

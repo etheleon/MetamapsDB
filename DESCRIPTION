@@ -9,4 +9,6 @@ Imports:
     magrittr
     RJSONIO,
     RCurl,
-    igraph
+    igraph, 
+    rgexf,
+    magrittr

@@ -15,7 +15,9 @@ Imports: \tab
 magrittr
 RJSONIO,
 RCurl,
-igraph\cr}
+igraph,
+rgexf,
+magrittr\cr}
 }
 \author{uesu}
 
