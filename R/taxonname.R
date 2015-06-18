@@ -16,5 +16,5 @@ taxname<-structure(function #List Pathways
     dbquery(query=query, params=params, ...)
     }
     }, ex= function(){
-   Asperigillus= taxname(taxon="5062");
+   #Asperigillus= taxname(taxon="5062");
    })

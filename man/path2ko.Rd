@@ -18,5 +18,5 @@
 
 
 \examples{
-kos.in.pathway = path2ko(pathway="path:K00982")
+#kos.in.pathway = path2ko(pathway="path:K00982")
 }

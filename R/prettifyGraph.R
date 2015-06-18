@@ -29,7 +29,7 @@ V(g)$frame.color="#FFFFFF00"    #Colorless
 E(g)$arrow.size = 0.1
 g
 }, ex=function(x){
-    data(top500kos)
-    g= grepgraph(top500kos)
-    g = prettifyGraph(g)
+    #data(top500kos)
+    #g= grepgraph(top500kos)
+    #g = prettifyGraph(g)
     })

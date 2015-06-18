@@ -26,7 +26,7 @@
 
 
 \examples{
-data(top500kos)
-g= grepgraph(top500kos)
-g = prettifyGraph(g)
+#data(top500kos)
+#g= grepgraph(top500kos)
+#g = prettifyGraph(g)
 }

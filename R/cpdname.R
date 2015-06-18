@@ -10,5 +10,5 @@ cpdname<-structure(function #List Pathways
         cpd.cpd, cpd.name"
     dbquery(query=query, params=params, ...)
     }, ex= function(){
-   cpdname(cpd="C00022");
+   #cpdname(cpd="C00022");
    })

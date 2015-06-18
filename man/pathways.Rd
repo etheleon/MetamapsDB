@@ -16,5 +16,5 @@
 
 
 \examples{
-pathwayDF = pathways();
+#   pathwayDF = pathways();
 }

@@ -19,5 +19,5 @@
 
 
 \examples{
-pathwayDF = koname(ko="K00001");
+#pathwayDF = koname(ko="K00001");
 }

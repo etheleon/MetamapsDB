@@ -19,5 +19,5 @@
 
 
 \examples{
-Asperigillus= taxname(taxon="5062");
+#Asperigillus= taxname(taxon="5062");
 }

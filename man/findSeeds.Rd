@@ -16,6 +16,6 @@ And selects for components with at least 1 outgoing edge and no inbound edges.}
 
 
 \examples{
-...
+print("Still in progress")
 #possibleSCC \%>\% group_by(membership) \%>\% summarise(sum(outbound), sum(inbound))
 }

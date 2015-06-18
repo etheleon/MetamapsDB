@@ -9,5 +9,5 @@ pathway='path:ko00010',  #The pathway name
     dbquery(query=query, params=params, ...)
     },
 ex = function(x) { 
-kos.in.pathway = path2ko(pathway="path:K00982")
+#kos.in.pathway = path2ko(pathway="path:K00982")
 })

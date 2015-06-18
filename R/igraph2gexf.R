@@ -22,6 +22,6 @@ function(mbgraph  #igraph Obj
                )
     )
 }, ex=function(){
-...
+# 
 })
 

@@ -19,5 +19,5 @@
 
 
 \examples{
-cpdname(cpd="C00022");
+#cpdname(cpd="C00022");
 }

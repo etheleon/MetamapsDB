@@ -20,15 +20,15 @@ uesu}
 
 
 \examples{
-    data(top500kos)
-    mbgraph<-grepgraph(top500kos)
-    p1 = plot(
-    mbgraph, 
-    vertex.label=V(g)$name, 
-    vertex.size = 1,
-    edge.arrow.size=0.1,
-    vertex.frame.color="#FFFFFF00", 
-    vertex.color=c("grey","red")
+#    data(top500kos)
+#    mbgraph<-grepgraph(top500kos)
+#    p1 = plot(
+#    mbgraph, 
+#    vertex.label=V(g)$name, 
+#    vertex.size = 1,
+#    edge.arrow.size=0.1,
+#    vertex.frame.color="#FFFFFF00", 
+#    vertex.color=c("grey","red")
 
-)
+#)
 }

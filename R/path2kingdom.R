@@ -15,7 +15,7 @@ RETURN
 params = list(taxID = taxID)
 listquery(query=query, params = params, ...)
 }, ex=function() { 
-df = path2kingdom(taxID='79255')
-df2 = lapply(df$data[[1]], function(x) matrix(x, ncol=1))
-setNames(data.frame(cbind(df2[[1]],df2[[2]],df2[[3]])), df$columns)
+#df = path2kingdom(taxID='79255')
+#df2 = lapply(df$data[[1]], function(x) matrix(x, ncol=1))
+#setNames(data.frame(cbind(df2[[1]],df2[[2]],df2[[3]])), df$columns)
 })

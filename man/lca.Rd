@@ -19,10 +19,10 @@
 
 
 \examples{
-lcaTaxID <- lca(taxon1="10090", taxon2='9096', recurse=FALSE);
-df <- lca(taxon1="10090", taxon2='9096', recurse=FALSE);
+#lcaTaxID <- lca(taxon1="10090", taxon2='9096', recurse=FALSE);
+#df <- lca(taxon1="10090", taxon2='9096', recurse=FALSE);
 
 #recursion when you have 3 or more taxIDs
-taxa = c(314146,9598,10090)
-lcaTaxID <- Reduce(f=lca, x=taxa, init=taxa[1])
+#taxa = c(314146,9598,10090)
+#lcaTaxID <- Reduce(f=lca, x=taxa, init=taxa[1])
 }
