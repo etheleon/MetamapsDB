@@ -1,6 +1,6 @@
 MetamapsDB
 ========
-
+[![Build Status](https://travis-ci.org/etheleon/metamaps.svg?branch=master)](https://travis-ci.org/etheleon/metamaps)
 Structured Queries to metamaps DB
 
 #KEGG
