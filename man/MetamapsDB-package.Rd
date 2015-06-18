@@ -12,6 +12,7 @@ Version: \tab 0.01\cr
 License: \tab GPL-2\cr
 Title: \tab MetamapsDB\cr
 Imports: \tab 
+magrittr
 RJSONIO,
 RCurl,
 igraph\cr}
