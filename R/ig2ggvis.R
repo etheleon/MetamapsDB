@@ -44,5 +44,5 @@ ig2ggvis<-structure(function #Convert igraph to ggvis object
                 add_tooltip(all_values, "hover")
         }
     }, ex= function(){
-        ...
+        print("Still in Progress")
     })
