@@ -1,11 +1,11 @@
 MetamapsDB
 ========
 
-Structured Queries to metamaps DB
+[![Build Status](https://travis-ci.org/etheleon/metamaps.svg?branch=master)](https://travis-ci.org/etheleon/metamaps)
 
-#KEGG
-Downloading on: September 2014
+R package for querying integrated -omics database, MetamapsDB. 
+[![MetamapsDB](./thumbnail.png)](github.com/etheleon/omics).
 
-#NCBI taxnonomy
-Downloaded on: 12 September 2014
+R package containing Neo4j cypher queries and analytic tools used in the functional analyses of a highly complex microbial community.
 
+Currently Allows for integration of -omics datasets obtained from microbial communities with __Functional databases__, __taxonomic databases__. 

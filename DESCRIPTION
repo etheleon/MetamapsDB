@@ -6,8 +6,10 @@ License: GPL-2
 Title: MetamapsDB
 Description: For integration with neo4j's REST API
 Imports:
+    magrittr,
     RJSONIO,
     RCurl,
     igraph, 
     rgexf,
-    magrittr
+    magrittr,
+    ggvis

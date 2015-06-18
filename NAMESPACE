@@ -1,4 +1,10 @@
 import(RJSONIO, RCurl, igraph)
 
 exportPattern("^[[:alpha:]]+")
+export("%>%")
+export("%<>%")
+export("%$%")
+importFrom(magrittr,"%>%")
+importFrom(magrittr,"%<>%")
+importFrom(magrittr,"%$%")
 
