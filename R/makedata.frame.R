@@ -3,7 +3,7 @@ function    #Function for dealing with dbquery outputs which have lists
 ### Converts a data.frame where its columns exists as lists into a proper data.frame
 (
 df, ##<< the data.frame output from dbquery
-string2factor = FALSE
+string2factor = FALSE ##<< to convert strings into factors
 ){
     1:ncol(df)               %>%
     lapply(function(column){

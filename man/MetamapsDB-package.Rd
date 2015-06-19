@@ -8,7 +8,7 @@
 \tabular{ll}{Package: \tab MetamapsDB\cr
 Maintainer: \tab uesu <wesley@bic.nus.edu.sg>\cr
 Author: \tab uesu\cr
-Version: \tab 0.01\cr
+Version: \tab 0.0.2\cr
 License: \tab GPL-2\cr
 Title: \tab MetamapsDB\cr
 Imports: \tab 

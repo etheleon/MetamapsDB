@@ -4,10 +4,8 @@
 \description{Converts a igraph obj into a ggvis plot}
 \usage{ig2ggvis(g, dfOnly = TRUE, ...)}
 \arguments{
-  \item{g}{
-}
-  \item{dfOnly}{
-}
+  \item{g}{graph object}
+  \item{dfOnly}{df only}
   \item{\dots}{
 }
 }

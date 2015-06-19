@@ -6,12 +6,9 @@
     withText = TRUE, vtext = c(0.5, 1), layout = FALSE, ...)}
 \arguments{
   \item{g}{GraphObject}
-  \item{vsize}{
-}
-  \item{vcolor}{
-}
-  \item{withText}{
-}
+  \item{vsize}{the vertex size}
+  \item{vcolor}{length 2 vector for KO and compounds}
+  \item{withText}{Conditional to include labels in plot}
   \item{vtext}{two vector text value}
   \item{layout}{Whether to calculate the layout}
   \item{\dots}{

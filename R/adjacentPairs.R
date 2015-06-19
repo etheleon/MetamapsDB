@@ -1,7 +1,7 @@
 adjacentPairs<-structure(function #Convert igraph to ggvis object
-### Finds adjacent pairs of KOs
-    (g, #graph object,
-     ko2ko =  FALSE,
+### Finds adjacent pairs of KOs or KO2CPD
+    (g, ##<<graph object,
+     ko2ko =  FALSE, ##<<ko to ko
     ...
     ){
         kos      =  grepl("ko:", V(g)$name) %>% which

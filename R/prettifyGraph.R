@@ -1,13 +1,12 @@
 prettifyGraph<-structure(
 function    #Plots a standard metabolic graph
 ### Adds details into the igraph object
-(
-         g,          ##<< GraphObject
-vsize    = c(1,2),
-vcolor   = c("grey", "red"),    ##length 2 vector for KO and compounds
-withText = TRUE,        ##Conditional to include labels in plot
-vtext    = c(0.5, 1),   ##<< two vector text value 
-layout   = FALSE,    ##<< Whether to calculate the layout
+(g,                          ##<< GraphObject
+vsize    = c(1,2),           ##<< the vertex size
+vcolor   = c("grey", "red"), ##<< length 2 vector for KO and compounds
+withText = TRUE,             ##<< Conditional to include labels in plot
+vtext    = c(0.5, 1),        ##<< two vector text value
+layout   = FALSE,            ##<< Whether to calculate the layout
 ...
 ){
 if(layout)

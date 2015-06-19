@@ -4,8 +4,7 @@
 \description{Converts a igraph object into gexf format}
 \usage{igraph2gexf(mbgraph)}
 \arguments{
-  \item{mbgraph}{
-}
+  \item{mbgraph}{the graph object}
 }
 
 

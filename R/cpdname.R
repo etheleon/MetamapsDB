@@ -1,6 +1,6 @@
 cpdname<-structure(function #List Pathways
 ### Finds the details of the CPD when given its ID
-    (cpd='C00022',
+    (cpd='C00022',##<< the cpd ID
      minimal=TRUE,##<< The default is K00001, accepts both with or without the ko: prefix
     ... ){
     if(!grepl("cpd:",cpd)) cpd = gsub("^","cpd:",cpd)

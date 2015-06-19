@@ -1,6 +1,6 @@
 path2ko<-structure(function(#Finds all KOs belonging to a Pathways
 ### Finds all KOs in a given pathway
-                            pathway='path:ko00010',  #The pathway name
+pathway='path:ko00010',  ##<<The pathway ID
 ...
 ){
     params = list (pathwayID = pathway)

@@ -5,16 +5,14 @@
 \usage{grepgraph(kos, fullGraph = FALSE, ...)}
 \arguments{
   \item{kos}{this will take the input KOs}
-  \item{fullGraph}{
-}
+  \item{fullGraph}{to output the whole of metabolism or not}
   \item{\dots}{
 }
 }
 
 
 
-\author{Wesley Goi
-uesu}
+\author{uesu}
 
 
 

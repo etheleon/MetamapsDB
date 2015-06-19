@@ -7,8 +7,7 @@
 \arguments{
   \item{query}{Cypher Query, rmbr to escape double quotes if any}
   \item{params}{a list object. If no parameters, let params = False.}
-  \item{cypherurl}{
-}
+  \item{cypherurl}{The address of the graph database eg. metamaps.scelse.nus.edu.sg:7474}
   \item{\dots}{
 }
 }

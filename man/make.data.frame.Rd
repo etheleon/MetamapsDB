@@ -5,8 +5,7 @@
 \usage{make.data.frame(df, string2factor = FALSE)}
 \arguments{
   \item{df}{the data.frame output from dbquery}
-  \item{string2factor}{
-}
+  \item{string2factor}{to convert strings into factors}
 }
 
 
