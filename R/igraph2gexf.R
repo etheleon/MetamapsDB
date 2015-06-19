@@ -1,14 +1,8 @@
 igraph2gexf <- structure( 
-<<<<<<< HEAD
-function(mbgraph  ##<<Function for converting igraph 2 gexf obj
-### Converts a igraph object into gexf format
-){
-=======
 function#Function for converting igraph 2 gexf obj
 ### Converts a igraph object into gexf format
          (mbgraph  ##<< the graph object
          ){
->>>>>>> refs/remotes/origin/master
     gdata     = igraph::get.data.frame(mbgraph, what="both")
     tmpedges  = gdata$edges
     tmpnodes  = gdata$vertices
