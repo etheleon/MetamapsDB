@@ -1,4 +1,5 @@
 adjacentPairs<-structure(function #Convert igraph to ggvis object
+### Finds adjacent pairs of KOs
     (g, #graph object,
      ko2ko =  FALSE,
     ...

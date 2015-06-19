@@ -1,7 +1,7 @@
 \name{prettifyGraph}
 \alias{prettifyGraph}
 \title{Plots a standard metabolic graph}
-
+\description{Adds details into the igraph object}
 \usage{prettifyGraph(g, vsize = c(1, 2), vcolor = c("grey", "red"), 
     withText = TRUE, vtext = c(0.5, 1), layout = FALSE, ...)}
 \arguments{

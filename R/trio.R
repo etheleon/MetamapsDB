@@ -1,4 +1,5 @@
 trio <- structure(function( ##<< Function to find trios.
+### Finds trios
 KOI = 'ko:K00001', ##<< the KO of interest
 toFilter = FALSE
 ){

@@ -1,12 +1,16 @@
-make.data.frame<-structure(function(    #Function for dealing with dbquery outputs which have lists 
-df##<< the data.frame output from dbquery
+make.data.frame<-structure(
+function    #Function for dealing with dbquery outputs which have lists 
+### Converts a data.frame where its columns exists as lists into a proper data.frame
+(
+df, ##<< the data.frame output from dbquery
+string2factor = FALSE
 ){
     1:ncol(df)               %>%
     lapply(function(column){
         sapply(df[,column], function(x) {ifelse(is.null(x), NA, x)})
     })                       %>%
     do.call(cbind,.)         %>%
-    data.frame(stringsAsFactors=FALSE)               %>%
+    data.frame(stringsAsFactors=string2factor)               %>%
     setNames(colnames(df))
 }, ex=function(x){
     #output.df <- dbquery(

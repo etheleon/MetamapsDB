@@ -1,4 +1,5 @@
 cpdname<-structure(function #List Pathways
+### Finds the details of the CPD when given its ID
     (cpd='C00022',
      minimal=TRUE,##<< The default is K00001, accepts both with or without the ko: prefix
     ... ){

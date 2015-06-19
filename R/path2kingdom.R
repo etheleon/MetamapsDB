@@ -1,5 +1,7 @@
-path2kingdom<-structure(function #List all intermediaries between taxa and the superkingdom it belongs to 
-(taxID = '79255',
+path2kingdom<-structure(
+function #List all intermediaries between taxa and the superkingdom it belongs to 
+### Finds the superkingdom given the taxid
+                        (taxID = '79255',
 ...){
 
 query = "

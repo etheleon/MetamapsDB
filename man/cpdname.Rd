@@ -1,7 +1,7 @@
 \name{cpdname}
 \alias{cpdname}
 \title{List Pathways}
-
+\description{Finds the details of the CPD when given its ID}
 \usage{cpdname(cpd = "C00022", minimal = TRUE, ...)}
 \arguments{
   \item{cpd}{

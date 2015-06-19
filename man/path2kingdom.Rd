@@ -1,7 +1,7 @@
 \name{path2kingdom}
 \alias{path2kingdom}
 \title{List all intermediaries between taxa and the superkingdom it belongs to }
-
+\description{Finds the superkingdom given the taxid}
 \usage{path2kingdom(taxID = "79255", ...)}
 \arguments{
   \item{taxID}{

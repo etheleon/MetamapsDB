@@ -1,6 +1,8 @@
 prettifyGraph<-structure(
-function(    #Plots a standard metabolic graph
-g,          ##<< GraphObject
+function    #Plots a standard metabolic graph
+### Adds details into the igraph object
+(
+         g,          ##<< GraphObject
 vsize    = c(1,2),
 vcolor   = c("grey", "red"),    ##length 2 vector for KO and compounds
 withText = TRUE,        ##Conditional to include labels in plot

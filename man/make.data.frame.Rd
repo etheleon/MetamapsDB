@@ -1,10 +1,12 @@
 \name{make.data.frame}
 \alias{make.data.frame}
 \title{Function for dealing with dbquery outputs which have lists }
-
-\usage{make.data.frame(df)}
+\description{Converts a data.frame where its columns exists as lists into a proper data.frame}
+\usage{make.data.frame(df, string2factor = FALSE)}
 \arguments{
   \item{df}{the data.frame output from dbquery}
+  \item{string2factor}{
+}
 }
 
 

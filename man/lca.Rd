@@ -1,7 +1,7 @@
 \name{lca}
 \alias{lca}
 \title{Finds the lowest common ancestor}
-
+\description{Finds the lowest common ancestor}
 \usage{lca(taxon1 = "10090", taxon2 = "9096", recurse = TRUE, ...)}
 \arguments{
   \item{taxon1}{The first taxon}

@@ -1,5 +1,6 @@
 lca<-structure(function #Finds the lowest common ancestor
-    (taxon1='10090', ##<< The first taxon
+### Finds the lowest common ancestor
+               (taxon1='10090', ##<< The first taxon
     taxon2='9096', ##<< The second taxon
     recurse=TRUE,       ##<< F if comparing just two 
     ... ){

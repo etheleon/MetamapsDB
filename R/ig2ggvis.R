@@ -1,4 +1,5 @@
 ig2ggvis<-structure(function #Convert igraph to ggvis object
+### Converts a igraph obj into a ggvis plot
     (g, #graph object
      dfOnly = TRUE,
     ...

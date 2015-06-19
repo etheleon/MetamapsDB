@@ -1,5 +1,6 @@
-igraph2gexf <- structure( ##Function for converting igraph 2 gexf obj
-function(mbgraph  #igraph Obj
+igraph2gexf <- structure( 
+function(mbgraph  #Function for converting igraph 2 gexf obj
+### Converts a igraph object into gexf format
          ){
     gdata     = igraph::get.data.frame(mbgraph, what="both")
     tmpedges  = gdata$edges

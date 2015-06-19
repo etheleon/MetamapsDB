@@ -1,4 +1,5 @@
 taxname<-structure(function #List Pathways
+### Lists the taxonomic id's details
     (taxon='5062', ##<< The default is Aspergillus oryzae, accepts both name as well as 
      name=F,
     ... ){
