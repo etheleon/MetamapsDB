@@ -4,8 +4,7 @@
 \description{Finds all KOs in a given pathway}
 \usage{path2ko(pathway = "path:ko00010", ...)}
 \arguments{
-  \item{pathway}{
-}
+  \item{pathway}{The pathway ID}
   \item{\dots}{
 }
 }

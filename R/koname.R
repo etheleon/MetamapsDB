@@ -1,6 +1,6 @@
 koname<-structure(function #List Pathways
 ### Gives KO details when supplied with KO id                  
-    (ko='K00001', 
+    (ko='K00001', ##<< the koid
      minimal=TRUE,##<< The default is K00001, accepts both with or without the ko: prefix
     ... ){
     if(!grepl("ko:",ko)) ko = gsub("^","ko:",ko)

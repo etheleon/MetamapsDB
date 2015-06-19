@@ -4,8 +4,7 @@
 \description{Finds the superkingdom given the taxid}
 \usage{path2kingdom(taxID = "79255", ...)}
 \arguments{
-  \item{taxID}{
-}
+  \item{taxID}{the taxonomic id}
   \item{\dots}{
 }
 }

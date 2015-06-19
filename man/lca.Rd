@@ -6,7 +6,7 @@
 \arguments{
   \item{taxon1}{The first taxon}
   \item{taxon2}{The second taxon}
-  \item{recurse}{F if comparing just two}
+  \item{recurse}{False if comparing just two}
   \item{\dots}{
 }
 }

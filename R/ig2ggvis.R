@@ -1,7 +1,7 @@
 ig2ggvis<-structure(function #Convert igraph to ggvis object
 ### Converts a igraph obj into a ggvis plot
-    (g, #graph object
-     dfOnly = TRUE,
+    (g, ##<<graph object
+     dfOnly = TRUE, ##<<df only
     ...
     ){
         layoutDF    = setNames(data.frame(layout.norm(g$layout, xmax=1, xmin=0, ymin=0, ymax=1)), c("x", "y"))
