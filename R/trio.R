@@ -1,7 +1,8 @@
 trio <- structure(function( ##<< Function to find trios.
 ### Finds trios
 KOI = 'ko:K00001', ##<< the KO of interest
-toFilter = FALSE   ##<< to filter or not
+toFilter = FALSE,   ##<< to filter or not
+... ##<< other arguments such as cypherurl
 ){
 #' Run this after starting the db'
 #query="
@@ -15,7 +16,7 @@ toFilter = FALSE   ##<< to filter or not
 #        ko.contigCount = contigCount,
 #        ko.expression  = FPKM"
 
-cypher =  "192.168.100.253:7474/db/data/cypher"
+#cypher =  "192.168.100.253:7474/db/data/cypher"
 
 query="
     START
@@ -40,9 +41,9 @@ query="
 "
 
 params = list(koid = KOI)
-cypher="192.168.100.253:7474/db/data/cypher"
 
-trioDF = dbquery(query,params, cypher)
+trioDF = dbquery(query,params,...)
+
 trioDF %<>% make.data.frame
 trioDF = trioDF[complete.cases(trioDF),]
 trioDF %<>% filter(before != after)
