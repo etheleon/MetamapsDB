@@ -53,9 +53,9 @@ if(toFilter){
                         expression.rise = as.numeric(beforeExpression) - as.numeric(middleExpression),
                         expression.fall = as.numeric(afterExpression) - as.numeric(middleExpression)
                         ) %>% 
-    filter(contig.rise > 0 & contig.fall >0 & expression.rise <0 & expression.fall <0)
+    filter(contig.rise > 0 & contig.fall >0 & expression.rise <0 & expression.fall <0) %>% unique
 }else{
-    trioDF
+    unique(trioDF)
 }
 }, ex=function(){
 #...
