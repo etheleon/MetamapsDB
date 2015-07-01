@@ -7,7 +7,7 @@ string2factor = FALSE ##<< to convert strings into factors
 ){
     1:ncol(df)               %>%
     lapply(function(column){
-        sapply(df[,column], function(x) {ifelse(is.null(x), NA, x)})
+        sapply(df[,column], function(x) {ifelse(is.null(x), NA, as.character(x))})
     })                       %>%
     do.call(cbind,.)         %>%
     data.frame(stringsAsFactors=string2factor)               %>%
