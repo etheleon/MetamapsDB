@@ -4,8 +4,7 @@
 \description{Lists all metabolic pathways}
 \usage{pathways(...)}
 \arguments{
-  \item{\dots}{
-}
+  \item{\dots}{extra arguments, eg cypherurl}
 }
 
 
