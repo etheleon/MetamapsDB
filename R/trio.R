@@ -2,6 +2,7 @@ trio <- structure(function( ##<< Function to find trios.
 ### Finds trios
 KOI = 'ko:K00001', ##<< the KO of interest
 toUnique = TRUE,
+withDetails = FALSE,
 ... ##<< other arguments such as cypherurl
 ){
 
@@ -18,55 +19,32 @@ toUnique = TRUE,
 #        ko.contigCount = contigCount,
 #        ko.expression  = FPKM"
 
-#cypher =  "192.168.100.253:7474/db/data/cypher"
-
-#query="
-#    START
-#        inputko=node:koid(ko={koid})
-#    WITH 
-#        inputko,
-#        inputko.ko          AS middle,
-#        inputko.contigCount AS middleContigCount,
-#        inputko.expression  AS middleExpression
-#    MATCH
-#        (ko1:ko)-->(:cpd)-->(inputko)-->(:cpd)-->(ko3:ko)
-#    RETURN
-#        distinct ko1.ko          AS before,
-#        distinct ko1.contigCount as beforeContigCount,
-#        distinct ko1.expression  as beforeExpression,
-#        middle,
-#        middleContigCount,
-#        middleExpression,
-#        ko3.ko          AS after,
-#        ko3.contigCount AS afterContigCount,
-#        ko3.expression  AS afterExpression
-#
-
 #Round 1: Find the paths
 
 query <- "
     START
         inputko=node:koid(ko={koid})
     WITH
-        inputko,
-        inputko.ko          AS middle,
+        inputko
     MATCH
         (ko1:ko)-->(:cpd)-->(inputko)-->(:cpd)-->(ko3:ko)
     RETURN
-        ko1.ko          AS before,
-        middle,
-        ko3.ko          AS after,
+        ko1.ko     AS before,
+        inputko.ko AS middle,
+        ko3.ko     AS after
 "
 
 params <- list(koid = KOI)
 trioDF <- dbquery(query,params,...)
+#trioDF <- dbquery(query,params,cypherurl=cyp)
+nrow(trioDF)
 
-trioDF %<>% make.data.frame
-trioDF = trioDF[complete.cases(trioDF),]
+trioDF$before %<>% as.character
+trioDF$middle %<>% as.character
+trioDF$after  %<>% as.character
 
-# not uturn type reactions
+# not uturn type reactions (redundant KOs)
 trioDF %<>% filter(before != after) %>% unique
-
 if(toUnique){
     #remove reverse rxns
     trioDF = trioDF[!duplicated(
@@ -81,24 +59,28 @@ if(toUnique){
 }
 
 #Round 2: Find the contigs information
-kos = with(trioDF, c(before, after,middle) %>% unique)
+if(withDetails){
+    kos = with(trioDF, c(before, after,middle) %>% unique)
 
-params  = kos %>% lapply(function(x) list(ko=x)) %>% list(kos=.)
-query   = "
-    UNWIND
-        { kos } AS koss
-    MATCH
-        (inputko:ko {ko : koss.ko})
-    RETURN
-        inputko.ko          AS koID,
-        inputko.contigCount AS ContigCount,
-        inputko.expression  AS Expression
-"
+    params  = kos %>% lapply(function(x) list(ko=x)) %>% list(kos=.)
+    query   = "
+        UNWIND
+            { kos } AS koss
+        MATCH
+            (inputko:ko {ko : koss.ko})
+        RETURN
+            inputko.ko          AS koID,
+            inputko.contigCount AS ContigCount,
+            inputko.expression  AS Expression
+    "
 
-contigInfo <- dbquery(query,params,...)
-contigInfo %<>% make.data.frame
-list(trioDF, contigInfo)
-
+    contigInfo <- dbquery(query,params,...)
+    contigInfo %<>% make.data.frame
+    contigInfo <- contigInfo[complete.cases(contigInfo),]
+    list(trioDF, contigInfo)
+}else{
+    trioDF
+}
 }, ex=function(){
 #...
 })
