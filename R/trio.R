@@ -1,9 +1,11 @@
 trio <- structure(function( ##<< Function to find trios.
 ### Finds trios
 KOI = 'ko:K00001', ##<< the KO of interest
-toFilter = FALSE,   ##<< to filter or not
+toUnique = TRUE,
 ... ##<< other arguments such as cypherurl
 ){
+
+#' Round 0: 
 #' Run this after starting the db'
 #query="
 #    OPTIONAL MATCH
@@ -18,45 +20,85 @@ toFilter = FALSE,   ##<< to filter or not
 
 #cypher =  "192.168.100.253:7474/db/data/cypher"
 
-query="
+#query="
+#    START
+#        inputko=node:koid(ko={koid})
+#    WITH 
+#        inputko,
+#        inputko.ko          AS middle,
+#        inputko.contigCount AS middleContigCount,
+#        inputko.expression  AS middleExpression
+#    MATCH
+#        (ko1:ko)-->(:cpd)-->(inputko)-->(:cpd)-->(ko3:ko)
+#    RETURN
+#        distinct ko1.ko          AS before,
+#        distinct ko1.contigCount as beforeContigCount,
+#        distinct ko1.expression  as beforeExpression,
+#        middle,
+#        middleContigCount,
+#        middleExpression,
+#        ko3.ko          AS after,
+#        ko3.contigCount AS afterContigCount,
+#        ko3.expression  AS afterExpression
+#
+
+#Round 1: Find the paths
+
+query <- "
     START
         inputko=node:koid(ko={koid})
-    WITH 
+    WITH
         inputko,
         inputko.ko          AS middle,
-        inputko.contigCount AS middleContigCount,
-        inputko.expression  AS middleExpression
     MATCH
         (ko1:ko)-->(:cpd)-->(inputko)-->(:cpd)-->(ko3:ko)
     RETURN
         ko1.ko          AS before,
-        ko1.contigCount as beforeContigCount,
-        ko1.expression  as beforeExpression,
         middle,
-        middleContigCount,
-        middleExpression,
         ko3.ko          AS after,
-        ko3.contigCount AS afterContigCount,
-        ko3.expression  AS afterExpression
 "
 
-params = list(koid = KOI)
-
-trioDF = dbquery(query,params,...)
+params <- list(koid = KOI)
+trioDF <- dbquery(query,params,...)
 
 trioDF %<>% make.data.frame
 trioDF = trioDF[complete.cases(trioDF),]
-trioDF %<>% filter(before != after)
-if(toFilter){
-    trioDF %>%  mutate( contig.rise     = as.numeric(beforeContigCount) - as.numeric(middleContigCount),
-                        contig.fall     = as.numeric(afterContigCount) - as.numeric(middleContigCount),
-                        expression.rise = as.numeric(beforeExpression) - as.numeric(middleExpression),
-                        expression.fall = as.numeric(afterExpression) - as.numeric(middleExpression)
-                        ) %>% 
-    filter(contig.rise > 0 & contig.fall >0 & expression.rise <0 & expression.fall <0) %>% unique
-}else{
-    unique(trioDF)
+
+# not uturn type reactions
+trioDF %<>% filter(before != after) %>% unique
+
+if(toUnique){
+    #remove reverse rxns
+    trioDF = trioDF[!duplicated(
+                trioDF                             %>%
+                apply(1, function(row){
+                    c(row["before"], row["after"]) %>%
+                    sort                           %>%
+                    paste0(collapse="")
+                })
+    ),]
+    #remove redundant
 }
+
+#Round 2: Find the contigs information
+kos = with(trioDF, c(before, after,middle) %>% unique)
+
+params  = kos %>% lapply(function(x) list(ko=x)) %>% list(kos=.)
+query   = "
+    UNWIND
+        { kos } AS koss
+    MATCH
+        (inputko:ko {ko : koss.ko})
+    RETURN
+        inputko.ko          AS koID,
+        inputko.contigCount AS ContigCount,
+        inputko.expression  AS Expression
+"
+
+contigInfo <- dbquery(query,params,...)
+contigInfo %<>% make.data.frame
+list(trioDF, contigInfo)
+
 }, ex=function(){
 #...
 })
