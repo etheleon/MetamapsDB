@@ -7,7 +7,7 @@ fullGraph=FALSE,    ##<< to output the whole of metabolism or not
 if(fullGraph){
 
 }else{
-    kos    = ifelse(grepl("ko:"), kos, gsub("^", "ko:",kos))
+    kos    = ifelse(grepl("ko:", kos), kos, gsub("^", "ko:",kos))
     params = kos %>% lapply(function(x) list(ko=x)) %>% list(kos=.)
 
     query_cpd2ko = "
@@ -21,7 +21,7 @@ if(fullGraph){
         cpd.name       AS childName,
         ako.definition AS parentName"
 
-    df1 = dbquery(query_cpd2ko, params, cypherurl="192.168.100.253:7474/db/data/cypher")
+    df1 = dbquery(query_cpd2ko, params, ...)
     df1 %<>% make.data.frame
     df1 = df1[complete.cases(df1),]
 
@@ -36,7 +36,7 @@ if(fullGraph){
         ako.definition AS childName,
         cpd.name       AS parentName"
 
-    df2 = dbquery(query_ko2cpd, params, cypherurl="192.168.100.253:7474/db/data/cypher")
+    df2 = dbquery(query_ko2cpd, params, ...)
     df2 %<>% make.data.frame
     df2 = df2[complete.cases(df2),]
 
