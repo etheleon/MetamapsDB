@@ -1,7 +1,7 @@
 \name{koname}
 \alias{koname}
 \title{List Pathways}
-\description{Gives KO details when supplied with KO id                  }
+\description{Gives KO details when supplied with KO id}
 \usage{koname(ko = "K00001", minimal = TRUE, ...)}
 \arguments{
   \item{ko}{the koid}

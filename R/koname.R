@@ -5,22 +5,31 @@ koname<-structure(function #List Pathways
     ...
     ){
         ko = gsub("^(ko:)*","ko:",ko)
-        query = "
-        UNWIND
-            { koname } AS KOSS
-        MATCH
-            (ko:ko {ko : koss.ko})
-        RETURN 
-            ko.ko, ko.name, ko.definition, ko.pathway, ko.`pathway.name`
-        "
+        if(!minimal){
+            query = "
+            UNWIND
+                { koname } AS KOSS
+            MATCH
+                (ko:ko {ko : KOSS.ko})
+            RETURN 
+                ko.ko, ko.name, ko.definition, ko.pathway, ko.`pathway.name`
+            "
+        }else{
+            query = "
+            UNWIND
+                { koname } AS KOSS
+            MATCH
+                (ko:ko {ko : KOSS.ko})
+            RETURN 
+                ko.ko, ko.name, ko.definition
+            "
+        }
+
         params <- ko %>% lapply(function(x){list(ko=x)}) %>% list(koname=.)
         df     <- dbquery(query=query, params=params, ...)
-
-        if(minimal){
-            df %>% select(ko.ko:ko.definition)
-        }else{
-            df
-        }
-    }, ex= function(){
+                         # cypherurl= "http://metamaps.scelse.nus.edu.sg:7474/db/data/cypher")
+        df
+    }
+    , ex= function(){
    #pathwayDF = koname(ko="K00001");
    })
