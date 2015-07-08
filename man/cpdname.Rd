@@ -5,7 +5,7 @@
 \usage{cpdname(cpd = "C00022", minimal = TRUE, ...)}
 \arguments{
   \item{cpd}{the cpd ID; either as a single or vector accepts with or without prefix}
-  \item{minimal}{The default is K00001, accepts both with or without the ko: prefix}
+  \item{minimal}{The default is C00002, accepts both with or without the ko: prefix}
   \item{\dots}{
 }
 }
