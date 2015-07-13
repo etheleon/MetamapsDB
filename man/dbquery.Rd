@@ -2,7 +2,7 @@
 \alias{dbquery}
 \title{Function for querying metamaps DB}
 \description{Takes variable queries with table output ie. no nodes no rels}
-\usage{dbquery(query, params = FALSE, cypherurl = "192.168.100.1:7474/db/data/cypher", 
+\usage{dbquery(query, params = FALSE, cypherurl = "127.0.0.1:7474/db/data/cypher", 
     ...)}
 \arguments{
   \item{query}{Cypher Query, rmbr to escape double quotes if any}
