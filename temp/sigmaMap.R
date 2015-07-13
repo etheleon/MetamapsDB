@@ -20,22 +20,7 @@ colorType <- c  ("centrality","betweeness","loadScore") %>%
 ui = navbarPage("Superzip", id="nav",
         
       # Shiny versions prior to 0.11 should use class="modal" instead.
-      absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
-        draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
-        width = 330, height = "auto",
-
-        h2("ZIP explorer"),
-
-        selectInput("color", "Color", vars),
-        selectInput("size", "Size", vars, selected = "adultpop"),
-        conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",
-          # Only prompt for threshold when coloring or sizing by superzip
-          numericInput("threshold", "SuperZIP threshold (top n percentile)", 5)
-        ),
-
-        plotOutput("histCentile", height = 200),
-        plotOutput("scatterCollegeIncome", height = 250)
-      ),
+,
 
       tags$div(id="cite",
         'Data compiled for ', tags$em('Coming Apart: The State of White America, 1960–2010'), ' by Charles Murray (Crown Forum, 2012).'
@@ -134,46 +119,34 @@ shinyApp(
 )
 
 
-sigma <- function(gexf, drawEdges = TRUE, drawNodes = TRUE, drawLabels = FALSE, labelThreshold = 8,
-                  width = NULL, height = NULL) {
-  
-  # read the gexf file
-  data <- paste(gexf, collapse="\n")
-  
-  # create a list that contains the settings
-  settings <- list(
-    drawEdges = drawEdges,
-    drawNodes = drawNodes,
-    drawLabels = drawLabels, 
-    labelThreshold = labelThreshold
-  )
-  
-  # pass the data and settings using 'x'
-  x <- list(
-    data = data,
-    settings = settings
-  )
-  
-  # create the widget
-  htmlwidgets::createWidget("sigma", x, 
-sizingPolicy = htmlwidgets::sizingPolicy(
-browser.fill=TRUE))
-}
 
 
 ####################################################################################################
-shinyApp(
-        ui = fluidPage(
-        tags$head(
-            includeCSS("styles.css")
-        )
-        # Plots--
 
-        sigmaOutput("network", width="100%", height="1000px")
+ui = fluidPage(
+    tags$head(
+        tags$link(rel = "stylesheet", type = "text/css", href = "www/styles.css")
     ),
-    server = function(input, output){
+    sigmaOutput("network", width="100%", height="1000"),
+    absolutePanel(id = "controls", class = "panel panel-default", fixed = TRUE,
+        draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
+        width = 330, height = 300,
+        h2("KEGG explorer"),
+        selectInput("labelType", "Labels", c("KO", "CPD")),
+    #selectInput("color", "Color", vars),
+    #selectInput("size", "Size", vars, selected = "adultpop"),
+        conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",
+          # Only prompt for threshold when coloring or sizing by superzip
+          numericInput("koID", "KEGG Ortholog ID", 'ko:K00001')
+        )
+    )
+)
+
+server = function(input, output){
     output$network = renderSigma({
         sigma(gexf = agexf$graph, drawLabels = T, labelThreshold = 20)
     })
 }
-)
+
+
+shinyApp(ui, server)
