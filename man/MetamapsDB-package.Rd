@@ -10,6 +10,7 @@ Maintainer: \tab uesu <wesley@bic.nus.edu.sg>\cr
 Author: \tab uesu\cr
 Version: \tab 0.0.2\cr
 License: \tab GPL-2\cr
+Depends: \tab R (>= 3.0.2)\cr
 Title: \tab MetamapsDB R interface for accessing integrated omics data of microbioal communities\cr
 Imports: \tab 
 magrittr,
@@ -20,7 +21,8 @@ rgexf,
 magrittr,
 ggvis,
 sigma,
-dplyr\cr}
+dplyr,
+shiny\cr}
 }
 \author{uesu}
 

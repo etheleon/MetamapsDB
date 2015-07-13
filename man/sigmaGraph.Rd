@@ -17,5 +17,6 @@ Works with older version of IGraph, maybe someone can choose to upgrade this fur
 
 \examples{
 data(nitrogenGraph)
-nitrogenMetab \%>\% sigmaGraph
+app = nitrogenMetab \%>\% sigmaGraph
+#app
 }
