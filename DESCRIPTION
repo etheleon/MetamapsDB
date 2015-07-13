@@ -3,7 +3,7 @@ Maintainer: uesu <wesley@bic.nus.edu.sg>
 Author: uesu
 Version: 0.0.2
 License: GPL-2
-Title: MetamapsDB
+Title: MetamapsDB R interface for accessing integrated omics data of microbioal communities
 Description: For integration with neo4j's REST API
 Imports:
     magrittr,
@@ -12,4 +12,6 @@ Imports:
     igraph,
     rgexf,
     magrittr,
-    ggvis
+    ggvis,
+    sigma,
+    dplyr

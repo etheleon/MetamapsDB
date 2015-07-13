@@ -1,7 +1,8 @@
 # Sample .travis.yml for R projects
 language: r
+github_packages: etheleon/sigma
 warnings_are_errors: false
-sudo: required
+sudo: false
 
 env:
  global:
