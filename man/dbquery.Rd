@@ -2,11 +2,14 @@
 \alias{dbquery}
 \title{Function for querying metamaps DB}
 \description{Takes variable queries with table output ie. no nodes no rels}
-\usage{dbquery(query, params = FALSE, cypherurl = cacheEnv$cypher, ...)}
+\usage{dbquery(query, params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, 
+    password = cacheEnv$password, ...)}
 \arguments{
   \item{query}{Cypher Query, rmbr to escape double quotes if any}
   \item{params}{a list object. If no parameters, let params = False.}
   \item{cypherurl}{The address of the graph database eg. metamaps.scelse.nus.edu.sg:7474}
+  \item{user}{neo4j username}
+  \item{password}{neo4j password}
   \item{\dots}{
 }
 }
