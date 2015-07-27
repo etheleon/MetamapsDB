@@ -1,4 +1,4 @@
-import(RJSONIO, RCurl, igraph)
+import(RJSONIO, RCurl, igraph, shiny, sigma, dplyr)
 
 exportPattern("^[[:alpha:]]+")
 export("%>%")
@@ -7,4 +7,5 @@ export("%$%")
 importFrom(magrittr,"%>%")
 importFrom(magrittr,"%<>%")
 importFrom(magrittr,"%$%")
-
+importFrom(rgexf,"write.gexf")
+importFrom(base64enc, "base64encode")
