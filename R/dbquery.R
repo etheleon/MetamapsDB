@@ -14,7 +14,7 @@ if(is.list(params)){
         post = toJSON(list(query = query))
 }
 
-key <- paste(user, cacheEnv$password, sep=":") %>% charToRaw %>% base64enc::base64encode
+key <- base64enc::base64encode(charToRaw(paste(user, cacheEnv$password, sep=":")))
 result = fromJSON(getURL(
 cypherurl,
 customrequest = "POST",
