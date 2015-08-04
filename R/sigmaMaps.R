@@ -65,5 +65,4 @@ columnBar <- absolutePanel(
 }, ex = function(){
 data(nitrogenGraph)
 app = nitrogenMetab %>% sigmaGraph
-#app
 })
