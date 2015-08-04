@@ -16,4 +16,5 @@ Imports:
     ggvis,
     sigma,
     dplyr,
-    shiny
+    shiny,
+    base64enc

@@ -1,4 +1,4 @@
-import(RJSONIO, RCurl, igraph, shiny, sigma, dplyr, base64enc)
+import(RJSONIO, RCurl, igraph, shiny, sigma, dplyr)
 
 exportPattern("^[[:alpha:]]+")
 export("%>%")
