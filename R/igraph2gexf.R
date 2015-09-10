@@ -3,6 +3,8 @@
 #'
 #' @param mbgraph metabolic graph
 #'
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%<>%"
 #' @export
 igraph2gexf <- function(mbgraph){
     gdata     = igraph::get.data.frame(mbgraph, what="both")

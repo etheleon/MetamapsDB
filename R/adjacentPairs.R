@@ -3,6 +3,8 @@
 #' @param g graph object
 #' @param ko kos to find adjacent pairs for
 #' 
+#' @importFrom magrittr "%>%"
+#'
 #' @export
 adjacentPairs<- function (g, ko2ko =  FALSE, ...){
         kos      =  grepl("ko:", V(g)$name) %>% which

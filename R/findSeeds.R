@@ -5,6 +5,7 @@
 #'
 #' @param mbgraph igraph object representing the metabolic graph of interest
 #'
+#' @importFrom magrittr "%>%"
 #' @export
 findSeeds <- function(mbgraph){
         #allCompounds
@@ -41,7 +42,7 @@ findSeeds <- function(mbgraph){
                    !is.na(nonmember)    # Has connections with nodes outside of component
                    )
         possibleSCC = sourceCompDF                                            %>%
-        filter(
+        dplyr::filter(
                membership %in% unique(possibleSCC$membership),
                !is.na(nonmember)
                )

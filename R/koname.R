@@ -4,8 +4,6 @@
 #' @param minimal return minimal details
 #'
 #' @importFrom magrittr "%>%"
-#' @importFrom magrittr "%$%"
-#' @importFrom magrittr "%<>%"
 #'
 #' @export
 koname <- function(ko='K00001', minimal=TRUE,...){

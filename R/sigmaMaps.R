@@ -3,6 +3,10 @@
 #' Works with older version of IGraph, maybe someone can choose to upgrade this further
 #' @param igraphObj graph object after running prettifyGraph
 #'
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%$%"
+
+
 #' @export
 sigmaGraph <- function(igraphObj){
 agexf <- igraphObj %>% igraph2gexf %$% graph
