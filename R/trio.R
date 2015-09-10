@@ -1,9 +1,15 @@
-trio <- structure(function( ##<< Function to find trios.
-### Finds trios
-KOI = 'ko:K00001', ##<< the KO of interest
-toUnique = TRUE,
+#' Function to find trios.
+
+#' @param KOI the ko id
+#' @param toUnique  if to return only unique
+#' @param withDetails with details
+#' @param ... the other args for dbquery
+
+trio <- function( 
+KOI         = 'ko:K00001', 
+toUnique    = TRUE,
 withDetails = FALSE,
-... ##<< other arguments such as cypherurl
+...
 ){
 
 #' Round 0: 
@@ -81,7 +87,4 @@ if(withDetails){
 }else{
     trioDF
 }
-}, ex=function(){
-#...
-})
-
+}

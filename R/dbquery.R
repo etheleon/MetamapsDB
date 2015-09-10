@@ -1,21 +1,23 @@
-dbquery<-structure(function(#Function for querying metamaps DB
-###Takes variable queries with table output ie. no nodes no rels
-query,	##<< Cypher Query, rmbr to escape double quotes if any 
-params      = FALSE, ##<< a list object. If no parameters, let params = False.
-cypherurl   = cacheEnv$cypher, ##<< The address of the graph database eg. metamaps.scelse.nus.edu.sg:7474
-user        = cacheEnv$user, ##<< neo4j username
-password    = cacheEnv$password, ##<< neo4j password
-...
-){
+#' Function for querying metamaps DB
+#'
+#' Takes variable queries with table output ie. no nodes no rels
+#' @param query char string with cypher Query, rmbr to escape double quotes if any; read LUCENE
+#' @param params a list object. ie params required by a cypher query, false if query requires no parameters; default
+#' @param cypherurl address of database, inclusive of ports
+#' @param user database username
+#' @param password database password
+#' 
+#' @export
+dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, password = cacheEnv$password, ...){
 #Checks if the params is given
 if(is.list(params)){
-        post = toJSON(list(query = query, params = params))
+        post = RJSONIO::toJSON(list(query = query, params = params))
 }else{
-        post = toJSON(list(query = query))
+        post = RJSONIO::toJSON(list(query = query))
 }
 
 key <- base64enc::base64encode(charToRaw(paste(user, cacheEnv$password, sep=":")))
-result = fromJSON(getURL(
+result = RJSONIO::fromJSON(RCurl::getURL(
 cypherurl,
 customrequest = "POST",
 httpheader = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key)),
@@ -35,10 +37,4 @@ if(length(result$data)>2){
 }else{
     return(NA)
 }
-}, ex=function(x){
-    #output.df <- dbquery(
-    # query = "START ko=node:koid('ko:\"ko:K00020\"') return ko.ko,ko.definition",
-    # params = FALSE, 
-    #cypherurl = "metamaps.scelse.nus.edu.sg:7474/db/data/cypher")
-    #cypherurl = "192.168.100.1:7474/db/data/cypher")    #internal within the server
-})
+}

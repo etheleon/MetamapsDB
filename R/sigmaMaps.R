@@ -1,9 +1,10 @@
-sigmaGraph <- structure(function #Takes mbgraph and outputs as a shinyApp Obj
-### Users should encode the values into the igraph object
-### Works with older version of IGraph, maybe someone can choose to upgrade this further
-(igraphObj ##<< graph object after running prettifyGraph
-){
-#converts igraph Obj
+#' Takes mbgraph and outputs as a shinyApp Obj
+#' Users should encode the values into the igraph object
+#' Works with older version of IGraph, maybe someone can choose to upgrade this further
+#' @param igraphObj graph object after running prettifyGraph
+#'
+#' @export
+sigmaGraph <- function(igraphObj){
 agexf <- igraphObj %>% igraph2gexf %$% graph
 
 colorType <- c("centrality", "betweeness", "loadScore") %>%
@@ -62,7 +63,4 @@ columnBar <- absolutePanel(
     }
 ##################################################
     shinyApp(ui, server)
-}, ex = function(){
-data(nitrogenGraph)
-app = nitrogenMetab %>% sigmaGraph
-})
+}

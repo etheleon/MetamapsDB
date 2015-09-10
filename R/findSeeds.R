@@ -1,8 +1,12 @@
-findSeeds <- structure(function(#To find all seed compounds in the metabolic graph
-### Function finds strongly connected components within a bipartite metabolic network.
-### And selects for components with at least 1 outgoing edge and no inbound edges.
-mbgraph ##<< the graph
-    ){
+#' To find all seed compounds in the metabolic graph
+#'
+#' Function finds strongly connected components within a bipartite metabolic network.
+#' And selects for components with at least 1 outgoing edge and no inbound edges.
+#'
+#' @param mbgraph igraph object representing the metabolic graph of interest
+#'
+#' @export
+findSeeds <- function(mbgraph){
         #allCompounds
         cpdNodes        = which(grepl("cpd:", V(mbgraph)$name))
        #Find all strongly connected components (SCC)
@@ -54,9 +58,5 @@ mbgraph ##<< the graph
                                 )
                }) %>% do.call(rbind, .)
 ###    Data.frame of source component, entites, linker connection to non-member KOs/CPDs in other components.
-    },
-    ex = function() {
-        print("Still in progress")
-        #possibleSCC %>% group_by(membership) %>% summarise(sum(outbound), sum(inbound))
     }
-)
+
