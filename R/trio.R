@@ -6,7 +6,9 @@
 #' @param ... the other args for dbquery
 
 #' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%<>%"
 
+#' @export
 trio <- function( 
 KOI         = 'ko:K00001', 
 toUnique    = TRUE,
