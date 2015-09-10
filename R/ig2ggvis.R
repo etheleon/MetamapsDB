@@ -1,9 +1,11 @@
-ig2ggvis<-structure(function #Convert igraph to ggvis object
-### Converts a igraph obj into a ggvis plot
-    (g, ##<<graph object
-     dfOnly = TRUE, ##<<df only
-    ...
-    ){
+#' Convert igraph to ggvis object
+#'
+#' Converts a igraph obj into a ggvis plot
+#' @param g igraph object
+#' @param dfOnly outputs the data.frame and not draw using ggvis 
+#'
+#' @export
+ig2ggvis <- function(g, dfOnly = TRUE, ...){
         layoutDF    = setNames(data.frame(layout.norm(g$layout, xmax=1, xmin=0, ymin=0, ymax=1)), c("x", "y"))
         vertexDF    = data.frame(id = V(g)$name, name = V(g)$label)
         edgeDF      = get.edgelist(g)
@@ -44,6 +46,4 @@ ig2ggvis<-structure(function #Convert igraph to ggvis object
                 scale_ordinal("fill", range=c("grey","red"))                                                                                                                            %>%
                 add_tooltip(all_values, "hover")
         }
-    }, ex= function(){
-        print("Still in Progress")
-    })
+    }

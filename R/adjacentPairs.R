@@ -1,13 +1,12 @@
-adjacentPairs<-structure(function #Convert igraph to ggvis object
-### Finds adjacent pairs of KOs or KO2CPD
-    (g, ##<<graph object,
-     ko2ko =  FALSE, ##<<ko to ko
-    ...
-    ){
+#' Finds adjacent pairs of KOs for actual biological reactions
+#'
+#' @param g graph object
+#' @param ko kos to find adjacent pairs for
+#' 
+#' @export
+adjacentPairs<- function (g, ko2ko =  FALSE, ...){
         kos      =  grepl("ko:", V(g)$name) %>% which
-
-        #Finding true biological reactions
-#TODO: non-ko2ko directin is still not configured
+#TODO:  non-ko2ko directin is still not configured
 test = do.call(rbind,lapply(c("out","in"), function(direction){
         kopairs     =   neighborhood(graph=g, nodes=kos, order=1, mode = direction)   #immediate pairs
         kopairs     =   kopairs[sapply(kopairs, length) != 1]
@@ -43,6 +42,4 @@ test = do.call(rbind,lapply(c("out","in"), function(direction){
         duplicated                                                                                %>%
         ifelse(FALSE, TRUE),]                                           # this inverses the list
         }))
-    }, ex= function(){
-        print("Still in progress")
-            })
+    }

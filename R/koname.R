@@ -1,9 +1,14 @@
-koname<-structure(function #List Pathways
-### Gives KO details when supplied with KO id
-    (ko='K00001', ##<< the koid
-     minimal=TRUE,##<< The default is K00001, accepts both with or without the ko: prefix
-    ...
-    ){
+#' Gives KO details when supplied with KO id
+#'
+#' @param ko the koid 
+#' @param minimal return minimal details
+#'
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%$%"
+#' @importFrom magrittr "%<>%"
+#'
+#' @export
+koname <- function(ko='K00001', minimal=TRUE,...){
         ko = gsub("^(ko:)*","ko:",ko)
         if(!minimal){
             query = "
@@ -30,6 +35,3 @@ koname<-structure(function #List Pathways
                          # cypherurl= "http://metamaps.scelse.nus.edu.sg:7474/db/data/cypher")
         df
     }
-    , ex= function(){
-   #pathwayDF = koname(ko="K00001");
-   })

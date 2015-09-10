@@ -1,12 +1,9 @@
-pathways<-structure(
-function #List Pathways
-### Lists all metabolic pathways
-(... ##<< extra arguments, eg cypherurl
- ){
+#' List Pathways
+#' Lists all metabolic pathways
+#' @export
+pathways<-function(...){
 setNames(
          dbquery(query='match (pathway:pathway) return pathway.pathwayname, pathway.pathway', ...), 
          c("pathwayName", "pathwayID")
          )
-}, ex= function(){
-#   pathwayDF = pathways();
-})
+}

@@ -1,9 +1,9 @@
-path2kingdom<-structure(
-function #List all intermediaries between taxa and the superkingdom it belongs to 
-### Finds the superkingdom given the taxid
-(taxID = '79255', ##<< the taxonomic id
-...){
-
+#' List all intermediaries between taxa and the superkingdom it belongs to 
+#'
+#' Finds the superkingdom given the taxid
+#' @param taxID NCBI taxonomic id
+#' @export
+path2kingdom<-function(taxID = '79255', ...){
 query = "
 START
     basetaxa=node:ncbitaxid(taxid={taxID})
@@ -16,8 +16,4 @@ RETURN
 "
 params = list(taxID = taxID)
 listquery(query=query, params = params, ...)
-}, ex=function() { 
-#df = path2kingdom(taxID='79255')
-#df2 = lapply(df$data[[1]], function(x) matrix(x, ncol=1))
-#setNames(data.frame(cbind(df2[[1]],df2[[2]],df2[[3]])), df$columns)
-})
+}

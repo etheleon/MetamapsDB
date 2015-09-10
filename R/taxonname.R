@@ -1,8 +1,9 @@
-taxname<-structure(function #List Pathways
-### Lists the taxonomic id's details
-    (taxon='5062', ##<< The default is Aspergillus oryzae, accepts both name as well as
-     name=FALSE,   ##<< to show the name
-    ... ){
+#' Lists the taxonomic id's details
+#'
+#' @param taxon The default is Aspergillus oryzae, accepts both name as well as
+#' @param name  to show the name
+#' @export
+taxname<-function(taxon='5062',name=FALSE,... ){
     params=list(taxonname=taxon)
     if(name)
     {
@@ -16,6 +17,4 @@ taxname<-structure(function #List Pathways
                 taxa.name, taxa.taxid, head(labels(taxa)) as rank"
     dbquery(query=query, params=params, ...)
     }
-    }, ex= function(){
-   #Asperigillus= taxname(taxon="5062");
-   })
+}

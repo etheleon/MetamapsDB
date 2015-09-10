@@ -1,9 +1,12 @@
-grepgraph<-structure(
-function #Generates metabolic network as IGRAPH object from input vector KOs
-### Takes in a vector list of KO ids and generates a metabolic graph as a igraph object
-(kos,               ##<< this will take the input KOs 
-fullGraph=FALSE,    ##<< to output the whole of metabolism or not
-...){
+#' Returns the metabolic graph given vector of KOs
+#'
+#' Takes in a vector list of KO ids and generates a metabolic graph as a igraph object
+#'
+#' @param kos vector of kos
+#' @param fullGraph to output the full metabolic graph (yet to be implemented)
+#'
+#' @export
+grepgraph <- function(kos,fullGraph=FALSE,...){
 if(fullGraph){
 
 }else{
@@ -52,17 +55,4 @@ if(fullGraph){
     g$layout = layout.fruchterman.reingold(g)
     g
     }
-}, ex=function(){
-#    data(top500kos)
-#    mbgraph<-grepgraph(top500kos)
-#    p1 = plot(
-#    mbgraph, 
-#    vertex.label=V(g)$name, 
-#    vertex.size = 1,
-#    edge.arrow.size=0.1,
-#    vertex.frame.color="#FFFFFF00", 
-#    vertex.color=c("grey","red")
-
-#)
 }
-)

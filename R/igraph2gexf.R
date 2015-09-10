@@ -1,8 +1,10 @@
-igraph2gexf <- structure( 
-function#Function for converting igraph 2 gexf obj
-### Converts a igraph object into gexf format
-         (mbgraph  ##<< the graph object
-         ){
+#' Converts igraph obj two gexf
+#' Function for converting igraph 2 gexf
+#'
+#' @param mbgraph metabolic graph
+#'
+#' @export
+igraph2gexf <- function(mbgraph){
     gdata     = igraph::get.data.frame(mbgraph, what="both")
     tmpedges  = gdata$edges
     tmpnodes  = gdata$vertices
@@ -27,6 +29,4 @@ function#Function for converting igraph 2 gexf obj
     }else{
         message("Metabolic Graph needs to include definition")
     }
-}, ex=function(){
-# 
-})
+}

@@ -1,10 +1,13 @@
-make.data.frame<-structure(
-function    #Function for dealing with dbquery outputs which have lists 
-### Converts a data.frame where its columns exists as lists into a proper data.frame
-(
-df, ##<< the data.frame output from dbquery
-string2factor = FALSE ##<< to convert strings into factors
-){
+#' Convert columns with nested list structures into plain vectors
+#'
+#' Certain dbquerys will return data.frames with columns having lists, this function reduces this
+#'
+#' @param df the data.frame output from dbquery
+#' @param string2factor to store strings as factor
+#'
+#' @export
+make.data.frame <- function(
+df, string2factor = FALSE){
     1:ncol(df)               %>%
     lapply(function(column){
         sapply(df[,column], function(x) {ifelse(is.null(x), NA, as.character(x))})
@@ -12,11 +15,4 @@ string2factor = FALSE ##<< to convert strings into factors
     do.call(cbind,.)         %>%
     data.frame(stringsAsFactors=string2factor)               %>%
     setNames(colnames(df))
-}, ex=function(x){
-    #output.df <- dbquery(
-    # query = "START ko=node:koid('ko:\"ko:K00020\"') return ko.ko,ko.definition",
-    # params = FALSE, 
-    #cypherurl = "metamaps.scelse.nus.edu.sg:7474/db/data/cypher")
-    #cypherurl = "192.168.100.1:7474/db/data/cypher")    #internal within the server
-#make.data.frame(output.df)
-})
+}
