@@ -6,8 +6,9 @@ function#Function for converting igraph 2 gexf obj
     gdata     = igraph::get.data.frame(mbgraph, what="both")
     tmpedges  = gdata$edges
     tmpnodes  = gdata$vertices
-    tmpnodes$Definition %<>% sapply(function(x) gsub("[[:punct:]]", " ", x))
-    write.gexf(
+    if(colnames(tmpnodes) %in% 'Definition'){
+        tmpnodes$Definition %<>% sapply(function(x) gsub("[[:punct:]]", " ", x))
+        write.gexf(
             nodes     = tmpnodes %>% select(name, Definition),
             edges     = tmpedges %>% select(from:to),
       nodesVizAtt = list(
@@ -23,7 +24,9 @@ function#Function for converting igraph 2 gexf obj
               size = V(mbgraph)$size
                )
     )
+    }else{
+        message("Metabolic Graph needs to include definition")
+    }
 }, ex=function(){
 # 
 })
-
