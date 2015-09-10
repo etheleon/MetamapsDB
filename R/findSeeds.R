@@ -5,7 +5,6 @@
 #'
 #' @param mbgraph igraph object representing the metabolic graph of interest
 #'
-#' @importFrom magrittr "%>%"
 #' @export
 findSeeds <- function(mbgraph){
         #allCompounds

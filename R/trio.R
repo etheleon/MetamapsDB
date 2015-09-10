@@ -1,13 +1,10 @@
 #' Function to find trios.
-
+#'
 #' @param KOI the ko id
 #' @param toUnique  if to return only unique
 #' @param withDetails with details
 #' @param ... the other args for dbquery
-
-#' @importFrom magrittr "%>%"
-#' @importFrom magrittr "%<>%"
-
+#'
 #' @export
 trio <- function( 
 KOI         = 'ko:K00001', 
@@ -16,6 +13,7 @@ withDetails = FALSE,
 ...
 ){
 
+        KOI = gsub("^(ko:)*","ko:",KOI)
 #' Round 0: 
 #' Run this after starting the db'
 #query="
@@ -46,9 +44,7 @@ query <- "
 
 params <- list(koid = KOI)
 trioDF <- dbquery(query,params,...)
-#trioDF <- dbquery(query,params,cypherurl=cyp)
-nrow(trioDF)
-
+if(!is.na(trioDF)){
 trioDF$before %<>% as.character
 trioDF$middle %<>% as.character
 trioDF$after  %<>% as.character
@@ -90,5 +86,8 @@ if(withDetails){
     list(trioDF, contigInfo)
 }else{
     trioDF
+}
+}else{
+NA
 }
 }

@@ -5,7 +5,6 @@
 #' @param df the data.frame output from dbquery
 #' @param string2factor to store strings as factor
 #'
-#' @importFrom magrittr "%>%"
 #'
 #' @export
 make.data.frame <- function(

@@ -5,16 +5,13 @@
 #' @param kos vector of kos
 #' @param fullGraph to output the full metabolic graph (yet to be implemented)
 #'
-#' @importFrom magrittr "%>%"
-#' @importFrom magrittr "%<>%"
-
 #' @export
 grepgraph <- function(kos,fullGraph=FALSE,...){
 if(fullGraph){
 
 }else{
-    kos    = ifelse(grepl("ko:", kos), kos, gsub("^", "ko:",kos))
-    params = kos %>% lapply(function(x) list(ko=x)) %>% list(kos=.)
+        kos = gsub("^(ko:)*","ko:",kos)
+        params = kos %>% lapply(function(x) list(ko=x)) %>% list(kos=.)
 
     query_cpd2ko = "
     UNWIND 

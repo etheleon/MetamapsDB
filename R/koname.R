@@ -3,7 +3,6 @@
 #' @param ko the koid 
 #' @param minimal return minimal details
 #'
-#' @importFrom magrittr "%>%"
 #'
 #' @export
 koname <- function(ko='K00001', minimal=TRUE,...){
