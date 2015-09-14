@@ -16,14 +16,14 @@ if(is.list(params)){
         post = RJSONIO::toJSON(list(query = query))
 }
 
-key <- base64enc::base64encode(charToRaw(paste(user, cacheEnv$password, sep=":")))
-result = RJSONIO::fromJSON(RCurl::getURL(
+    key <- base64enc::base64encode(charToRaw(paste(user, password, sep=":")))
+    result = RJSONIO::fromJSON(RCurl::getURL(
 cypherurl,
 customrequest = "POST",
 httpheader = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key)),
 postfields = post))
 
-if(length(result$data)>2){
+if(length(result$data)>=2){
     setNames(data.frame(do.call(rbind,lapply(result$data, function(x) matrix(x, nrow=1)))), result$columns)
 
 }else if(length(result$data)==1){
