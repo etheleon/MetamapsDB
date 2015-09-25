@@ -18,4 +18,7 @@ Imports:
     sigma,
     dplyr,
     shiny,
-    base64enc
+    base64enc,
+    cluster
+
+
