@@ -4,7 +4,7 @@
 \alias{findTrios}
 \title{findTrios searches valid three-KO reactions resticting by the center KO and reports reaction clusters}
 \usage{
-findTrios(KOI, ks, toPrint = TRUE)
+findTrios(KOI, ks, toPrint = TRUE, outputFile, plotDir)
 }
 \arguments{
 \item{KOI}{KOs-of-interest ie KOs above a selected amount of expression ie. highly expressed KOs and with D-statistics above that of the desired threshold}

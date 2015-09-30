@@ -51,8 +51,8 @@ if(fullGraph){
             name = c(as.character(childName), as.character(parentName))
             )), c("Vertex","Definition"))
          )
-    g=simplify(graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
-    g$layout = layout.fruchterman.reingold(g)
+    g=igraph::simplify(igraph::graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
+    g$layout = igraph::layout.fruchterman.reingold(g)
     g
     }
 }

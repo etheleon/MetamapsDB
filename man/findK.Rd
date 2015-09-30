@@ -4,7 +4,7 @@
 \alias{findK}
 \title{'findK to find the optimum number of Ks}
 \usage{
-findK(theMatrix, kmax = 10)
+findK(theMatrix, kmax = 10, ko)
 }
 \arguments{
 \item{theMatrix}{two column data.frame with KS values of the before and after KOs in the reactions}
