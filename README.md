@@ -2,6 +2,7 @@ MetamapsDB
 ========
 
 [![Build Status](https://travis-ci.org/etheleon/metamaps.svg?branch=master)](https://travis-ci.org/etheleon/metamaps)
+[![Gitter](https://badges.gitter.im/metamaps.png)](https://gitter.im/etheleon/metamaps)
 
 R package for querying integrated -omics database, MetamapsDB. 
 [![MetamapsDB](./thumbnail.png)](github.com/etheleon/omics).
