@@ -53,7 +53,7 @@ if(fullGraph){
             )), c("Vertex","Definition"))
          )
     g=igraph::simplify(igraph::graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
-    g$layout = layout.fruchterman.reingold(g)
+    g$layout = igraph::layout.fruchterman.reingold(g)
     g
     }
 }
