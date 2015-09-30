@@ -7,6 +7,7 @@
 #' @param vtext two vector text valuevsize    = c(1,2),           
 #' @param layout Whether to calculate the layoutvcolor   = c("grey", "red"), 
 #'
+#' @import igraph 
 #' @export
 prettifyGraph<- function
 (g,                          
@@ -29,9 +30,9 @@ layout   = FALSE,
 
     #Label
     if(withText){
-        V(g)$label.cex=rep(vtext[1], vcount(g))
+        V(g)$label.cex                        = rep(vtext[1], vcount(g))
         V(g)$label.cex[grep("ko", V(g)$name)] = vtext[2]
-        V(g)$label = V(g)$Definition
+        V(g)$label                            = V(g)$Definition
     }
 
     V(g)$frame.color="#FFFFFF00"    #Colorless

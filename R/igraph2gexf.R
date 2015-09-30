@@ -3,6 +3,7 @@
 #'
 #' @param mbgraph metabolic graph
 #'
+#'
 #' @export
 igraph2gexf <- function(mbgraph){
     gdata     = igraph::get.data.frame(mbgraph, what="both")
@@ -10,20 +11,20 @@ igraph2gexf <- function(mbgraph){
     tmpnodes  = gdata$vertices
     if(sum(colnames(tmpnodes) %in% 'Definition')){
         tmpnodes$Definition %<>% sapply(function(x) gsub("[[:punct:]]", " ", x))
-        write.gexf(
-            nodes     = tmpnodes %>% select(name, Definition),
-            edges     = tmpedges %>% select(from:to),
-      nodesVizAtt = list(
+        rgexf::write.gexf(
+            nodes     = tmpnodes %>% dplyr::select(name, Definition),
+            edges     = tmpedges %>% dplyr::select(from:to),
+            nodesVizAtt = list(
               color     =   cbind(
-                                V(mbgraph)$color %>% col2rgb %>% t %>% data.frame,
-                                ifelse(is.null(V(mbgraph)$opacity), "100", V(mbgraph)$opacity)
+                                igraph::V(mbgraph)$color %>% col2rgb %>% t %>% data.frame,
+                                ifelse(is.null(igraph::V(mbgraph)$opacity), "100", igraph::V(mbgraph)$opacity)
                                 ) %>%
                             setNames(c("R", "G", "B", "A")), #%>% head
               position  =   cbind(
                                 data.frame(mbgraph$layout), 
                                 0) %>%
                             setNames(c("X","Y","Z")), #%>% head
-              size = V(mbgraph)$size
+              size = igraph::V(mbgraph)$size
                )
     )
     }else{

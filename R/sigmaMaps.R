@@ -3,9 +3,9 @@
 #' Works with older version of IGraph, maybe someone can choose to upgrade this further
 #' @param igraphObj graph object after running prettifyGraph
 #'
-
-
-
+#'
+#' @import shiny sigma
+#'
 #' @export
 sigmaGraph <- function(igraphObj){
 agexf <- igraphObj %>% igraph2gexf %$% graph
@@ -13,7 +13,7 @@ agexf <- igraphObj %>% igraph2gexf %$% graph
 colorType <- c("centrality", "betweeness", "loadScore") %>%
         setNames(c("Centrality", "Betweeness", "Load Score"))
 
-columnBar <- absolutePanel(
+columnBar <- shiny::absolutePanel(
         id = "controls", class = "panel panel-default", fixed = TRUE,
         draggable = TRUE, top = 60, left = "auto", right = 20, bottom = "auto",
         width = 330, height = 300,
@@ -50,7 +50,7 @@ columnBar <- absolutePanel(
                 "))
     ),
         #Plot
-        sigmaOutput("network", width="100%", height="1000"),
+        sigma::sigmaOutput("network", width="100%", height="1000"),
 
         #Bar
         columnBar
@@ -61,7 +61,7 @@ columnBar <- absolutePanel(
     server <- function(input, output){
 
         output$network <- renderSigma({
-            sigma(gexf = agexf, drawLabels = TRUE, labelThreshold = 8)
+            sigma::sigma(gexf = agexf, drawLabels = TRUE, labelThreshold = 8)
         })
     }
 ##################################################
