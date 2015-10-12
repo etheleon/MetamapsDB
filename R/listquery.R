@@ -16,6 +16,12 @@ listquery<-function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = ca
     }else{
         post = RJSONIO::toJSON(list(query = query))
     }
+    key <- base64enc::base64encode(charToRaw(paste(user, password, sep=":")))
 
-    result = RJSONIO::fromJSON(getURL(cypherurl, customrequest = "POST", httpheader = c(`Content-Type` = "application/json"), postfields = post))
+        result = RJSONIO::fromJSON(RCurl::getURL(
+cypherurl,
+customrequest = "POST",
+httpheader = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key)),
+postfields = post))
+    result
 }

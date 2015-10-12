@@ -20,6 +20,8 @@ prettifyGraph(g, vsize = c(1, 2), vcolor = c("grey", "red"),
 \item{vtext}{two vector text valuevsize    = c(1,2),}
 
 \item{layout}{Whether to calculate the layoutvcolor   = c("grey", "red"),}
+
+\item{contracted}{}
 }
 \description{
 returns metabolic graph with all the ornaments set

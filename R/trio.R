@@ -30,12 +30,8 @@ withDetails = FALSE,
 #Round 1: Find the paths
 
 query <- "
-    START
-        inputko=node:koid(ko={koid})
-    WITH
-        inputko
     MATCH
-        (ko1:ko)-->(:cpd)-->(inputko)-->(:cpd)-->(ko3:ko)
+        (ko1:ko)-->(:cpd)-->(inputko:ko {ko:{koid}})-->(:cpd)-->(ko3:ko)
     RETURN
         ko1.ko     AS before,
         inputko.ko AS middle,
@@ -50,7 +46,7 @@ trioDF$middle %<>% as.character
 trioDF$after  %<>% as.character
 
 # not uturn type reactions (redundant KOs)
-trioDF %<>% filter(before != after) %>% unique
+trioDF %<>% dplyr::filter(before != after) %>% unique
 if(toUnique){
     #remove reverse rxns
     trioDF = trioDF[!duplicated(

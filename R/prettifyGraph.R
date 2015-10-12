@@ -6,7 +6,8 @@
 #' @param withText Conditional to include labels in plot(g,                          
 #' @param vtext two vector text valuevsize    = c(1,2),           
 #' @param layout Whether to calculate the layoutvcolor   = c("grey", "red"), 
-#'
+#' @param contracted
+
 #' @import igraph 
 #' @export
 prettifyGraph<- function
@@ -18,7 +19,7 @@ vtext    = c(0.5, 1),
 layout   = FALSE,            
 ...
 ){
-    if(layout)
+    if(layout | nrow(g$layout) != vcount(g))
         g$layout = layout.fruchterman.reingold(g)
     #Size
     V(g)$size = rep(vsize[1], vcount(g))

@@ -5,6 +5,8 @@
 #' @param kos vector of kos
 #' @param fullGraph to output the full metabolic graph (yet to be implemented)
 #'
+#' @import igraph
+#'
 #' @export
 grepgraph <- function(kos,fullGraph=FALSE,...){
 if(fullGraph){
@@ -21,8 +23,10 @@ if(fullGraph){
     RETURN 
         cpd.cpd        AS child,
         ako.ko         AS parent,
+        ako.definition AS parentName,
+        ako.name       AS parentSym,
         cpd.name       AS childName,
-        ako.definition AS parentName"
+        cpd.name       AS childSym"
 
     df1 = dbquery(query_cpd2ko, params, ...)
     df1 %<>% make.data.frame
@@ -36,8 +40,10 @@ if(fullGraph){
     RETURN 
         ako.ko         AS child,
         cpd.cpd        AS parent,
+        cpd.name       AS parentName,
+        cpd.name       AS parentSym,
         ako.definition AS childName,
-        cpd.name       AS parentName"
+        ako.name       AS childSym"
 
     df2 = dbquery(query_ko2cpd, params, ...)
     df2 %<>% make.data.frame
@@ -48,11 +54,12 @@ if(fullGraph){
     vertex.data <- with(fulldata2,
          setNames(unique(data.frame(
             id = c(as.character(child), as.character(parent)),
-            name = c(as.character(childName), as.character(parentName))
-            )), c("Vertex","Definition"))
+            name = c(as.character(childName), as.character(parentName)),
+            sym = c(as.character(childSym), as.character(parentSym))
+            )), c("Vertex","Definition", "Symbol"))
          )
-    g=igraph::simplify(igraph::graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
-    g$layout = igraph::layout.fruchterman.reingold(g)
+    g=simplify(graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
+    g$layout = layout.fruchterman.reingold(g)
     g
     }
 }

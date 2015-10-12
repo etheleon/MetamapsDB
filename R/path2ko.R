@@ -7,10 +7,8 @@
 path2ko<-function(pathway='path:ko00010',  ...){
     params = list (pathwayID = pathway)
     query = "
-    START
-        p=node:pathwayid(pathway={pathwayID})
-    MATCH 
-        (ko:ko)-[:pathwayed]-(p) 
+    MATCH
+        (ko:ko)-[:pathwayed]-(p:pathway {pathway : {pathwayID}})
     RETURN 
         ko.ko as KO"
     dbquery(query=query, params=params, ...)
