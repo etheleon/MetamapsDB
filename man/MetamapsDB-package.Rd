@@ -13,7 +13,6 @@ License: \tab GPL-2\cr
 Depends: \tab R (>= 3.0.2)\cr
 Title: \tab MetamapsDB R interface for accessing integrated omics data of microbioal communities\cr
 Imports: \tab 
-magrittr,
 RJSONIO,
 RCurl,
 igraph,
@@ -26,6 +25,5 @@ shiny\cr}
 }
 \author{
 uesu
-Maintainer: \packageMaintainer{MetamapsDB}
 }
 \keyword{ package }

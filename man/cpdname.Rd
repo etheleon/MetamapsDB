@@ -8,6 +8,8 @@ cpdname(cpd = "C00022", ...)
 }
 \arguments{
 \item{cpd}{the compound ID with or without the prefix is accepted either as a single or vector accepts with or without prefix}
+
+\item{...}{allows for additional arguments use for dbquery}
 }
 \description{
 Finds the details of the CPD when given its ID

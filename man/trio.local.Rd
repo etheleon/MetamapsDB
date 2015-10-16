@@ -8,6 +8,8 @@ trio.local(koi, contracted = FALSE)
 }
 \arguments{
 \item{koi}{the KO of interest}
+
+\item{contracted}{conditional for contracting and simplifying graph ie. merging subunits}
 }
 \value{
 data.frame containing all reactions

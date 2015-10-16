@@ -7,6 +7,9 @@ Lists all metabolic pathways}
 \usage{
 pathways(...)
 }
+\arguments{
+\item{...}{additional parameters for dbquery}
+}
 \description{
 List Pathways
 Lists all metabolic pathways

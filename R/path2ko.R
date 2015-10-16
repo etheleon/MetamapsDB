@@ -2,7 +2,7 @@
 #' Finds all KOs belonging to a Pathways
 #'
 #' @param pathway The pathway ID
-#'
+#' @param ... additional paramters for dbquery
 #' @export
 path2ko<-function(pathway='path:ko00010',  ...){
     params = list (pathwayID = pathway)

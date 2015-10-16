@@ -10,6 +10,8 @@ ig2ggvis(g, dfOnly = TRUE, ...)
 \item{g}{igraph object}
 
 \item{dfOnly}{outputs the data.frame and not draw using ggvis}
+
+\item{...}{additional dbquery parameters}
 }
 \description{
 Converts a igraph obj into a ggvis plot

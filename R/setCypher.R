@@ -15,7 +15,7 @@ port = 7474,            ##<< Port
 username = 'neo4j',   ##<< authorization username and password
 password = 'neo4j' ##<< authorization username and password
 ){
-    assign("cacheEnv",new.env(), env = baseenv())
+    assign("cacheEnv",new.env(), envir = baseenv())
     cacheEnv$cypher   <- paste0(url, ":", port, "/db/data/cypher")
     cacheEnv$user     <- username
     cacheEnv$password <- password

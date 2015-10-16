@@ -8,7 +8,11 @@ Returns the metabolic graph given vector of KOs}
 grepgraph_cpd(cpds, fullGraph = FALSE, ...)
 }
 \arguments{
-\item{kos}{vector of kos}
+\item{cpds}{vector of kos}
+
+\item{fullGraph}{to export the whole of metabolism}
+
+\item{...}{additional parameters for dbquery}
 }
 \description{
 Takes in a vector list of KO ids and generates a metabolic graph as a igraph object

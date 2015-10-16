@@ -17,6 +17,8 @@ dbquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
 \item{user}{database username}
 
 \item{password}{database password}
+
+\item{...}{allows for additional arguments to be passed into dbquery}
 }
 \description{
 Takes variable queries with table output ie. no nodes no rels

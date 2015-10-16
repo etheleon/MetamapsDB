@@ -3,7 +3,7 @@
 #' @param taxon1 First taxon NCBI tax id
 #' @param taxon2 Second taxon NCBI tax id
 #' @param recurse to keep moving up to find the LCA
-#'
+#' @param ... additional dbquery parameters
 #' @export
 lca <- function(   taxon1='10090', taxon2='9096',  recurse=TRUE,   ... ){
     params = list(taxonOne= as.character(taxon1), taxonTwo = as.character(taxon2))

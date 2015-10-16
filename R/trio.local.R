@@ -3,7 +3,7 @@
 #' trio.local finds all trios surrounding a given KO
 #'
 #' @param koi              the KO of interest
-#'
+#' @param contracted        conditional for contracting and simplifying graph ie. merging subunits
 #' @return data.frame containing all reactions
 #'
 #' @export
@@ -73,45 +73,45 @@ trio.local <- function(koi, contracted=FALSE){
     }
 
     #Find ALL trios
-#    allTrios= lapply(surrKOs_id,
-#        function(ko1){
-#            #ko1 -a-> cpd1
-#            E(meta)[ko1 %->% surrCPD_id] %>% extractFromPath %>%
-#            #ko1 -a-> cpd1 -b-> koi
-#            lapply(function(cpd1){
-#                   isC2K = E(meta)[cpd1 %->% koID] %>% as_ids %>% length > 0 #valid
-#                   if(isC2K){
-#            #ko1 -> cpd1 -> koi -> cpd2
-#                       E(meta)[koID %->% surrCPD_id] %>% extractFromPath %>%
-#                        #ko1 -> cpd1 -> koi -> cpd2 -> ko2
-#                       lapply(function(cpd2){
-#                                isC2K2 = E(meta)[cpd2 %->% surrKOs_id] %>% length  > 0
-#                                if(isC2K2){
-#                                ko2 = E(meta)[cpd2 %->% surrKOs_id] %>% extractFromPath(type="ko")
-#                                data.frame(
-#                                     Kminus = ko1,
-#                                     Cminus = cpd1,
-#                                     K      = koID,
-#                                     Cplus  = cpd2,
-#                                     Kplus = ko2
-#                                     )
-#                              }else{
-#                                  message("Failed")
-#                              }
-#                            }) %>% do.call(rbind,.)
-#                   }else{
-#                    message("Failed")
-#                   }
-#                   }) %>% do.call(rbind,.)
-#        }) %>% do.call(rbind,.)
-#    allTrios %<>% filter(Kminus != Kplus & Cminus != Cplus)
-#    allTrios = apply(allTrios,1, function(x) matrix(unlist(V(meta)[x]$name), nrow=1)) %>% t %>% as.data.frame %>% setNames(colnames(allTrios))
+    allTrios= lapply(surrKOs_id,
+        function(ko1){
+            #ko1 -a-> cpd1
+            E(meta)[ko1 %->% surrCPD_id] %>% extractFromPath %>%
+            #ko1 -a-> cpd1 -b-> koi
+            lapply(function(cpd1){
+                   isC2K = E(meta)[cpd1 %->% koID] %>% as_ids %>% length > 0 #valid
+                   if(isC2K){
+            #ko1 -> cpd1 -> koi -> cpd2
+                       E(meta)[koID %->% surrCPD_id] %>% extractFromPath %>%
+                        #ko1 -> cpd1 -> koi -> cpd2 -> ko2
+                       lapply(function(cpd2){
+                                isC2K2 = E(meta)[cpd2 %->% surrKOs_id] %>% length  > 0
+                                if(isC2K2){
+                                ko2 = E(meta)[cpd2 %->% surrKOs_id] %>% extractFromPath(type="ko")
+                                data.frame(
+                                     Kminus = ko1,
+                                     Cminus = cpd1,
+                                     K      = koID,
+                                     Cplus  = cpd2,
+                                     Kplus = ko2
+                                     )
+                              }else{
+                                  message("Failed")
+                              }
+                            }) %>% do.call(rbind,.)
+                   }else{
+                    message("Failed")
+                   }
+                   }) %>% do.call(rbind,.)
+        }) %>% do.call(rbind,.)
+    allTrios %<>% filter(Kminus != Kplus & Cminus != Cplus)
+    allTrios = apply(allTrios,1, function(x) matrix(unlist(V(meta)[x]$name), nrow=1)) %>% t %>% as.data.frame %>% setNames(colnames(allTrios))
 
-#    notshortest = anti_join(allTrios,spaths, by=colnames(allTrios))
-#    notshortest$type = "notshortest"
-#    spaths$type = "shortest"
+    notshortest = anti_join(allTrios,spaths, by=colnames(allTrios))
+    notshortest$type = "notshortest"
+    spaths$type = "shortest"
 
-#    list(paths = rbind(notshortest, spaths), graph=meta)
+    list(paths = rbind(notshortest, spaths), graph=meta)
     }
 }
 
@@ -150,6 +150,7 @@ findV = function(name, g){
 #' 
 #' @param noi       node of interest; the compound/ko ID not the vertex ID of the node in the graph
 #' @param graph     igraph object
+#' @param all       conditional to return all nodes regardless of direction
 #'
 #' @return vector of surrounding nodes if all is TRUE, if all is FALSE returns list of in and out nodes
 surrNODES = function(noi, graph, all=TRUE){

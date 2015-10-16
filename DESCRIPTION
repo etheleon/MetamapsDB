@@ -2,22 +2,23 @@ Package: MetamapsDB
 Maintainer: uesu <wesley@bic.nus.edu.sg>
 Author: uesu
 Version: 0.0.2
-License: GPL-2
-Depends: R (>= 3.0.2)
+License: file LICENSE
+Depends: R (>= 3.1.1)
 Title: MetamapsDB R interface for accessing integrated omics data of microbioal communities
-Description: For integration with neo4j's REST API
+Description: For integration with custom neo4j database OMICS via REST API
 LazyData: TRUE
 Imports:
     magrittr,
+    parallel,
     RJSONIO,
     RCurl,
     igraph,
     rgexf,
-    magrittr,
     ggvis,
     sigma,
     dplyr,
+    stringr,
+    tidyr,
     shiny,
     base64enc,
     cluster
-

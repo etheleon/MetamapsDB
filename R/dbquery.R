@@ -6,7 +6,8 @@
 #' @param cypherurl address of database, inclusive of ports
 #' @param user database username
 #' @param password database password
-#' 
+#' @param ... allows for additional arguments to be passed into dbquery
+#'
 #' @export
 dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, password = cacheEnv$password, ...){
 #Checks if the params is given

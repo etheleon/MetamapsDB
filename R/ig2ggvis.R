@@ -3,7 +3,7 @@
 #' Converts a igraph obj into a ggvis plot
 #' @param g igraph object
 #' @param dfOnly outputs the data.frame and not draw using ggvis 
-#'
+#' @param ... additional dbquery parameters
 #' @export
 ig2ggvis <- function(g, dfOnly = TRUE, ...){
         layoutDF    = setNames(data.frame(layout.norm(g$layout, xmax=1, xmin=0, ymin=0, ymax=1)), c("x", "y"))

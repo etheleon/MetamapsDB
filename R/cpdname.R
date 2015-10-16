@@ -1,6 +1,6 @@
 #' Finds the details of the CPD when given its ID
 #' @param cpd the compound ID with or without the prefix is accepted either as a single or vector accepts with or without prefix
-#'
+#' @param ... allows for additional arguments use for dbquery
 #' @export
 cpdname<- function (cpd='C00022', ... ){
     cpd = gsub("^(cpd:)*","cpd:",cpd)

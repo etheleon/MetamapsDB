@@ -10,6 +10,8 @@ koname(ko = "K00001", minimal = TRUE, ...)
 \item{ko}{the koid}
 
 \item{minimal}{return minimal details}
+
+\item{...}{additional dbquery parameters}
 }
 \description{
 Gives KO details when supplied with KO id

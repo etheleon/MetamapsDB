@@ -2,7 +2,7 @@
 #'
 #' @param ko the koid 
 #' @param minimal return minimal details
-#'
+#' @param ... additional dbquery parameters
 #'
 #' @export
 koname <- function(ko='K00001', minimal=TRUE,...){

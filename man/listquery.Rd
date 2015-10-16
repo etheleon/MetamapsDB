@@ -8,7 +8,7 @@ listquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
   user = cacheEnv$user, password = cacheEnv$password, ...)
 }
 \arguments{
-\item{query}{}
+\item{query}{cypher query}
 
 \item{params}{string containing cypher query}
 
@@ -17,6 +17,8 @@ listquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
 \item{user}{database username}
 
 \item{password}{database password}
+
+\item{...}{accepts additional parameters from external function calls}
 }
 \description{
 Takes variable queries with table output ie. no nodes no rels (simpler version of DBquery gives a list)

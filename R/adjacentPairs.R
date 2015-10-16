@@ -1,12 +1,11 @@
 #' Finds adjacent pairs of KOs for actual biological reactions
 #'
 #' @param g graph object
-#' @param ko kos to find adjacent pairs for
+#' @param ko2ko conditional to specify if one find the adjacent pairs directly from Ko 2 KO
 #' 
-#' @importFrom magrittr "%>%"
 #'
 #' @export
-adjacentPairs<- function (g, ko2ko =  FALSE, ...){
+adjacentPairs<- function (g, ko2ko =  FALSE){
         kos      =  grepl("ko:", V(g)$name) %>% which
 #TODO:  non-ko2ko directin is still not configured
 test = do.call(rbind,lapply(c("out","in"), function(direction){
