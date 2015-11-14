@@ -5,7 +5,8 @@
 \title{Function for querying metamaps DB}
 \usage{
 dbquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
-  user = cacheEnv$user, password = cacheEnv$password, ...)
+  user = cacheEnv$user, password = cacheEnv$password, justPost = FALSE,
+  ...)
 }
 \arguments{
 \item{query}{char string with cypher Query, rmbr to escape double quotes if any; read LUCENE}
@@ -17,6 +18,8 @@ dbquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
 \item{user}{database username}
 
 \item{password}{database password}
+
+\item{justPost}{}
 }
 \description{
 Takes variable queries with table output ie. no nodes no rels

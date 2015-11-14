@@ -4,7 +4,7 @@
 #' @param name  to show the name
 #' @export
 taxname<-function(taxon=5062,name=FALSE,... ){
-    params=list(taxonname=taxon)
+    params=list(taxonname=as.character(taxon))
     if(name)
     {
         query = "MATCH (taxa:Taxon {name:{taxonName}}) RETURN taxa.taxid AS taxID, taxa.name AS name, labels(taxa) as rank"

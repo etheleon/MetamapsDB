@@ -4,7 +4,7 @@
 \alias{taxname}
 \title{Lists the taxonomic id's details}
 \usage{
-taxname(taxon = "5062", name = FALSE, ...)
+taxname(taxon = 5062, name = FALSE, ...)
 }
 \arguments{
 \item{taxon}{The default is Aspergillus oryzae, accepts both name as well as}

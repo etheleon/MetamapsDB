@@ -3,6 +3,7 @@
 export("%<>%")
 export("%>%")
 export(adjacentPairs)
+export(annotateContigs.taxonomy)
 export(connect)
 export(contractMetab)
 export(cpdname)
