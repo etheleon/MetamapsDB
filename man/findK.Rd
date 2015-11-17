@@ -10,6 +10,8 @@ findK(theMatrix, kmax = 10, ko)
 \item{theMatrix}{two column data.frame with KS values of the before and after KOs in the reactions}
 
 \item{kmax}{the max number of Ks to test for; defaults to 10}
+
+\item{ko}{the ko of interest}
 }
 \value{
 optimum number of Ks to choose

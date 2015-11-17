@@ -4,12 +4,12 @@
 \alias{adjacentPairs}
 \title{Finds adjacent pairs of KOs for actual biological reactions}
 \usage{
-adjacentPairs(g, ko2ko = FALSE, ...)
+adjacentPairs(g, ko2ko = FALSE)
 }
 \arguments{
 \item{g}{graph object}
 
-\item{ko}{kos to find adjacent pairs for}
+\item{ko2ko}{conditional to specify if one find the adjacent pairs directly from Ko 2 KO}
 }
 \description{
 Finds adjacent pairs of KOs for actual biological reactions

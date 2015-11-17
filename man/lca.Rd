@@ -12,6 +12,8 @@ lca(taxon1 = "10090", taxon2 = "9096", recurse = TRUE, ...)
 \item{taxon2}{Second taxon NCBI tax id}
 
 \item{recurse}{to keep moving up to find the LCA}
+
+\item{...}{additional dbquery parameters}
 }
 \description{
 Finds the lowest common ancestor

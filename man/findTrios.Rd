@@ -12,6 +12,10 @@ findTrios(KOI, ks, toPrint = TRUE, outputFile, plotDir)
 \item{ks}{Precalculated data.frame output from ksCal fxn containing all KO's gene distribution  KS statistic when compared with whole sample's empirical gene distribution}
 
 \item{toPrint}{conditional to print the results of the classification plots}
+
+\item{outputFile}{the txt file to write the results of findTrios to}
+
+\item{plotDir}{the location to save the diagnostics plots to}
 }
 \value{
 data.frame of all reactions, corresponding clusters and the KS statistics for each KO and the selected Cluster

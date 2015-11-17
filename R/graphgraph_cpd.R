@@ -3,8 +3,9 @@
 #'
 #' Takes in a vector list of KO ids and generates a metabolic graph as a igraph object
 #'
-#' @param kos vector of kos
-#'
+#' @param cpds vector of kos
+#' @param fullGraph to export the whole of metabolism
+#' @param ... additional parameters for dbquery
 #' @export
 grepgraph_cpd<- function(cpds, fullGraph=FALSE, ...){
 if(fullGraph){

@@ -1,5 +1,6 @@
 #' List Pathways
 #' Lists all metabolic pathways
+#' @param ... additional parameters for dbquery
 #' @export
 pathways<-function(...){
 setNames(

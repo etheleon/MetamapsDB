@@ -10,6 +10,8 @@ taxname(taxon = 5062, name = FALSE, ...)
 \item{taxon}{The default is Aspergillus oryzae, accepts both name as well as}
 
 \item{name}{to show the name}
+
+\item{...}{additional parameters for dbquery}
 }
 \description{
 Lists the taxonomic id's details

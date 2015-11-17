@@ -13,7 +13,8 @@
 #' @param KOI KOs-of-interest ie KOs above a selected amount of expression ie. highly expressed KOs and with D-statistics above that of the desired threshold
 #' @param ks  Precalculated data.frame output from ksCal fxn containing all KO's gene distribution  KS statistic when compared with whole sample's empirical gene distribution
 #' @param toPrint conditional to print the results of the classification plots
-#'
+#' @param outputFile the txt file to write the results of findTrios to
+#' @param plotDir the location to save the diagnostics plots to
 #' @return data.frame of all reactions, corresponding clusters and the KS statistics for each KO and the selected Cluster
 #'
 #' @export
@@ -121,6 +122,7 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
 #'
 #' @param theMatrix    two column data.frame with KS values of the before and after KOs in the reactions
 #' @param kmax         the max number of Ks to test for; defaults to 10
+#' @param ko           the ko of interest
 #'
 #' @return optimum number of Ks to choose
 findK <- function(theMatrix, kmax = 10, ko){
@@ -190,7 +192,7 @@ ksCal <- function(contigDF, baseDistribution, cores){
     contigDF %$%
     ko       %>%
     unique   %>%
-    mclapply(
+    parallel::mclapply(
          function(koid){
              group2  =  filter(contigDF, ko == koid)$rpkm_cDNA %>% as.numeric
              ks      =  ks.test(group1, group2, alternative="two.sided")

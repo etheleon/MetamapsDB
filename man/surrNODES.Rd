@@ -10,6 +10,8 @@ surrNODES(noi, graph, all = TRUE)
 \item{noi}{node of interest; the compound/ko ID not the vertex ID of the node in the graph}
 
 \item{graph}{igraph object}
+
+\item{all}{conditional to return all nodes regardless of direction}
 }
 \value{
 vector of surrounding nodes if all is TRUE, if all is FALSE returns list of in and out nodes

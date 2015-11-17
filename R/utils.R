@@ -3,8 +3,8 @@
 #' @name %>%
 #' @rdname pipe
 #' @keywords internal
-#' @export
 #' @importFrom magrittr %>%
+#' @export
 #' @usage lhs \%>\% rhs
 NULL
 
@@ -12,21 +12,21 @@ NULL
 #' Double Pipe operator
 #'
 #' @name %<>%
-#' @rdname pipe
+#' @rdname doublepipe
 #' @keywords internal
-#' @export
 #' @importFrom magrittr %<>%
+#' @export
 #' @usage lhs \%<>\% rhs
 NULL
 
 #' with Pipe operator
 #'
-#' @name %<>%
-#' @rdname pipe
+#' @name %$%
+#' @rdname dollarpipe
 #' @keywords internal
-#' @export
 #' @importFrom magrittr %$%
-#' @usage lhs \%\$\% rhs
+#' @export
+#' @usage lhs \%$\% rhs
 NULL
 
 #' findType finds KOs/compounds ID in metabolic graph

@@ -7,6 +7,8 @@
 #' @param user database username
 #' @param password database password
 #' @param justPost
+#' @param ... allows for additional arguments to be passed into dbquery
+#'
 #' @export
 dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, password = cacheEnv$password, justPost=FALSE,...){
     #Checks if the params is given

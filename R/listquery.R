@@ -2,12 +2,12 @@
 #'
 #' Takes variable queries with table output ie. no nodes no rels (simpler version of DBquery gives a list)
 #'
-#' @param query
+#' @param query cypher query
 #' @param params string containing cypher query
 #' @param cypherurl address of database, inclusive of ports
 #' @param user database username
 #' @param password database password
-#'
+#' @param ... accepts additional parameters from external function calls
 #' @export
 listquery<-function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, password = cacheEnv$password,...){
     #Checks if the params is given

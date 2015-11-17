@@ -2,6 +2,7 @@
 #'
 #' @param taxon The default is Aspergillus oryzae, accepts both name as well as
 #' @param name  to show the name
+#' @param ... additional parameters for dbquery
 #' @export
 taxname<-function(taxon=5062,name=FALSE,... ){
     params=list(taxonname=as.character(taxon))

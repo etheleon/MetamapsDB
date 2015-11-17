@@ -10,6 +10,8 @@ grepgraph(kos, fullGraph = FALSE, ...)
 \item{kos}{vector of kos}
 
 \item{fullGraph}{to output the full metabolic graph (yet to be implemented)}
+
+\item{...}{additional dbquery parameters}
 }
 \description{
 Takes in a vector list of KO ids and generates a metabolic graph as a igraph object

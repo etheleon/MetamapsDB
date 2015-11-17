@@ -6,7 +6,7 @@
 Adds details into the igraph object}
 \usage{
 prettifyGraph(g, vsize = c(1, 2), vcolor = c("grey", "red"),
-  withText = TRUE, vtext = c(0.5, 1), layout = FALSE, ...)
+  withText = TRUE, vtext = c(0.5, 1), layout = FALSE)
 }
 \arguments{
 \item{g}{igraph Object}
@@ -20,8 +20,6 @@ prettifyGraph(g, vsize = c(1, 2), vcolor = c("grey", "red"),
 \item{vtext}{two vector text valuevsize    = c(1,2),}
 
 \item{layout}{Whether to calculate the layoutvcolor   = c("grey", "red"),}
-
-\item{contracted}{}
 }
 \description{
 returns metabolic graph with all the ornaments set

@@ -2,6 +2,7 @@
 #'
 #' Finds the superkingdom given the taxid
 #' @param taxID NCBI taxonomic id
+#' @param ... additional dbquery paramaters
 #' @export
 path2kingdom<-function(taxID = '79255', ...){
 query = "

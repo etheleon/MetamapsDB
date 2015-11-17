@@ -8,6 +8,8 @@ path2kingdom(taxID = "79255", ...)
 }
 \arguments{
 \item{taxID}{NCBI taxonomic id}
+
+\item{...}{additional dbquery paramaters}
 }
 \description{
 Finds the superkingdom given the taxid
