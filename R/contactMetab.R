@@ -2,7 +2,7 @@
 #'
 #' Constracts KOs which share the same cpd product and substrates.
 #'
-#' @param g metabolic graph, igraph object
+#' @param g metabolic graph, igraph object. vertices must have the Symbol property
 #'
 #' @return new non-redundant (gene) metabolic graph
 #'
@@ -33,12 +33,12 @@ contractMetab <- function(g){
     )
 
     cl = V(g)$name %>% 
-            lapply(function(x) filter(cl, node == x)) %>% 
+            lapply(function(x) dplyr::filter(cl, node == x)) %>% 
             do.call(rbind,.)
 
     cl$Symbol = V(g)$Symbol
-    symDF = cl %>% group_by(cluster) %>% summarise(combSym = paste0(Symbol, collapse=" | "))
-    
+    symDF = cl %>% dplyr::group_by(cluster) %>% dplyr::summarise(combSym = paste0(Symbol, collapse=" | "))
+
 #Contract & Simplify
     g2 = contract.vertices(g, cl$cluster)
     V(g2)$Symbol = symDF$combSym

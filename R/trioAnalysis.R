@@ -91,7 +91,7 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
                     cluster   = NA,
                     selected  = NA
                     ))
-                write.table(finalM, file=outputFile, append=T, row.names=F, quote=F)
+                write.table(finalM, file=outputFile, append=TRUE, row.names=F, quote=F)
                 finalM
             }else{
                 finalM = clusteredM$matrix %>% merge(trioDF, by="rxnNum")
@@ -108,7 +108,7 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
                       "selected"
                       )
                 )
-                write.table(finalM, file=outputFile, append=T, row.names=F, quote=F)
+                write.table(finalM, file=outputFile, append=TRUE, row.names=F, quote=F)
                 finalM
         }
     }
