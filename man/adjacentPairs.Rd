@@ -2,16 +2,18 @@
 % Please edit documentation in R/adjacentPairs.R
 \name{adjacentPairs}
 \alias{adjacentPairs}
-\title{Finds adjacent pairs of KOs for actual biological reactions}
+\title{Given a igraph object, adjacentPairs finds
+adjacent pairs of KOs}
 \usage{
-adjacentPairs(g, ko2ko = FALSE)
+adjacentPairs(g, ko2ko = FALSE, ...)
 }
 \arguments{
 \item{g}{graph object}
 
-\item{ko2ko}{conditional to specify if one find the adjacent pairs directly from Ko 2 KO}
+\item{ko2ko}{kos to find adjacent pairs for}
 }
 \description{
-Finds adjacent pairs of KOs for actual biological reactions
+Given a igraph object, adjacentPairs finds
+adjacent pairs of KOs
 }
 

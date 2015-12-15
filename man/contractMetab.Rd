@@ -7,7 +7,7 @@
 contractMetab(g)
 }
 \arguments{
-\item{g}{metabolic graph, igraph object}
+\item{g}{metabolic graph, igraph object. vertices must have the Symbol property}
 }
 \value{
 new non-redundant (gene) metabolic graph
