@@ -4,8 +4,8 @@ Author: uesu
 Version: 0.0.2
 License: file LICENSE
 Depends: R (>= 3.1.1)
-Title: MetamapsDB R interface for accessing integrated omics data of microbioal communities
-Description: For integration with custom neo4j database OMICS via REST API
+Title: MetamapsDB R interface for accessing integrated omics data of microbial communities
+Description: Prototype package storing essential functional analyses used for the thesis of wesley goi. Includes integration layer with neo4j graph database etheleon/omics and sqlite for relational data
 LazyData: TRUE
 Imports:
     magrittr,
@@ -21,4 +21,5 @@ Imports:
     tidyr,
     shiny,
     base64enc,
-    cluster
+    cluster,
+    RSQLite
