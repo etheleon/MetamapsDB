@@ -1,21 +1,33 @@
-# taxname.sql
-#
-# faster way of querying the taxid names using structured SQL then querying the graphDB
-#
-# @param taxid vector of integers which represent NCBI's taxonomy unique identifier
-# @export
-taxnam.sql <- function(taxid)
+#' taxname.sql
+#'
+#' faster way of querying the taxid names using structured SQL then querying the graphDB
+#'
+#' @param taxids vector of integers/name representing the taxa of interest
+#' @param byID search by ID
+#' @param taxrank any of the common taxonomic ranks eg. genus
+#' @export
+taxnam.sql <- function(taxids, byID = TRUE, taxrank = "genus")
 {
-    dbloc   =   find.package('MetamapsDB') %>% 
-                    file.path('taxonomy') %>% 
+    dbloc   =   find.package('MetamapsDB') %>%
+                    file.path('taxonomy')  %>%
                     file.path('taxidSQL')
     con     <-  RSQLite::dbConnect(SQLite(), dbname=dbloc)
-    unique(taxid) %>% lapply(function(taxid){
-        result = dbSendQuery(conn = con,
-                    sprintf("select * from taxon where taxid == %s", taxid)
-                    )
-        fetch(result)
+
+   output = lapply(taxids, function(taxid){
+    if(byID){
+            query = sprintf("select * from taxon where taxid == %s", taxid)
+    }else{
+            query = sprintf("select * from taxon where name == \'%s\' AND rank == \'%s\'", taxid, taxrank)
+    }
+      unique(taxid) %>% lapply(function(taxid){
+            result = dbSendQuery(conn = con, query)
+            df = fetch(result)
+            dbClearResult(result)
+            df
+        }) %>% do.call(rbind,.)
     }) %>% do.call(rbind,.)
+    dbDisconnect(con)
+    output
 }
 
 #' findPerl finds the path to the executable
