@@ -8,10 +8,9 @@
 #'
 #' @export
 sigmaGraph <- function(igraphObj){
-agexf <- igraphObj %>% igraph2gexf %$% graph
-
-colorType <- c("centrality", "betweeness", "loadScore") %>%
-        setNames(c("Centrality", "Betweeness", "Load Score"))
+originalColor = V(igraphObj)$color
+colorType <- c("centrality", "betweeness", "none") %>%
+        setNames(c("Centrality", "Betweeness", "none"))
 
 columnBar <- shiny::absolutePanel(
         id = "controls", class = "panel panel-default", fixed = TRUE,
@@ -21,7 +20,7 @@ columnBar <- shiny::absolutePanel(
 
         selectInput("labelType", "Labels", c("KO", "CPD")),
 
-        selectInput("color", "Color", colorType),
+        selectInput("color", "Color", colorType, selected="none"),
         #selectInput("size", "Size", vars, selected = "adultpop"),
         conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",
           # Only prompt for threshold when coloring or sizing by superzip
@@ -39,7 +38,7 @@ columnBar <- shiny::absolutePanel(
                   cursor: move;
                   zoom: 0.9;
                   opacity: 0.5;
-                   transition: opacity .25s ease-in-out;
+                   transition: opacity .25s ease-in-out;[]
                    -moz-transition: opacity .25s ease-in-out;
                    -webkit-transition: opacity .25s ease-in-out;
                 }
@@ -59,11 +58,54 @@ columnBar <- shiny::absolutePanel(
 
 ##################################################
     server <- function(input, output){
+       
+#        color.bar(colorRampPalette(c("#e41a1c", "#377eb8", "#4daf4a"))(100), -1)
+        reactiveGraph = reactive({
+            if(input$color == "betweeness"){
+            values = sqrt(igraph::betweenness(igraphObj))
+            V(igraphObj)$color = drawGradient(values, colors = c("#e41a1c", "#377eb8", "#4daf4a"))
+            }else if(input$color == "centrality"){
+                values = sqrt(igraph::closeness(igraphObj))
+                V(igraphObj)$color = drawGradient(values, colors = c("#e41a1c", "#377eb8", "#4daf4a"))
+            }else{
+                V(igraphObj)$color = originalColor
+            }
+            igraphObj
+        })
 
         output$network <- renderSigma({
+            agexf <- reactiveGraph() %>% igraph2gexf %$% graph
             sigma::sigma(gexf = agexf, drawLabels = TRUE, labelThreshold = 8)
         })
     }
 ##################################################
     shinyApp(ui, server)
+}
+
+#' drawGradient gives the color gradient
+#'
+#' sets the middle color at the median
+#'
+#' @param values the score
+#' @param colors the color
+drawGradient = function(values, colors) {
+    mvalue = median(values, na.rm=T)
+
+    lowerMid = colorRampPalette(colors[1:2])
+    midUpper= colorRampPalette(colors[2:3])
+    #20 colors from btm to top; spread be taken
+
+    lowerV = cut(values[which(values < mvalue)], breaks=10)
+    levels(lowerV) = lowerMid(10)
+
+    upperV = cut(values[which(values > mvalue)], breaks=10)
+    levels(upperV) =  midUpper(10)
+
+    colorVector = values
+    colorVector[which(values <= mvalue)] = as.character(lowerV)
+    colorVector[which(values > mvalue)] = as.character(upperV)
+
+
+    colorVector[is.na(colorVector)] = "#000000"
+    colorVector
 }
