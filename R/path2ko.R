@@ -18,6 +18,7 @@ path2ko<-function(pathway='path:ko00010',  ...){
 #' Finds all associated pathways, and returns a data.frame with ko and pathway details
 #' 
 #' @param ko the ko ID int the form eg. K00001
+#' @export
 ko2path = function (ko = "K00001", ...)
 {
     ko = gsub("^(ko:)*", "ko:", ko)
