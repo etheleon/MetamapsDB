@@ -13,3 +13,23 @@ path2ko<-function(pathway='path:ko00010',  ...){
         ko.ko as KO"
     dbquery(query=query, params=params, ...)
 }
+
+#' ko2path Finds all pathways related to the KO
+#' Finds all associated pathways, and returns a data.frame with ko and pathway details
+#' 
+#' @param ko the ko ID int the form eg. K00001
+ko2path = function (ko = "K00001", ...)
+{
+    ko = gsub("^(ko:)*", "ko:", ko)
+    query = "
+    UNWIND
+        { koname } AS KOSS
+    MATCH
+        (ko:ko {ko : KOSS.ko})-[:pathwayed]-(p:pathway)
+    RETURN
+        ko.ko, ko.name, ko.definition, p.pathway, p.pathwayname
+    "
+    params <- ko %>% lapply(function(x){list(ko=x)}) %>% list(koname=.)
+    df = dbquery(query = query, params = params, ...)
+    df
+}
