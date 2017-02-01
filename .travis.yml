@@ -1,21 +1,14 @@
 # Sample .travis.yml for R projects
 language: r
-repos:
-    CRAN: http://cran.rstudio.com
-    ropensci: http://packages.ropensci.com
+sudo: false
 
 r_github_packages:
      - etheleon/sigma
-      
+
+before_install:
+      Rscript -e 'update.packages(ask = FALSE)'
+
 warnings_are_errors: false
-
-
-sudo: required
-
-
-env:
-      global:
-        - NOT_CRAN=true
 
 notifications:
   email:
