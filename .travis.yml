@@ -1,10 +1,14 @@
 # Sample .travis.yml for R projects
 language: r
+repos:
+    CRAN: http://cran.rstudio.com
+    ropensci: http://packages.ropensci.com
 
 r_github_packages:
      - etheleon/sigma
       
 warnings_are_errors: false
+
 
 sudo: required
 
@@ -12,7 +16,6 @@ sudo: required
 env:
       global:
         - NOT_CRAN=true
-      before_install: echo "options(repos = c(CRAN='http://cran.rstudio.com'))" > ~/.Rprofile
 
 notifications:
   email:
