@@ -5,19 +5,20 @@
 #' @param taxids vector of integers/name representing the taxa of interest
 #' @param byID search by ID
 #' @param taxrank any of the common taxonomic ranks eg. genus
+#' @import RSQLite
 #' @export
 taxnam.sql <- function(taxids, byID = TRUE, taxrank = "genus")
 {
     dbloc   =   find.package('MetamapsDB') %>%
                     file.path('taxonomy')  %>%
                     file.path('taxidSQL')
-    con     <-  RSQLite::dbConnect(SQLite(), dbname=dbloc)
+    con     <-  dbConnect(SQLite(), dbname=dbloc)
 
    output = lapply(taxids, function(taxid){
     if(byID){
-            query = sprintf("select * from taxon where taxid == %s", taxid)
+            query = sprintf("select * from taxon where taxid = %s", taxid)
     }else{
-            query = sprintf("select * from taxon where name == \'%s\' AND rank == \'%s\'", taxid, taxrank)
+            query = sprintf("select * from taxon where name like \'%s\' AND rank like \'%s\'", taxid, taxrank)
     }
       unique(taxid) %>% lapply(function(taxid){
             result = dbSendQuery(conn = con, query)

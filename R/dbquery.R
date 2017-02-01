@@ -13,11 +13,13 @@
 dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, password = cacheEnv$password, justPost=FALSE,...){
     #Checks if the params is given
     tryCatch({
-        cat("Sending query\n")
+        message("Sending query\n")
     if(is.list(params)){
         post = RJSONIO::toJSON(list(query = query, params = params))
+        #cat(post)
     }else{
         post = RJSONIO::toJSON(list(query = query))
+        #cat(post)
     }
 
     key <- base64enc::base64encode(charToRaw(paste(user, password, sep=":")))
@@ -31,16 +33,17 @@ dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = ca
 #                 .opts = list(verbose = TRUE)
                  )
     }else{
-        result = RJSONIO::fromJSON(RCurl::getURL(
+        result = RJSONIO::fromJSON(
+        RCurl::getURL(
                                                  cypherurl,
                                                  customrequest = "POST",
                                                  httpheader = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key)),
                                                  postfields = post
 #                                                 .opts = list(verbose = TRUE)
                                                  ))
+
         if(length(result$data)>=2){
             setNames(data.frame(do.call(rbind,lapply(result$data, function(x) matrix(x, nrow=1)))), result$columns)
-
         }else if(length(result$data)==1){
             setNames(data.frame(lapply(result$data[[1]], function(x){
                                        if(length(x) == 0){
@@ -55,12 +58,12 @@ dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = ca
     }
     },
     interrupt = function(ex) {
-          cat("Interruptted\n");
+          warning("Interruptted\n");
       print(ex);
     }, error = function(ex) {
-          cat("Error\n");
+          warning("Error\n");
       print(ex);
     }, finally = {
-        cat("Query Completed\n")
+        message("Query Completed\n")
     })
     }
