@@ -1,8 +1,3 @@
 language: R
 cache: packages
 sudo: false
-
-r_github_packages:
-  - etheleon/sigma
-
-cran: https://cloud.r-project.org
