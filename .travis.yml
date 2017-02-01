@@ -5,8 +5,4 @@ sudo: false
 r_github_packages:
   - etheleon/sigma
 
-before_install:
-  Rscript -e 'update.packages(ask = FALSE)'
-
-before_deploy:
-  - R -e "install.packages('roxygen2', repos = 'http://cran.rstudio.com')"
+cran: http://cran.rstudio.com
