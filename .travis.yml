@@ -1,12 +1,12 @@
-# Sample .travis.yml for R projects
-language: r
+language: R
 cache: packages
 sudo: false
 
-warnings_are_errors: false
+r_github_packages:
+  - etheleon/sigma
 
-r_github_packages: etheleon/sigma
+before_install:
+  Rscript -e 'update.packages(ask = FALSE)'
 
-repos:
-    CRAN: https://cloud.r-project.org
-    ropensci: http://packages.ropensci.org
+before_deploy:
+  - R -e "install.packages('roxygen2', repos = 'http://cran.rstudio.com')"
