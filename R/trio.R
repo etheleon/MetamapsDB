@@ -6,16 +6,15 @@
 #' @param ... the other args for dbquery
 #'
 #' @export
-trio <- function( 
+trio <- function(
 KOI         = 'ko:K00001', 
 toUnique    = TRUE,
 withDetails = FALSE,
 ...
 ){
-
-        KOI = gsub("^(ko:)*","ko:",KOI)
-#' Round 0: 
-#' Run this after starting the db'
+KOI = gsub("^(ko:)*","ko:",KOI)
+# Round 0: 
+# Run this after starting the db'
 #query="
 #    OPTIONAL MATCH
 #        (ko:ko)--(c:contigs)

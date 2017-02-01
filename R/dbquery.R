@@ -6,7 +6,7 @@
 #' @param cypherurl address of database, inclusive of ports
 #' @param user database username
 #' @param password database password
-#' @param justPost
+#' @param justPost its just a POST request
 #' @param ... allows for additional arguments to be passed into dbquery
 #'
 #' @export

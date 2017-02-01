@@ -36,7 +36,7 @@ taxnam.sql <- function(taxids, byID = TRUE, taxrank = "genus")
 #' Code taken from R package gdata
 #'
 #' @param perl full path to perl executable
-#' @param verbose
+#' @param verbose print extra
 findPerl <- function(perl, verbose = "FALSE")
 {
   errorMsg <- "perl executable not found. Use perl= argument to specify the correct path."

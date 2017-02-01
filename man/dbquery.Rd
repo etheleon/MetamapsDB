@@ -19,6 +19,8 @@ dbquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
 
 \item{password}{database password}
 
+\item{justPost}{its just a POST request}
+
 \item{...}{allows for additional arguments to be passed into dbquery}
 }
 \description{

@@ -8,6 +8,8 @@ findPerl(perl, verbose = "FALSE")
 }
 \arguments{
 \item{perl}{full path to perl executable}
+
+\item{verbose}{print extra}
 }
 \description{
 Code taken from R package gdata
