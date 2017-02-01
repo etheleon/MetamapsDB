@@ -8,4 +8,4 @@ r_github_packages:
 before_install:
   Rscript -e 'update.packages(ask = FALSE)'
 
-cran: https://cran.rstudio.com
+cran: https://cloud.r-project.org
