@@ -6,6 +6,7 @@
 #' @param byID search by ID
 #' @param taxrank any of the common taxonomic ranks eg. genus
 #' @import RSQLite
+#' @import DBI
 #' @export
 taxnam.sql <- function(taxids, byID = TRUE, taxrank = "genus")
 {
