@@ -5,4 +5,7 @@ sudo: false
 r_github_packages:
   - etheleon/sigma
 
+before_install:
+	  Rscript -e 'update.packages(ask = FALSE)'
+
 cran: http://cran.rstudio.com
