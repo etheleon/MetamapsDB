@@ -3,9 +3,13 @@ Maintainer: uesu <wesley@bic.nus.edu.sg>
 Author: uesu
 Version: 0.0.2
 License: file LICENSE
-Depends: R (>= 3.1.1)
-Title: MetamapsDB R interface for accessing integrated omics data of microbial communities
-Description: Prototype package storing essential functional analyses used for the thesis of wesley goi. Includes integration layer with neo4j graph database etheleon/omics and sqlite for relational data
+Depends:
+    R (>= 3.1.1)
+Title: MetamapsDB R interface for accessing integrated omics data of microbial
+    communities
+Description: Prototype package storing essential functional analyses used for
+    the thesis of wesley goi. Includes integration layer with neo4j graph database
+    etheleon/omics and sqlite for relational data
 LazyData: TRUE
 Imports:
     magrittr,
@@ -24,3 +28,4 @@ Imports:
     cluster,
     RSQLite
 Remotes: jjallaire/sigma
+RoxygenNote: 5.0.1

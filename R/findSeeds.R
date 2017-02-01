@@ -34,7 +34,7 @@ findSeeds <- function(mbgraph){
         clusterNSize_cpdOnly = scc$membership[cpdNodes] %>% table %>% data.frame %>% setNames(c("membership", "clusterSize.cpd"))
         sourceCompDF = merge(merge(sourceCompDF, clusterNSize, by="membership", all=T), clusterNSize_cpdOnly, by="membership", all=T)
 
-        #' Note in the PNAS paper, the nodes were purely just compounds
+        # Note in the PNAS paper, the nodes were purely just compounds
         possibleSCC =
             sourceCompDF                                                                     %>%
             filter(
