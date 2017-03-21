@@ -26,6 +26,7 @@ Imports:
     shiny,
     base64enc,
     cluster,
+    DBI,
     RSQLite
 Remotes: jjallaire/sigma
 RoxygenNote: 5.0.1
