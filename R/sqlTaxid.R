@@ -13,7 +13,7 @@ taxnam.sql <- function(taxids, byID = TRUE, taxrank = "genus")
     dbloc   =   find.package('MetamapsDB') %>%
                     file.path('taxonomy')  %>%
                     file.path('taxidSQL')
-    con     <-  dbConnect(SQLite(), dbname=dbloc)
+    con     <-  DBI::dbConnect(SQLite(), dbname=dbloc)
 
    output = lapply(taxids, function(taxid){
     if(byID){
@@ -22,9 +22,9 @@ taxnam.sql <- function(taxids, byID = TRUE, taxrank = "genus")
             query = sprintf("select * from taxon where name like \'%s\' AND rank like \'%s\'", taxid, taxrank)
     }
       unique(taxid) %>% lapply(function(taxid){
-            result = dbSendQuery(conn = con, query)
+            result = DBI::dbSendQuery(conn = con, query)
             df = fetch(result)
-            dbClearResult(result)
+            DBI::dbClearResult(result)
             df
         }) %>% do.call(rbind,.)
     }) %>% do.call(rbind,.)
