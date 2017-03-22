@@ -7,6 +7,7 @@
 #' @param taxrank any of the common taxonomic ranks eg. genus
 #' @import RSQLite
 #' @import DBI
+#' @importFrom magrittr "%>%"
 #' @export
 taxnam.sql <- function(taxids, byID = TRUE, taxrank = "genus")
 {

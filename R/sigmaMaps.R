@@ -5,6 +5,7 @@
 #'
 #'
 #' @import shiny sigma
+#' @importFrom magrittr "%>%"
 #'
 #' @export
 sigmaGraph <- function(igraphObj){

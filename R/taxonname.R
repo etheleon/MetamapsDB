@@ -3,6 +3,7 @@
 #' @param taxon     The default is Aspergillus oryzae, accepts both name as well as
 #' @param name      search by name
 #' @param ...       additional parameters for dbquery
+#' @importFrom magrittr "%>%"
 #' @export
 taxname<-function(taxon=5062,name=FALSE,... ){
 #    params=list(taxonname=as.character(taxon))  

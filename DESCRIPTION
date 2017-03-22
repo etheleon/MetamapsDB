@@ -13,6 +13,9 @@ Description: Prototype package storing essential functional analyses used for
 LazyData: TRUE
 Imports:
     magrittr,
+    stats,
+    utils,
+    grDevices,
     parallel,
     RJSONIO,
     RCurl,
@@ -27,6 +30,7 @@ Imports:
     base64enc,
     cluster,
     DBI,
-    RSQLite
+    RSQLite,
+    data.table
 Remotes: jjallaire/sigma
 RoxygenNote: 5.0.1

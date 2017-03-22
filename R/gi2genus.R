@@ -6,6 +6,8 @@
 #' @param koi the KOs of interested eg K00001
 #' @param sqlite3 the sqlite3 db
 #'
+#' @importFrom magrittr "%>%"
+#' @importFrom data.table "fread"
 #' @export
 gi2rank <- function(blastTab, koi, sqlite3 = "sql3db")
 {
@@ -27,7 +29,7 @@ gi2rank <- function(blastTab, koi, sqlite3 = "sql3db")
     }
     print(cmd)
     try(system(cmd))
-    df = data.table::fread(tempFile)
+    df = fread(tempFile)
 
 }
 

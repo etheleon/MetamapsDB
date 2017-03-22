@@ -4,7 +4,7 @@
 \alias{findNextKO}
 \title{FindNextKO}
 \usage{
-findNextKO(cpd, graph, originalKO)
+findNextKO(cpd, graph, originalKO, direction)
 }
 \arguments{
 \item{cpd}{the intermediary cpd}

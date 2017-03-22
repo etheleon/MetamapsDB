@@ -9,6 +9,8 @@ ko2path(ko = "K00001", ...)
 }
 \arguments{
 \item{ko}{the ko ID int the form eg. K00001}
+
+\item{...}{the extra params to pass to dbquery}
 }
 \description{
 ko2path Finds all pathways related to the KO

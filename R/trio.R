@@ -4,6 +4,9 @@
 #' @param toUnique  if to return only unique
 #' @param withDetails with details
 #' @param ... the other args for dbquery
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%<>%"
+#' @importFrom magrittr "%$%"
 #'
 #' @export
 trio <- function(

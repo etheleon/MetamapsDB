@@ -17,6 +17,9 @@
 #' @param plotDir the location to save the diagnostics plots to
 #' @return data.frame of all reactions, corresponding clusters and the KS statistics for each KO and the selected Cluster
 #'
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%<>%"
+#' @importFrom magrittr "%$%"
 #' @export
 findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
    file.remove(outputFile) 
@@ -116,7 +119,7 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
 })
 }
 
-#''findK to find the optimum number of Ks
+#' findK to find the optimum number of Ks
 #'
 #' using cluster::clusGap
 #'
@@ -124,6 +127,9 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
 #' @param kmax         the max number of Ks to test for; defaults to 10
 #' @param ko           the ko of interest
 #'
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%<>%"
+#' @importFrom magrittr "%$%"
 #' @return optimum number of Ks to choose
 findK <- function(theMatrix, kmax = 10, ko){
         clusTab = theMatrix %>% dplyr::select(before, after) 

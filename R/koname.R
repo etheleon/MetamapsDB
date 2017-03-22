@@ -4,6 +4,7 @@
 #' @param minimal return minimal details
 #' @param ... additional dbquery parameters
 #'
+#' @importFrom magrittr "%>%"
 #' @export
 koname <- function(ko='K00001', minimal=TRUE,...){
         ko = gsub("^(ko:)*","ko:",ko)

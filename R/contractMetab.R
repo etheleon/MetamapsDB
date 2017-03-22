@@ -6,11 +6,16 @@
 #'
 #' @return new non-redundant (gene) metabolic graph
 #'
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%<>%"
+#' @importFrom stats "cutree"
+#' @importFrom stats "hclust"
+#' @importFrom stats "dist"
 #' @export
 contractMetab <- function(g){
 
 #Cluster
-    m                  = get.adjacency(g)
+    m                  = igraph::get.adjacency(g)
     clustersInfo       = cutree(hclust(dist(m)), h=0)
     clustersInfo       = as.data.frame(clustersInfo) %>% setNames("cluster")
     clustersInfo$node  = rownames(clustersInfo)

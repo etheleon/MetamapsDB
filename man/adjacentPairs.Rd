@@ -11,6 +11,8 @@ adjacentPairs(g, ko2ko = FALSE, ...)
 \item{g}{graph object}
 
 \item{ko2ko}{kos to find adjacent pairs for}
+
+\item{...}{ellipise pass in other arguments which are required}
 }
 \description{
 Given a igraph object, adjacentPairs finds 

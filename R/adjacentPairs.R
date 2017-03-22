@@ -3,7 +3,7 @@
 #'
 #' @param g graph object
 #' @param ko2ko kos to find adjacent pairs for
-#'
+#' @param ... ellipise pass in other arguments which are required
 #' @importFrom magrittr "%>%"
 #'
 #' @export
@@ -17,7 +17,7 @@ adjacentPairs<- function (g, ko2ko =  FALSE, ...){
         #function to find the connected KOs given intermediate cpds
         pairDF = do.call(rbind,lapply(kopairs, function(ko){
             if(ko2ko){
-                findNextKO(ko[-1], g, ko[1])
+                findNextKO(ko[-1], g, ko[1], direction)
             }else{
                 data.frame(ko  = as_ids(ko[1]), # ko nodes
                            cpd = as_ids(ko[-1])  # Cpd nodes
@@ -41,7 +41,7 @@ adjacentPairs<- function (g, ko2ko =  FALSE, ...){
 #' @param originalKO KO of interest
 #' @param direction the direction in which to find
 #'
-findNextKO = function(cpd, graph, originalKO){
+findNextKO = function(cpd, graph, originalKO, direction){
     connectedKO = neighborhood(graph = graph, nodes = cpd, order = 1, mode=direction)
     #removes nodes without outgoing/incoming connections
     connectedKO = connectedKO[sapply(connectedKO, length) != 1]
@@ -54,4 +54,3 @@ findNextKO = function(cpd, graph, originalKO){
                                     )
         }))
 }
-

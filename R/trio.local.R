@@ -5,6 +5,8 @@
 #' @param koi              the KO of interest
 #' @param contracted        conditional for contracting and simplifying graph ie. merging subunits
 #' @return data.frame containing all reactions
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%$%"
 #'
 #' @export
 trio.local <- function(koi, contracted=FALSE){
@@ -123,6 +125,7 @@ trio.local <- function(koi, contracted=FALSE){
 #'
 #' @param edges the edgelist
 #' @param type the type of nodes to extract
+#' @importFrom magrittr "%>%"
 #' @export
 extractFromPath <- function(edges, type='cpd') {
     if(type == 'cpd'){
@@ -147,10 +150,10 @@ findV = function(name, g){
 
 #' surrNODES finds nodes which are surrounding the given node 
 #' 
-#' 
 #' @param noi       node of interest; the compound/ko ID not the vertex ID of the node in the graph
 #' @param graph     igraph object
 #' @param all       conditional to return all nodes regardless of direction
+#' @importFrom magrittr "%>%"
 #'
 #' @return vector of surrounding nodes if all is TRUE, if all is FALSE returns list of in and out nodes
 surrNODES = function(noi, graph, all=TRUE){
@@ -160,13 +163,13 @@ surrNODES = function(noi, graph, all=TRUE){
     inNODE = neighborhood(graph,
                           mode  = "in",
                           order = 1,
-                          node  = koi) %>% do.call(c,.) %>% unique %>% names %>%
+                          nodes = koi) %>% do.call(c,.) %>% unique %>% names %>%
     grep(pat, . , invert=T, value=T)
 
     outNODE = neighborhood(graph,
                            mode = "out",
                            order=1,
-                           node=koi) %>% do.call(c,.) %>% unique %>% names %>%
+                           nodes=koi) %>% do.call(c,.) %>% unique %>% names %>%
     grep(pat, . , invert=T, value=T)
 
     if(all==FALSE){

@@ -3,6 +3,7 @@
 #'
 #' @param pathway The pathway ID
 #' @param ... additional paramters for dbquery
+#' @importFrom magrittr "%>%"
 #' @export
 path2ko<-function(pathway='path:ko00010',  ...){
     params = list (pathwayID = pathway)
@@ -18,6 +19,7 @@ path2ko<-function(pathway='path:ko00010',  ...){
 #' Finds all associated pathways, and returns a data.frame with ko and pathway details
 #' 
 #' @param ko the ko ID int the form eg. K00001
+#' @param ... the extra params to pass to dbquery
 #' @export
 ko2path = function (ko = "K00001", ...)
 {

@@ -3,6 +3,7 @@
 #' draws the taxonomic tree of the given leave nodes
 #'
 #' @param taxids vector of leave nodes
+#' @importFrom magrittr "%>%"
 #' @export
 buildTree <- function(taxids){
     edgelists = taxids %>% lapply(function(x) path2kingdom(as.character(x)))
@@ -23,11 +24,11 @@ buildTree <- function(taxids){
 
     es= edgelists[[1]]
 
-    trueEdgelist = edgelists %>% 
+    trueEdgelist = edgelists       %>%
         lapply(function(x) x$taxid %>%
-               as.character %>%
-               as.integer %>%
-               buildE) %>%
+               as.character        %>%
+               as.integer          %>%
+               buildE)             %>%
         do.call(rbind,.)
     unique(as.data.frame(trueEdgelist)) %>% as.matrix
 }

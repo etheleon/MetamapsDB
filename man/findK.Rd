@@ -2,7 +2,7 @@
 % Please edit documentation in R/trioAnalysis.R
 \name{findK}
 \alias{findK}
-\title{'findK to find the optimum number of Ks}
+\title{findK to find the optimum number of Ks}
 \usage{
 findK(theMatrix, kmax = 10, ko)
 }

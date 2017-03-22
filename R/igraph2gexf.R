@@ -3,7 +3,7 @@
 #'
 #' @param mbgraph metabolic graph
 #'
-#'
+#' @importFrom magrittr "%>%"
 #' @export
 igraph2gexf <- function(mbgraph){
     gdata     = igraph::get.data.frame(mbgraph, what="both")
@@ -16,7 +16,7 @@ igraph2gexf <- function(mbgraph){
             edges     = tmpedges %>% dplyr::select(from:to),
             nodesVizAtt = list(
               color     =   cbind(
-                                igraph::V(mbgraph)$color %>% col2rgb %>% t %>% data.frame,
+                                igraph::V(mbgraph)$color %>% grDevices::col2rgb %>% t %>% data.frame,
                                 ifelse(is.null(igraph::V(mbgraph)$opacity), "100", igraph::V(mbgraph)$opacity)
                                 ) %>%
                             setNames(c("R", "G", "B", "A")), #%>% head

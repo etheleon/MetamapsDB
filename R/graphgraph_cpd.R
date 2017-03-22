@@ -6,6 +6,8 @@
 #' @param cpds vector of kos
 #' @param fullGraph to export the whole of metabolism
 #' @param ... additional parameters for dbquery
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%<>%"
 #' @export
 grepgraph_cpd<- function(cpds, fullGraph=FALSE, ...){
 if(fullGraph){

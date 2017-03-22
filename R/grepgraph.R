@@ -6,6 +6,8 @@
 #' @param fullGraph to output the full metabolic graph (yet to be implemented)
 #' @param ... additional dbquery parameters
 #' @import igraph
+#' @importFrom magrittr "%>%"
+#' @importFrom magrittr "%<>%"
 #' @export
 grepgraph <- function(kos,fullGraph=FALSE,...){
 if(fullGraph){
