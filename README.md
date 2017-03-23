@@ -38,7 +38,7 @@ It is the final step of the 5 preprocessing steps used in carrying out our gene 
 
 Docker wrapper for generating a KEGG + Taxnoomy + Contig neo4j graph database
 
-[![MetamapsDB](./thumbnail.png)](github.com/etheleon/omics).
+[![MetamapsDB](./thumbnail.png)](https://github.com/etheleon/omics).
 
 # MapBloat
 
@@ -52,30 +52,27 @@ Functions
 
 | Function | Description |
 | --- | --- |
-| annotateContigs.taxonomy| ||
+| connect | Connects with Neo4J database |
+| dbquery| Sends query to Neo4J database |
+| koname | Takes ko id as input and returns ko details |
+| taxnam.sql | Takes NCBI taxonomy id as input and returns ko details |
+| contractMetab | Simplifies KEGG metabolic graph |
+| igraph2gexf | Encodes Igraph into gexf format |
+| sigmaGraph| Generates an interactive graph representation of a subnetwork in html using the `htmlwidgets` package|
+| grepgraph | given a set of KOs get the subgrap of metabolism |
+| annotateContigs.taxonomy | |
 | buildE||
 | buildTree||
-| connect||
-| contractMetab||
-| dbquery||
 | extractFromPath||
 | findK||
-| findPerl||
-| findPython||
 | findSeeds||
 | findTrios||
 | findtype||
 | getContigs||
 | gi2rank||
-| grepgraph||
 | ig2ggvis||
-| igraph2gexf||
-| koname||
 | ksCal||
 | lca||
-| make.data.frame||
-| sigmaGraph||
-| taxnam.sql||
+| make.data.frame | Utily function dbquery might return data.frame where each column is a nested list. Converts lilst to dataframe|
 | trio||
 | trio.local||
-
