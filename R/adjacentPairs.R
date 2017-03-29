@@ -1,4 +1,4 @@
-#' Given a igraph object, adjacentPairs finds 
+#' Given a igraph object, adjacentPairs finds
 #' adjacent pairs of KOs 
 #'
 #' @param g graph object
@@ -8,10 +8,10 @@
 #'
 #' @export
 adjacentPairs<- function (g, ko2ko =  FALSE, ...){
-        kos         =  grepl("ko:", V(g)$name) %>% which
+        kos         =  grepl("ko:", igraph::V(g)$name) %>% which
         #TODO:  non-ko2ko direction is still not configured
         do.call(rbind,lapply(c("out","in"), function(direction){
-            kopairs     =   neighborhood(graph=g, nodes=kos, order=1, mode = direction)   #immediate pairs
+            kopairs     =   igraph::neighborhood(graph=g, nodes=kos, order=1, mode = direction)   #immediate pairs
             kopairs     =   kopairs[sapply(kopairs, length) != 1]
 
         #function to find the connected KOs given intermediate cpds
@@ -42,7 +42,7 @@ adjacentPairs<- function (g, ko2ko =  FALSE, ...){
 #' @param direction the direction in which to find
 #'
 findNextKO = function(cpd, graph, originalKO, direction){
-    connectedKO = neighborhood(graph = graph, nodes = cpd, order = 1, mode=direction)
+    connectedKO = igraph::neighborhood(graph = graph, nodes = cpd, order = 1, mode=direction)
     #removes nodes without outgoing/incoming connections
     connectedKO = connectedKO[sapply(connectedKO, length) != 1]
 

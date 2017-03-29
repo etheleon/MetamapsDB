@@ -25,13 +25,13 @@ dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = ca
     key <- base64enc::base64encode(charToRaw(paste(user, password, sep=":")))
 
     if(justPost){
-        RCurl::getURL(
+        RJSONIO::fromJSON(RCurl::getURL(
                  cypherurl,
                  customrequest = "POST",
-                 httpheader = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key)),
-                 postfields = post
-#                 .opts = list(verbose = TRUE)
-                 )
+httpheader = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key)),
+                 postfields = post,
+                 .opts = list(verbose = TRUE)
+                 ))
     }else{
         result = RJSONIO::fromJSON(
         RCurl::getURL(

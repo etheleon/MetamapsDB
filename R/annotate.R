@@ -8,8 +8,11 @@ annotateContigs.taxonomy <- function(csv)
 {
     inputfile = paste("file://", csv)
     query = paste('
+    USING PERIODIC COMMIT 500
     LOAD CSV WITH HEADERS FROM ', inputfile, ' AS mapping
-    CREATE (c:contigs{contig:mapping.contID})-[:taxomapped {score: mapping.score}]->(t:Taxon{taxid:mapping.taxid})
+    CREATE UNIQUE
+        (c:contigs{contig:mapping.contigid})-[:taxomapped]->(t:Taxon{taxid:mapping.taxid})
     ', sep="")
-    dbquery(query)
+    message(query)
+    dbquery(query, justPost=TRUE)
 }

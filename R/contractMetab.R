@@ -8,9 +8,7 @@
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom magrittr "%<>%"
-#' @importFrom stats "cutree"
-#' @importFrom stats "hclust"
-#' @importFrom stats "dist"
+#' @importFrom stats "cutree" "hclust" "dist"
 #' @export
 contractMetab <- function(g){
 
@@ -33,7 +31,7 @@ contractMetab <- function(g){
     cl = rbind(clustersInfo, 
         data.frame(
            cluster       = starting:ending,
-           node          =  grep("cpd", V(g)$name, value=T)
+           node          =  grep("cpd", igraph::V(g)$name, value=T)
         )
     )
 
@@ -45,20 +43,20 @@ contractMetab <- function(g){
     symDF = cl %>% dplyr::group_by(cluster) %>% dplyr::summarise(combSym = paste0(Symbol, collapse=" | "))
 
 #Contract & Simplify
-    g2 = contract.vertices(g, cl$cluster)
-    V(g2)$Symbol = symDF$combSym
-    g2 = simplify(g2)
+    g2 = igraph::contract.vertices(g, cl$cluster)
+    igraph::V(g2)$Symbol = symDF$combSym
+    g2 = igraph::simplify(g2)
 
 #Sanitize 
     ##layout
-    g2$layout = layout.fruchterman.reingold(g2)
+    g2$layout = igraph::layout.fruchterman.reingold(g2)
 
     ## the definition
-    V(g2)$Definition = V(g2)$name %>% sapply(function(x) {
+    igraph::V(g2)$Definition = igraph::V(g2)$name %>% sapply(function(x) {
     if(length(x) > 1){
-        sapply(x, function(koid) { V(g)$Definition[V(g)$name == koid]}) %>% paste0(collapse='||')
+        sapply(x, function(koid) { igraph::V(g)$Definition[V(g)$name == koid]}) %>% paste0(collapse='||')
     }else{
-        V(g)$Definition[V(g)$name == x]
+        igraph::V(g)$Definition[V(g)$name == x]
     }
     })
 

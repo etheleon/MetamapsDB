@@ -60,6 +60,7 @@ Functions
 | igraph2gexf | Encodes Igraph into gexf format |
 | sigmaGraph| Generates an interactive graph representation of a subnetwork in html using the `htmlwidgets` package|
 | grepgraph | given a set of KOs get the subgrap of metabolism |
+| grepgraph.cpd | given a set of CPDs get the subgrap of metabolism |
 | annotateContigs.taxonomy | |
 | buildE||
 | buildTree||

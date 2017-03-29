@@ -2,7 +2,7 @@
 % Please edit documentation in R/adjacentPairs.R
 \name{adjacentPairs}
 \alias{adjacentPairs}
-\title{Given a igraph object, adjacentPairs finds 
+\title{Given a igraph object, adjacentPairs finds
 adjacent pairs of KOs}
 \usage{
 adjacentPairs(g, ko2ko = FALSE, ...)
@@ -15,7 +15,7 @@ adjacentPairs(g, ko2ko = FALSE, ...)
 \item{...}{ellipise pass in other arguments which are required}
 }
 \description{
-Given a igraph object, adjacentPairs finds 
+Given a igraph object, adjacentPairs finds
 adjacent pairs of KOs
 }
 
