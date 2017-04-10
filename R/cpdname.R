@@ -12,7 +12,10 @@ cpdname<- function (cpd='C00022', ... ){
     OPTIONAL MATCH
         (thecpd:cpd {cpd : eachcpd.cpdname})
     RETURN
-        thecpd.cpd, thecpd.name"
+        thecpd.cpd as cpd,
+        thecpd.name as name,
+        thecpd.exactMass as mass,
+        thecpd.molWeight as weight"
     df = dbquery(query=query, params=params, ...)
     df
 }

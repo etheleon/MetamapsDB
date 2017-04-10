@@ -10,8 +10,8 @@ annotateContigs.taxonomy <- function(csv)
     query = paste('
     USING PERIODIC COMMIT 500
     LOAD CSV WITH HEADERS FROM ', inputfile, ' AS mapping
-    CREATE UNIQUE
-        (c:contigs{contig:mapping.contigid})-[:taxomapped]->(t:Taxon{taxid:mapping.taxid})
+    MATCH (c:contigs{contig:mapping.contigid}),(t:Taxon{taxid:mapping.taxid})
+    MERGE (c)-[:taxomapped]->(t)
     ', sep="")
     message(query)
     dbquery(query, justPost=TRUE)
