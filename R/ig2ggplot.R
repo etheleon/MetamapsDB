@@ -25,7 +25,7 @@ ig2ggplot <- function(g, dfOnly = TRUE, ...){
         edgelists = 1:nrow(edgeDF) %>% lapply(function(row) {
             rbind(
             vertexDF2 %>% dplyr::select(x,y,name) %>% unique %>% dplyr::filter(name == edgeDF[row,1]) %>% dplyr::select(x,y) %>% dplyr::mutate(group=row),
-            vertexDF2 %>% dplyr::select(x,y,name) %>% unique %>% dplry::filter(name == edgeDF[row,2]) %>% dplyr::select(x,y) %>% dplyr::mutate(group=row)
+            vertexDF2 %>% dplyr::select(x,y,name) %>% unique %>% dplyr::filter(name == edgeDF[row,2]) %>% dplyr::select(x,y) %>% dplyr::mutate(group=row)
             )
         }) %>% do.call(rbind,.)
         if(dfOnly){
