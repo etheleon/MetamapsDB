@@ -4,6 +4,7 @@
 #'
 #'
 #' @param csv FULL path pointing to outputfile from mapBlat package's blast2lcaIn fxn
+#' @export
 annotateContigs.taxonomy <- function(csv)
 {
     inputfile = paste("file://", csv)
