@@ -31,9 +31,10 @@ ig2ggplot <- function(g, dfOnly = TRUE, ...){
         if(dfOnly){
             list(vertexDF2, edgelists)
         }else{
-            p = ggplot()+
-                geom_line(data=edgelists, aes(x=x,y=y, group=group))+
-                geom_point(data=vertexDF2, aes(x=x, y=y, color=type, size=type, text=label))
-            p 
+            p = ggplot()                                                                     +
+                geom_line(data=edgelists, aes(x=x,y=y, group=group), color="grey", alpha=0.5)                         +
+                geom_point(data=vertexDF2, aes(x=x, y=y, fill=type, size=type, text=label), color='black') +
+                theme_void()
+            p
         }
 }
