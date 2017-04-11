@@ -22,13 +22,13 @@ ig2ggplot <- function(g, dfOnly = TRUE, ...){
 
         vertexDF2$id = 1:nrow(vertexDF2)
         vertexDF2$type = do.call(c,lapply(strsplit(x=as.character(vertexDF2$name), split=":"), function(x) x[[1]]))
+        edgelists = 1:nrow(edgeDF) %>% lapply(function(row) {
+            rbind(
+            vertexDF2 %>% dplyr::select(x,y,name) %>% unique %>% dplyr::filter(name == edgeDF[row,1]) %>% dplyr::select(x,y) %>% dplyr::mutate(group=row),
+            vertexDF2 %>% dplyr::select(x,y,name) %>% unique %>% dplry::filter(name == edgeDF[row,2]) %>% dplyr::select(x,y) %>% dplyr::mutate(group=row)
+            )
+        }) %>% do.call(rbind,.)
         if(dfOnly){
-            edgelists = 1:nrow(edgeDF) %>% lapply(function(row) {
-                rbind(
-                vertexDF2 %>% select(x,y,name) %>% unique %>% filter(name == edgeDF[row,1]) %>% select(x,y) %>% mutate(group=row),
-                vertexDF2 %>% select(x,y,name) %>% unique %>% filter(name == edgeDF[row,2]) %>% select(x,y) %>% mutate(group=row)
-                )
-            }) %>% do.call(rbind,.)
             list(vertexDF2, edgelists)
         }else{
             p = ggplot()+
