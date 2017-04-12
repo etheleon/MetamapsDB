@@ -3,10 +3,11 @@
 #' Converts a igraph obj into a ggplot plot
 #' @param g igraph object
 #' @param dfOnly outputs the data.frame and not draw using ggvis 
+#' @param labels to show labels or not
 #' @param ... additional dbquery parameters
 #' @importFrom magrittr "%>%"
 #' @export
-ig2ggplot <- function(g, dfOnly = TRUE, ...){
+ig2ggplot <- function(g, dfOnly = TRUE, labels=FALSE,...){
         layoutDF    = setNames(data.frame(layout.norm(g$layout, xmax=1, xmin=0, ymin=0, ymax=1)), c("x", "y"))
         vertexDF    = data.frame(id = unlist(V(g)$name), name = unlist(V(g)$label))
         edgeDF      = get.edgelist(g)
@@ -31,10 +32,14 @@ ig2ggplot <- function(g, dfOnly = TRUE, ...){
         if(dfOnly){
             list(vertexDF2, edgelists)
         }else{
-            p = ggplot()                                                                     +
-                geom_line(data=edgelists, aes(x=x,y=y, group=group), color="grey", alpha=0.5)                         +
-                geom_point(data=vertexDF2, aes(x=x, y=y, fill=type, size=type, text=label), color='black') +
+            p = ggplot(vertexDF2, aes(x, y))                                                                     +
+                geom_line(data=edgelists, aes(x,y, group=group), color="grey", alpha=0.5)                         +
+                geom_point(data=vertexDF2, aes(color=type, size=type, text=label)) +
                 theme_void()
+            if(labels){
+            p + geom_text(aes(label=label))
+            }else{
             p
+            }
         }
 }
