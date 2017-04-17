@@ -6,7 +6,7 @@
 \usage{
 dbquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
   user = cacheEnv$user, password = cacheEnv$password, justPost = FALSE,
-  ...)
+  verbose = FALSE, ...)
 }
 \arguments{
 \item{query}{char string with cypher Query, rmbr to escape double quotes if any; read LUCENE}

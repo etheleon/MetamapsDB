@@ -10,7 +10,7 @@
 #' @param ... allows for additional arguments to be passed into dbquery
 #'
 #' @export
-dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, password = cacheEnv$password, justPost=FALSE,...){
+dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, password = cacheEnv$password, justPost=FALSE, verbose=FALSE,...){
     #Checks if the params is given
     tryCatch({
         message("Sending query\n")
@@ -30,7 +30,7 @@ dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = ca
                  customrequest = "POST",
 httpheader = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key)),
                  postfields = post,
-                 .opts = list(verbose = TRUE)
+                 .opts = list(verbose = verbose)
                  ))
     }else{
         result = RJSONIO::fromJSON(
@@ -38,8 +38,8 @@ httpheader = c('Content-Type' = 'application/json', 'Authorization' = paste('Bas
                                                  cypherurl,
                                                  customrequest = "POST",
                                                  httpheader = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key)),
-                                                 postfields = post
-#                                                 .opts = list(verbose = TRUE)
+                                                 postfields = post,
+                                                 .opts = list(verbose = verbose)
                                                  ))
 
         if(length(result$data)>=2){
