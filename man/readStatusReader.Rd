@@ -2,7 +2,7 @@
 % Please edit documentation in R/threshold.R
 \name{readStatusReader}
 \alias{readStatusReader}
-\title{readStatus stores the assignment details of a simulation into the graphDB
+\title{readStatus stores the assignment details of each read from the simulation and assigns the contig a genome of origin
 </rootDir/ko/454ReadStatus.txt> from newbler. 
 We remove stray reads from other taxa if it only attributes to less than 10% of the contig}
 \usage{
@@ -14,7 +14,7 @@ readStatusReader(root, koi, mdr = FALSE)
 \item{koi}{the ko directory}
 }
 \description{
-readStatus stores the assignment details of a simulation into the graphDB
+readStatus stores the assignment details of each read from the simulation and assigns the contig a genome of origin
 </rootDir/ko/454ReadStatus.txt> from newbler. 
 We remove stray reads from other taxa if it only attributes to less than 10% of the contig
 }
