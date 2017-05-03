@@ -18,7 +18,7 @@ contigInfo <- function(ko, withAnnotation=FALSE, contig){
                 c.mdr as MDR,
                 c.bin as bin,
                 c.contig as contig,
-                c.length as length
+                c.length as length,
                 c.readnum as readnum", gsub("^(ko:)*", "ko:", ko))
     }else{
         if(!withAnnotation){
