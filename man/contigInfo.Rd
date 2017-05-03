@@ -4,12 +4,14 @@
 \alias{contigInfo}
 \title{contigInfo}
 \usage{
-contigInfo(contig, ko, withAnnotation = F)
+contigInfo(ko, withAnnotation = FALSE, contig)
 }
 \arguments{
-\item{contig}{the contig}
-
 \item{ko}{the ko bin which the contig was assembled from}
+
+\item{withAnnotation}{}
+
+\item{contig}{contigID (optional)}
 }
 \description{
 contigInfo function greps the contig related info such as whether its in the MDR

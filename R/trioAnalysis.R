@@ -208,24 +208,3 @@ ksCal <- function(contigDF, baseDistribution, cores){
     },mc.cores = cores) %>%
     do.call(rbind,.)
 }
-
-#' returns gene/contig infomation for all KOs
-#'
-#' queries graphDB and extracts information for all genes in all KOs, outputs this into a data.frame
-#'
-#' @return returns data.frame with columns: contigName, Freq_cDNA, rpkm_cDNA, Freq_gDNA, rpkm_gDNA, ko
-#'
-#' @export
-getContigs <- function(){
-    query="
-    MATCH
-        (c:contigs)
-    RETURN
-        c.contig as contigName,
-        c.cDNAFreq AS Freq_cDNA,
-        c.cDNAFPKM as rpkm_cDNA,
-        c.gDNAFreq as Freq_gDNA,
-        c.gDNAFPKM as rpkm_gDNA
-    "
-    dbquery(query) %>% make.data.frame
-}

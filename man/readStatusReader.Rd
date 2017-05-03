@@ -3,7 +3,8 @@
 \name{readStatusReader}
 \alias{readStatusReader}
 \title{readStatus stores the assignment details of a simulation into the graphDB
-</rootDir/ko/454ReadStatus.txt> from newbler}
+</rootDir/ko/454ReadStatus.txt> from newbler. 
+We remove stray reads from other taxa if it only attributes to less than 10% of the contig}
 \usage{
 readStatusReader(root, koi, mdr = FALSE)
 }
@@ -14,6 +15,7 @@ readStatusReader(root, koi, mdr = FALSE)
 }
 \description{
 readStatus stores the assignment details of a simulation into the graphDB
-</rootDir/ko/454ReadStatus.txt> from newbler
+</rootDir/ko/454ReadStatus.txt> from newbler. 
+We remove stray reads from other taxa if it only attributes to less than 10% of the contig
 }
 

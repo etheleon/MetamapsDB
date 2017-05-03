@@ -5,19 +5,14 @@
 \title{dynamicThreshold tries to identify the lower bound converage value in order to remove low quality contigs.
 Number of contigs tend to stablize at a value when removing reads below a certain readnum and we try to identify the min read required for that region of stability}
 \usage{
-dynamicThreshold(rs, maxLimit = 100, increment = 1, contigLengths,
-  mdrContigs, mode = "readnum")
+dynamicThreshold(mode = "readnum", root, koi)
 }
 \arguments{
-\item{rs}{data.frame read.status, contig, readOrigin (taxid)}
+\item{mode}{two options either readnum or coverage; coverage is experimental, use readnum}
 
-\item{maxLimit}{maximum cutoff}
+\item{root}{folder to find}
 
-\item{increment}{incrememnt}
-
-\item{contigLengths}{the length of the contigs}
-
-\item{mode}{two options either readnum or coverage; coverage is experimental}
+\item{koi}{KO of interest}
 }
 \description{
 dynamicThreshold tries to identify the lower bound converage value in order to remove low quality contigs.

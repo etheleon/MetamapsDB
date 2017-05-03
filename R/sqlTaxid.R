@@ -65,3 +65,38 @@ findPerl <- function(perl, verbose = "FALSE")
 
   perl
 }
+
+#' findPython finds the path to the executable
+#'
+#' Code taken from R package gdata
+#'
+#' @param python full path to perl executable
+#' @param verbose print extra
+findPython <- function(perl, verbose = "FALSE")
+{
+  errorMsg <- "Python executable not found. Use python= argument to specify the correct path."
+
+  if (missing(python))
+    {
+      python = "python"
+    }
+
+  python = Sys.which(python)
+  if (python=="" || python=="python")
+    stop(errorMsg)
+
+  if (.Platform$OS == "windows") {
+    if (length(grep("rtools", tolower(python))) > 0) {
+      python.ftype <- shell("ftype python", intern = TRUE)
+      if (length(grep("^python=", python.ftype)) > 0) {
+        python <- sub('^python="([^"]*)".*', "\\1", python.ftype)
+      }
+    }
+      }
+
+  if (verbose) cat("Using python at", python, "\n")
+
+  python
+}
+
+
