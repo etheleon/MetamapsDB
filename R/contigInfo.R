@@ -18,6 +18,7 @@ contigInfo <- function(ko, withAnnotation=FALSE, contig){
                 c.mdr as MDR,
                 c.bin as bin,
                 c.contig as contig,
+                c.length as length
                 c.readnum as readnum", gsub("^(ko:)*", "ko:", ko))
     }else{
         if(!withAnnotation){
@@ -29,7 +30,9 @@ contigInfo <- function(ko, withAnnotation=FALSE, contig){
             RETURN 
                 contig.bin as bin,
                 contig.contig as contig,
-                contig.mdr as MDR
+                contig.mdr as MDR,
+                contig.readnum as readnum,
+                contig.length as length
             ", ko, contig)
         }else{
             query = sprintf("
@@ -42,6 +45,8 @@ contigInfo <- function(ko, withAnnotation=FALSE, contig){
                 t.taxid as taxid,
                 contig.bin as bin,
                 contig.contig as contig,
+                contig.readnum as readnum,
+                contig.length as length,
                 contig.mdr as MDR,
                 filter(x in labels(t) where x <> 'Taxon') as Rank
             ", ko, contig)
