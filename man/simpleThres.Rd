@@ -6,7 +6,10 @@
 \usage{
 simpleThres(keptDF)
 }
+\arguments{
+\item{keptDF}{internal function}
+}
 \description{
-simpleThres
+internal cluster
 }
 

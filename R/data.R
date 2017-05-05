@@ -14,3 +14,14 @@
 #' @format 83 nodes and 251 edges. 50 KOs and 33 compounds
 #'
 'nitrogenMetab'
+
+
+#' singleCopyGenes'
+#'
+#' Vector list showing Single Copy Genes
+#'
+#' @format 31 KEGG ids ko:KXXXXX
+#'
+'scg'
+
+

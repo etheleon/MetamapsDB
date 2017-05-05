@@ -9,7 +9,7 @@ contigsSurvive.repeats.readNum(rs, thresholds = seq(1, 50, 1))
 \arguments{
 \item{rs}{data.frame read.status, contig, readOrigin (taxid)}
 
-\item{readDepth}{the minimum depth}
+\item{thresholds}{the threshold window}
 }
 \description{
 contigsSurvive.repeats.readNum

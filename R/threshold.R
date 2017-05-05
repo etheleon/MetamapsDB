@@ -1,125 +1,16 @@
-#' superglue
-#'
-#' Based on NEWBLER's contig graph link plot contig-graph
-#'
-#' @param koi
-#' @param root
-superglue <- function(root, koi){
-    pairInfo = sprintf("%s/%s/454ContigGraph.txt", root, koi) %>% readLines %>%
-        lapply(function(line) if(grepl("^P", line)) line) %>% do.call(c,.) %>% (function(x) x[!is.null(x)]) %>%
-        textConnection %>% read.table %>% .[,-1] %>% setNames(c("contig", "five", "three"))
-
-    padding = function(x) sprintf("contig%05d", as.integer(x))
-    splitter = function(x, coi) {
-        indivFunc = function(ele) {
-            strsplit(ele, '/') %>% unlist %>% (function(x) { data.frame(connected2 = as.character(padding(x[[1]])), nread = as.integer(x[[2]]), gap = as.numeric(x[[3]]))})
-        }
-        if(x != '-'){
-            strsplit(as.character(x), ';') %>% unlist %>% lapply(indivFunc) %>% do.call(rbind,.) %>% mutate(origin = coi)
-        }else{
-            NA
-        }
-    }
-    #browser()
-    fiveENDS = pairInfo %>% apply(1, function(row){
-        splitter(row['five'], padding(row['contig']))
-    }) %>% do.call(rbind,.)
-    threeENDS = pairInfo %>% apply(1, function(row){
-        splitter(row['three'], padding(row['contig']))
-    }) %>% do.call(rbind,.)
-    combinedEdgelist = rbind(fiveENDS, threeENDS)
-    combinedEdgelist = combinedEdgelist[complete.cases(combinedEdgelist),]
-    combinedEdgelist %<>% select(origin, connected2, nread, gap)
-    g = graph_from_data_frame(combinedEdgelist)
-    E(g)$color='grey'
-    E(g)$weight= 
-someval = (E(g)$nread/(E(g)$gap+1e-5))
-(someval / sd(someval)) + mean(someval)
-
-    reps = rs %>% group_by(readOrigin) %>% summarise(repeats = n()) %>% filter(repeats > 1) %$% readOrigin
-    trueReps = filter(rs, readOrigin %in% reps) %>% arrange(readOrigin) %>% as.data.frame
-
-    pairFxn = function(x){
-    #browser()
-        matrix(t(combn(x$X5..Contig, 2)), ncol=2) %>% as.data.frame %>% setNames(c("to", "from"))
-    }
-    realRepeats = filter(rs, readOrigin %in% reps) %>% arrange(readOrigin)  %>% group_by(readOrigin) %>% do(pairFxn(.))
-
-    realRepeats %>% apply(1, function(row){
-        inGraph = row['to'] %in% V(g)$name & row['from'] %in% V(g)$name
-        if(inGraph){
-        #browser()
-        connected = are.connected(g, which(V(g)$name == row['to']), which(V(g)$name == row['from']))
-        if(connected){
-            get.edge.ids(g, c(which(V(g)$name == row['to']), which(V(g)$name == row['from'])))
-            theEdge = E(g)[get.edge.ids(g, c(which(V(g)$name == row['to']), which(V(g)$name == row['from'])))]
-            message(theEdge)
-            E(g)[get.edge.ids(g, c(which(V(g)$name == row['to']), which(V(g)$name == row['from'])))]$color<<-'red'
-        }
-        }
-    })
-    pdf("contigGraph.pdf", h=10, w=10)
-    plot(g, vertex.size=1, edge.width=sqrt(E(g)$gap))
-    dev.off()
-}
-
-#' mappingInfo Maps contigs back onto origin gene (SIMULATION only)
-#' And 
-mappingInfo <- function(blasdf, root, koi, outputDir, query, rangesFile, genomesFile, blastFile, doBlast=F, ...){
-    cmd = paste(findPython(), root, koi, outputDir, query, rangesFile, genomesFile)
-    if(doBlast){
-    cmd %T>% message("reading the following into memory: ",.) %>% system
-    blastFile = sprintf("%s/blast.tsv", outputDir)
-    }else{
-    blastdf = blastFile %>% read.table(sep="\t") %>% setNames(c("query","subject","perc.identity","alignment.length","mismatches","gap.openings","q.start","q.end","s.start","s.end","evalue","bitScore"))
-    }
-    blastdf$query %<>% as.character
-
-    contigInfo = unique(blastdf$query) %>% as.character %>% lapply(function(contig){
-    dbquery("MATCH (c:contigs{contig: {contigID}}) return c.contig, c.length, c.readnum", list(contigID = paste(koi, contig, sep=":")))
-    }) %>% do.call(rbind,.)
-    contigInfo$c.contig %<>% as.character %>% strsplit('\\:') %>% sapply(function(x) x[2])
-
-    blastdf = merge(blastdf, contigInfo, by.x = "query", by.y="c.contig", all.x=T)
-    #blastdf$subject %<>% as.character %>% strsplit('\\|') %>% sapply(function(x) x[2])
-    blastdf$c.length %<>% as.character %>% as.integer
-    blastdf$c.readnum %<>% as.character %>% as.integer
-
-    suspicious = blastdf %>% 
-        filter(
-            perc.identity == 100, 
-            alignment.length > c.length*0.50, 
-            query %in% mdr, 
-            c.readnum > dyn$thres) %>% 
-        group_by(subject) %>% 
-        summarise(n=n()) %>% 
-        filter(n>1) %>% 
-        arrange(desc(n)) %$% subject %>% as.character
-
-    confirmRepeats = blastdf %>% 
-        filter(
-            perc.identity == 100, 
-            alignment.length > c.length*0.50, 
-            query %in% mdr, 
-            c.readnum > dyn$thres, 
-            subject %in% suspicious
-        ) %$% query %>%
-    lapply(function(coi){
-        filter(readStatus, X5..Contig==coi)$Accno %>% as.character %>% strsplit('\\|') %>% sapply(function(x) x[2]) %>% table %>% data.frame %>% setNames(c("taxid", "count")) %>% mutate(total = sum(count), contig = coi) %>% mutate(perc = count/total) %>% filter(perc > 0.1)
-    }) %>% do.call(rbind,.) %>% arrange(taxid)
-}
-
 #' dynPlot Diagnostic plots
 #'
 #' @param dyn output from dynamicThreshold
 #'
+#' import ggplot from ggplot2
+#' import grid.arrange from gridExtra
 #' @examples
 #' \dontrun{
 #' newblerDir = "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
-#' c("ko:K00927","ko:K02316","ko:K02520") %>%
+#' dynList = c("ko:K00927","ko:K02316","ko:K02520") %>%
 #'     gsub("ko:", "", .) %>% #folders dont begin with ko:
-#'     lapply(dynamicThreshold(root=newblerDir)) %>% 
-#'     dynPlot(dynList)
+#'     lapply(dynamicThreshold, root=newblerDir)
+#' something = dynPlots(dynList)
 #' }
 dynPlots = function(dynList){
     kos = lapply(dynList, function(x) x$koi) %>% gsub("ko:", "", .)
@@ -128,28 +19,30 @@ dynPlots = function(dynList){
         message(sprintf("Processing KO of interest: %s", oneSCG))
         contigs = contigInfo(ko=oneSCG) %>% make.data.frame %>% filter(MDR == '1')
         contigs$readnum %<>% as.character %>% as.integer
-        #simulated = dbquery("match (k:ko{ko:{ko}})-[sim:SIMULATED]-(g:genus) return g.taxid as genusID, sim.genes as ngenes", params)  %>% make.data.frame
+        simulated = dbquery("match (k:ko{ko:{ko}})-[sim:SIMULATED]-(g:genus) return k.ko as ko,g.taxid as taxid, sim.genes as Freq", list(ko=gsub("^(ko:)*", "ko:", oneSCG))) %>% make.data.frame
+        simulated$Freq %<>% as.character %>% as.integer
         #simulated = read.csv("~/simulation_fr_the_beginning/reAssemble/scg/script/simulatedInfo.csv")
         simNum = sum(filter(simulated, ko == gsub("^(ko:)*", "ko:", oneSCG))$Freq)
-
+        #browser()
         df %<>% mutate( ko = oneSCG, cutoff = cutoff, simulated = simNum, remaining.cutoff = nrow(filter(contigs, readnum > cutoff)))
         df$remaining = sapply(df$threshold, function(x) nrow(filter(contigs, readnum > x)))
 
         thecutoff = cutoff
-        p1 = ggplot(df) +
-                geom_line(aes(threshold, repeats, group=ko)) +
+        p1 = ggplot(df)                                           +
+                geom_line(aes(threshold, repeats, group=ko))      +
                 geom_vline(aes(xintercept = cutoff), color="red") +
-                ggtitle(koname(oneSCG)$ko.definition) +
+                ggtitle(koname(oneSCG)$ko.definition)             +
                 ylab("#genes (redundant)")
 
-        p2 = ggplot(df) + 
-            geom_line(aes(threshold, remaining, group=ko)) + 
-            geom_hline(aes(yintercept=simulated))+ 
-            geom_hline(aes(yintercept = remaining.cutoff), color="red")+ 
-            geom_text(aes(0, simulated, label = "Simulated", vjust = -1)) + 
-            geom_text(aes(100, remaining.cutoff, label = "After thresholding", vjust = -1), color="Red") + 
-            #ylim(c(0,400))+ 
-            ggtitle(koname(oneSCG)$ko.definition) + ylab("#genes (total)")
+        p2 = ggplot(df)                                                                                  +
+            geom_line(aes(threshold, remaining, group=ko))                                               +
+            geom_hline(aes(yintercept=simulated))                                                        +
+            geom_hline(aes(yintercept = remaining.cutoff), color="red")                                  +
+            geom_text(aes(0, simulated, label = "Simulated", vjust = -1))                                +
+            geom_text(aes(100, remaining.cutoff, label = "After thresholding", vjust = -1), color="Red") +
+            #ylim(c(0,400))                                                                              +
+            ggtitle(koname(oneSCG)$ko.definition)                                                        + 
+            ylab("#genes (total)")
         combined = grid.arrange(p1,p2)
         print(combined)
         df
@@ -169,14 +62,16 @@ dynPlots = function(dynList){
 #' dynamicThreshold tries to identify the lower bound converage value in order to remove low quality contigs.
 #' Number of contigs tend to stablize at a value when removing reads below a certain readnum and we try to identify the min read required for that region of stability
 #'
-#' @param mode two options either readnum or coverage; coverage is experimental, use readnum
-#' @param root folder to find
 #' @param koi KO of interest
+#' @param mode two options either readnum or coverage; coverage is experimental, use readnum
+#' @param thresholding which type of thresholding method to use
+#' @param root folder to find
 #' @importFrom zoo rollapply
 #' @export
 dynamicThreshold <- function(koi, mode=c("readnum", "rpk"), thresholding=c("rle", "rolling"), root){
     message(sprintf("Processing %s", koi))
     rs = readStatusReader(root, koi, mdr=TRUE)
+    #browser()
     if(mode == 'readnum'){
         repeatsDF = contigsSurvive.repeats.readNum(rs)
     } else if (mode == 'rpk'){
@@ -189,13 +84,16 @@ dynamicThreshold <- function(koi, mode=c("readnum", "rpk"), thresholding=c("rle"
     } else if (thresholding == 'rle'){
         threshold = simpleThres(repeatsDF)
     }
-    return(list(thres = ifelse(mode=='readnum', ceiling(threshold), threshold), repeats = repeatsDF, koi = koi))
+    thres = if(mode=='readnum'){ceiling(threshold)}else{threshold}
+    return(list(thres = thres, repeats = repeatsDF, koi = koi))
 }
 
 #' rolling A dynamic threshold for the killing redundant contigs
 #'
 #' outputs a data.frame with 2 columns 1.) rollingMean 2.) meanDepth
 #' @param keptDF dataframe for the #repeats left after thresholding, columnnames thresholds, repeats
+#' @param wind window size
+#' @param interval interval size
 #'
 rolling <- function(keptDF, wind=15, interval = 10){
         data.frame(
@@ -209,6 +107,10 @@ rolling <- function(keptDF, wind=15, interval = 10){
 
 
 #' simpleThres
+#'
+#' internal cluster
+# 
+#' @param keptDF internal function
 simpleThres = function(keptDF){
     #browser()
     myRLE = keptDF %>% filter(threshold <=50) %$% rollapply(repeats, width=2, by=1, FUN = function(e){ abs(e[2] - e[1]) }) %>% rle %>% .$length
@@ -218,7 +120,7 @@ simpleThres = function(keptDF){
 #' contigsSurvive.repeats.readNum
 #'
 #' @param rs data.frame read.status, contig, readOrigin (taxid)
-#' @param readDepth the minimum depth
+#' @param thresholds the threshold window
 #'
 contigsSurvive.repeats.readNum <- function(rs, thresholds = seq(1, 50, 1)){
     thresholds %>% lapply(function(readDepth){

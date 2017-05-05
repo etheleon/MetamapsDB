@@ -13,6 +13,8 @@ dynamicThreshold(koi, mode = c("readnum", "rpk"), thresholding = c("rle",
 
 \item{mode}{two options either readnum or coverage; coverage is experimental, use readnum}
 
+\item{thresholding}{which type of thresholding method to use}
+
 \item{root}{folder to find}
 }
 \description{

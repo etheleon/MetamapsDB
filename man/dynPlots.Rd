@@ -7,7 +7,10 @@
 dynPlots(dynList)
 }
 \arguments{
-\item{dyn}{output from dynamicThreshold}
+\item{dyn}{output from dynamicThreshold
+
+import ggplot from ggplot2
+import grid.arrange from gridExtra}
 }
 \description{
 dynPlot Diagnostic plots
@@ -15,10 +18,10 @@ dynPlot Diagnostic plots
 \examples{
 \dontrun{
 newblerDir = "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
-c("ko:K00927","ko:K02316","ko:K02520") \%>\%
+dynList = c("ko:K00927","ko:K02316","ko:K02520") \%>\%
     gsub("ko:", "", .) \%>\% #folders dont begin with ko:
-    lapply(dynamicThreshold(root=newblerDir)) \%>\% 
-    dynPlot(dynList)
+    lapply(dynamicThreshold, root=newblerDir)
+something = dynPlots(dynList)
 }
 }
 
