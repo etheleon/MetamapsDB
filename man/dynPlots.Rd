@@ -4,24 +4,27 @@
 \alias{dynPlots}
 \title{dynPlot Diagnostic plots}
 \usage{
-dynPlots(dynList)
+dynPlots(dynList, indivPlots = T)
 }
 \arguments{
-\item{dyn}{output from dynamicThreshold
-
-import ggplot from ggplot2
-import grid.arrange from gridExtra}
+\item{dyn}{output from dynamicThreshold}
 }
 \description{
 dynPlot Diagnostic plots
 }
 \examples{
 \dontrun{
-newblerDir = "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
-dynList = c("ko:K00927","ko:K02316","ko:K02520") \%>\%
-    gsub("ko:", "", .) \%>\% #folders dont begin with ko:
-    lapply(dynamicThreshold, root=newblerDir)
-something = dynPlots(dynList)
+connect("yourDomain", password="yourPassword")
+newblerDir= "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
+dynList = scg  \%>\% gsub("ko:", "", .) \%>\% lapply(dynamicThreshold, root=newblerDir, mode='readnum')
+pdf("thresholdPlots.pdf", width=10)
+plotDF = dynPlots(dynList, F)         
+dev.off()                          
+pdf("abundance.pdf", width=10)
+lapply(plotDF$details,"[[", 1)      
+dev.off()                           
+plotDF$p \%>\% ggsave(file="summaryPlot.pdf", w=10)
+plotDF$violin \%>\% ggsave(file="violin.pdf", w=10, h=4)
 }
 }
 

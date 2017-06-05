@@ -33,35 +33,4 @@ gi2rank <- function(blastTab, koi, sqlite3 = "sql3db")
 
 }
 
-#' findpython finds the path to the executable
-#'
-#' Code taken from R package gdata
-#'
-#' @param python full path to python executable
-#' @param verbose print extra information
-findPython <- function(python, verbose = "FALSE")
-{
-  errorMsg <- "python executable not found. Use python= argument to specify the correct path."
 
-  if (missing(python))
-    {
-      python = "python"
-    }
-
-  python = Sys.which(python)
-  if (python=="" || python=="python")
-    stop(errorMsg)
-
-  if (.Platform$OS == "windows") {
-    if (length(grep("rtools", tolower(python))) > 0) {
-      python.ftype <- shell("ftype python", intern = TRUE)
-      if (length(grep("^python=", python.ftype)) > 0) {
-        python <- sub('^python="([^"]*)".*', "\\1", python.ftype)
-      }
-    }
-      }
-
-  if (verbose) cat("Using python at", python, "\n")
-
-  python
-}

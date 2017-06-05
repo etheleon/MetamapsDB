@@ -4,7 +4,7 @@
 \alias{contigsSurvive.repeats.readNum}
 \title{contigsSurvive.repeats.readNum}
 \usage{
-contigsSurvive.repeats.readNum(rs, thresholds = seq(1, 50, 1))
+contigsSurvive.repeats.readNum(rs, thresholds = seq(1, 50, 1), koi)
 }
 \arguments{
 \item{rs}{data.frame read.status, contig, readOrigin (taxid)}

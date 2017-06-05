@@ -12,10 +12,9 @@ contigInfo <- function(ko, withAnnotation=FALSE, contig){
         query = sprintf("
             MATCH
                 (c:contigs{bin:'%s'})
-            WHERE
-                c.mdr = 1 or c.mdr is NULL
             RETURN
                 c.mdr as MDR,
+                c.spanning as spanning,
                 c.bin as bin,
                 c.contig as contig,
                 c.length as length,
@@ -26,11 +25,13 @@ contigInfo <- function(ko, withAnnotation=FALSE, contig){
             MATCH 
                 (contig:contigs{contig:'%s:%s'})
             WHERE 
-                contig.mdr = 1 or contig.mdr is NULL
+                contig.mdr = 1 or contig.mdr is NULL,
+                contig.spanning = 1 or contig.spanning is NULL
             RETURN 
                 contig.bin as bin,
                 contig.contig as contig,
                 contig.mdr as MDR,
+                contig.spanning as spanning,
                 contig.readnum as readnum,
                 contig.length as length
             ", ko, contig)
@@ -39,7 +40,8 @@ contigInfo <- function(ko, withAnnotation=FALSE, contig){
             MATCH 
                 (contig:contigs{contig:'%s:%s'})--(t:Taxon)
             WHERE 
-                contig.mdr = 1 or contig.mdr is NULL
+                contig.mdr = 1 or contig.mdr is NULL,
+                c.spanning = 1 or c.spanning is NULL
             RETURN 
                 t.name as assignment,
                 t.taxid as taxid,
@@ -48,9 +50,12 @@ contigInfo <- function(ko, withAnnotation=FALSE, contig){
                 contig.readnum as readnum,
                 contig.length as length,
                 contig.mdr as MDR,
+                contig.spanning as spanning,
                 filter(x in labels(t) where x <> 'Taxon') as Rank
             ", ko, contig)
         }
     }
-    dbquery(query)
+    df = dbquery(query) %>% make.data.frame
+    df$readnum %<>% as.character %>% as.integer
+    df
 }
