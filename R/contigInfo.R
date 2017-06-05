@@ -39,7 +39,7 @@ contigInfo <- function(ko, withAnnotation=FALSE, contig){
             MATCH 
                 (contig:contigs{contig:'%s:%s'})--(t:Taxon)
             WHERE 
-                contig.mdr = 1 or contig.mdr is NULL or c.spanning = 1 or c.spanning is NULL
+                contig.mdr = 1 or contig.mdr is NULL or contig.spanning = 1 or contig.spanning is NULL
             RETURN 
                 t.name as assignment,
                 t.taxid as taxid,
