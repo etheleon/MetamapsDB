@@ -97,7 +97,7 @@ dynPlots = function(dynList, indivPlots=T){
     errorTable.vanilla = lapply(dynList, function(x) x$koi) %>% gsub("ko:", "", .) %>% lapply(contigInfo) %>% do.call(rbind,.) %>% filter(MDR==1) %>% group_by(bin) %>% summarise(n=n()) %>% mutate(simulated = sapply(bin, function(ko) nrow(simulated(ko)))) %>% mutate(diff = n - simulated)
     mae.vanilla = signif(sum(errorTable.vanilla$diff)/nrow(errorTable.vanilla), 4)
 
-    #Spanning only
+    #Spanning only 26.65
     errorTable.b4 = repeatDF %>% filter(threshold == 1) %>% select(ko, simulated, remaining)  %>% mutate(diff = abs(remaining - simulated))
     mae.b4      = signif(sum(errorTable.b4$diff)/nrow(errorTable.b4), 4)
 
@@ -162,7 +162,7 @@ dynPlots = function(dynList, indivPlots=T){
     geom_point(alpha=0.8)                                                                                                                                                                                               +
     scale_color_manual("Processing",
         values=c("#de2d26", "#fc9272", "#fc9272", "#3182bd","grey", "#9ecae1", "#9ecae1"),
-        labels=c(sprintf("Naive (MAE: %s)", mae.vanilla), sprintf("Post-processing (MAE: %s)", mae.after)),
+        labels=c(sprintf("Naive (MAE: %s)", mae.vanilla), sprintf("With processing (MAE: %s)", mae.after)),
         breaks = c("remaining_naive", "remaining.cutoff_cutoff"))                                                                                                                                                                    +
     scale_linetype_manual("In Genome Annotation", values=c("solid", "dotted", "dotdash"), label=c("Yes", "No"), breaks=c("in", "out")) +
     scale_y_continuous(breaks=c(0, 100, 200, 300, uniqueGenomes, 400), labels=c(0, 100, 200, 300, sprintf("Genomes: %s",uniqueGenomes), 400))+
@@ -205,7 +205,7 @@ dynPlots = function(dynList, indivPlots=T){
             geom_text(data = abuDF %>% filter(status!='kept'), aes(x=rank,y=abu, label=name, color=as.factor(status)), hjust=0, angle=45) +
             scale_color_manual(values=c(thresColor, naiveColor), guide=FALSE)                             +
             scale_fill_manual("Recovery Status", values=c("#00000020",thresColor, naiveColor), 
-            labels=c("Recovered", "Not recovered (Post-Processing)", "Not recovered (Naive)"))             +
+            labels=c("Recovered", "Not recovered (With Processing)", "Not recovered (Naive)"))             +
             scale_x_continuous(breaks = abuDF %>% filter(status!='kept') %$% rank)   +
             theme(axis.text.x=element_text(angle=90))                           +
             xlab("Abundance Rank of Genome") + ylab("Abundance")+
@@ -232,8 +232,8 @@ dynPlots = function(dynList, indivPlots=T){
             geom_boxplot(position=position_dodge(1), alpha=0.5)                                                 +
             geom_point(position=position_jitterdodge(dodge.width=0.9))                                          +
             #scale_y_log10()+
-            scale_color_manual("Processing", values=c("#de2d26", "#3182bd"), label=c("Naive","Post-processed")) +
-            scale_fill_manual( "Processing", values=c("#de2d26", "#3182bd"), label=c("Naive","Post-processed")) +
+            scale_color_manual("Processing", values=c("#de2d26", "#3182bd"), label=c("Naive","With processing")) +
+            scale_fill_manual( "Processing", values=c("#de2d26", "#3182bd"), label=c("Naive","With processing")) +
             scale_x_discrete(labels=seq(10, 100, 10))+
             xlab("Top Genera (%)")+ylab(c(expression("N"[Genes]*' not recovered')))+
     theme(legend.position="top")+

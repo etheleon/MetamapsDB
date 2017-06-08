@@ -7,13 +7,13 @@
 #' @export
 annotateContigs.taxonomy <- function(csv)
 {
-    inputfile = paste("file://", csv)
-    query = paste('
+    inputfile = paste0("file://", csv)
+    query = paste0('
     USING PERIODIC COMMIT 500
-    LOAD CSV WITH HEADERS FROM ', inputfile, ' AS mapping
+    LOAD CSV WITH HEADERS FROM "', inputfile, '" AS mapping
     MATCH (c:contigs{contig:mapping.contigid}),(t:Taxon{taxid:mapping.taxid})
     MERGE (c)-[:taxomapped]->(t)
-    ', sep="")
+    ')
     message(query)
     dbquery(query, justPost=TRUE)
 }
