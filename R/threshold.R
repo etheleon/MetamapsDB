@@ -1,3 +1,68 @@
+#' `lookupTable` finds which KOs for given taxa are good approximates of diversity
+#'
+#' @param genesOfInterest the kos of interest defaults to scg
+#' @param annotations table containing the number of KOs for each taxID
+#'
+#' @export
+lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the_beginning/out/template.csv")
+{
+    simTaxa = lapply(genesOfInterest, function(oneko){
+        dbquery("match (k:ko{ko:{ko}})-[:SIMULATED]-(g:Taxon) return k.ko, g.taxid", list(ko=oneko))
+    }) %>% do.call(rbind,.) %$% unique(g.taxid) %>% as.character()
+    abuDF = lapply(simTaxa, function(x){ 
+        dbquery("match (t:Taxon{taxid:{taxid}}) return t.abundance as abu, t.taxid as taxid", list(taxid = x))
+    }) %>% do.call(rbind,.)
+
+    message("Homology search")
+    # Cypher query for finding
+    findRank ="
+    MATCH
+        (k:ko{ko:{ko}})<-[:assignment]-(c:contigs)-[:taxomapped]->(t:Taxon)
+    WHERE
+        c.mdr=1 AND c.spanning=1 AND toInt(c.readnum) > k.threshold
+    WITH
+        t
+    MATCH
+        (t)-[:childof*]->(t2:{rank})
+    RETURN
+        DISTINCT t2.taxid as taxid, count(t2.taxid) as Freq
+    "
+
+    homologyAssignments = lapply(genesOfInterest, function(koi){
+        dbquery(query, list(ko = koi, rank = 'genus')) %>% make.data.frame %>% arrange(desc(as.integer(Freq))) %>% tbl_df %>% mutate(ko = koi)
+    }) %>% do.call(rbind,.)
+    homologyAssignments$taxid %<>% as.factor
+    homologyAssignments$Freq %<>% as.integer
+    wideDF = homologyAssignments %>% group_by(taxid) %>% mutate(tot = sum(Freq)) %>% ungroup %>% spread(ko, Freq, fill=0) %>% tbl_df
+    summaryDF = homologyAssignments %>% group_by(taxid) %>% 
+        summarise(ave = mean(Freq), sd = sd(Freq)) %>% 
+        merge(abuDF, by="taxid", all=T) %>% rowwise %>% mutate(name = taxnam.sql(taxid)$name) %>%
+        arrange(desc(abu)) %>% tbl_df
+    summaryDF %<>% merge(wideDF, by="taxid") %>% arrange(desc(abu)) %>% tbl_df
+    #write.csv(summaryDF, file="mdrInfo.csv", row.names=F)
+
+    message("What went into the simulation")
+    df = data.table::fread(homology)
+    df %<>% as.data.frame
+
+    annotationDF = df %>% filter(ko %in% scg) %>% group_by(seqnames, ko) %>% summarise(Freq=n()) %>% setNames(c("taxid", "ko", "Freq")) %>% ungroup
+    wideDF_truth = df %>% filter(ko %in% scg) %>% group_by(ko, seqnames) %>% summarise(n=n()) %>% setNames(c("taxid", "ko", "Freq")) %>% spread(taxid, Freq, fill = 0)
+    #write.csv(wideDF_truth, file="sim.csv", row.names=F)
+
+    comp = merge(annotationDF, meganAssignments,by=c("taxid", "ko"), suffix=c(".truth", ".homology"), all=T) %>% tbl_df
+    comp[is.na(comp)] = 0
+    wideDF_comparison = comp %>% rowwise %>% mutate(matched= ifelse(Freq.truth == Freq.homology, 1, 0)) %>% select(taxid, ko, matched) %>% spread(ko, matched)
+    #cause they're just not there in the 1st place
+    wideDF_comparison[is.na(wideDF_comparison)] = 1
+    wideDF_comparison %<>% merge(abuDF, by="taxid", all.y=T) %>% rowwise %>% mutate(name = taxnam.sql(taxid)$name) %>% 
+        arrange(desc(abu)) %>% tbl_df %>% select(taxid, name, abu, everything())
+    #truth = df %>% filter(ko %in% scg) %>% group_by(seqnames, ko) %>% summarise(Freq=n()) %>% group_by(seqnames) %>% summarise(ave = mean(Freq), sd = sd(Freq), tot = sum(Freq))
+
+    #scoring system
+
+    list(compare = comp, compare_wide = wideDF_comparison, homology = summaryDF, annotations = wideDF_truth)
+}
+
 #' dynPlot Diagnostic plots
 #'
 #' @param dyn output from dynamicThreshold

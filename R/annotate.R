@@ -9,7 +9,7 @@ annotateContigs.taxonomy <- function(csv)
 {
     inputfile = paste0("file://", csv)
     query = paste0('
-    USING PERIODIC COMMIT 500
+    USING PERIODIC COMMIT 100000
     LOAD CSV WITH HEADERS FROM "', inputfile, '" AS mapping
     MATCH (c:contigs{contig:mapping.contigid}),(t:Taxon{taxid:mapping.taxid})
     MERGE (c)-[:taxomapped]->(t)
