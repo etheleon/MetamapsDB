@@ -10,6 +10,7 @@
 #' \dontrun{
 #' rs = lapply(dynList, function(x) x$rs %>% mutate(ko = x$ko)) %>% do.call(rbind,.)
 #' output = lookupTable(genesOfInterest = scg, annotations = "~/simulation_fr_the_beginning/out/template.csv", rs)
+#' e
 #' }
 #' @export
 lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the_beginning/out/template.csv", rs)
@@ -17,6 +18,9 @@ lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the
     # in fact there's 2 lookup tables
     # 1. for homology search - the homology search + LCA has correctly identified the contigs to the correct ID
     # 2. for assembly - the assembly process has successfuly put together reads to form the correct contig
+
+    genesOfInterest %<>% gsub("^(ko:)*","ko:",.)
+
     message("Simulated taxa")
     suppressMessages({
         simTaxa = dbquery("match ()-[:SIMULATED]-(g:Taxon) return distinct g.taxid as taxid") %$%
@@ -26,9 +30,9 @@ lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the
 
     message("Calculating their abundances")
     suppressMessages({
-    abuDF = lapply(simTaxa, function(x){
-        dbquery("match (t:Taxon{taxid:{taxid}}) return t.abundance as abu, t.taxid as taxid", list(taxid = x))
-    }) %>% do.call(rbind,.)
+        abuDF = lapply(simTaxa, function(x){
+            dbquery("match (t:Taxon{taxid:{taxid}}) return t.abundance as abu, t.taxid as taxid", list(taxid = x))
+        }) %>% do.call(rbind,.)
     })
     ##################################################
     # Homology search
@@ -50,12 +54,13 @@ lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the
         ELSE t2.taxid
         END AS taxid
     "
-    suppressMessages({
         homologyAssignments = genesOfInterest %>% lapply(function(koi){
+        message(sprintf("Downloading Homology search data for %s", koi))
+    suppressMessages({
             assignedDF = dbquery(findGenus, list(ko = koi))
                 tryCatch(
                 {
-                    if(nrow(assignedDF) != 0){
+                    if(!is.na(assignedDF) && nrow(assignedDF) > 0){
                         #browser()
                         assignedDF %>% make.data.frame %$% table(taxid) %>% data.frame %>% setNames(c("taxid", "Freq")) %>% arrange(desc(as.integer(Freq))) %>% tbl_df %>% mutate(ko = koi)
                     }else{
@@ -63,32 +68,34 @@ lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the
                     }
                 },error = function(e) warning(sprintf("%s has problem", koi))
                 )
-            }) %>% do.call(rbind,.)
     })
+            }) %>% do.call(rbind,.)
     homologyAssignments$taxid %<>% as.factor
     homologyAssignments$Freq %<>% as.integer
+    homologyAssignments = homologyAssignments[complete.cases(homologyAssignments),]
+    wideDF = homologyAssignments  %>% group_by(taxid) %>% mutate(tot = sum(Freq)) %>% ungroup %>% spread(ko, Freq, fill=0) %>% tbl_df
 
-    wideDF = homologyAssignments %>% group_by(taxid) %>% mutate(tot = sum(Freq)) %>% ungroup %>% spread(ko, Freq, fill=0) %>% tbl_df
-    summaryDF = homologyAssignments %>% group_by(taxid) %>% 
-        summarise(ave = mean(Freq), sd = sd(Freq)) %>% 
-        merge(abuDF, by="taxid", all=T) %>% rowwise %>% mutate(name = taxnam.sql(taxid)$name) %>%
-        arrange(desc(abu)) %>% tbl_df
-    summaryDF %<>% merge(wideDF, by="taxid") %>% arrange(desc(abu)) %>% tbl_df
-    colnames(summaryDF) = make.names(colnames(summaryDF))
+    #summaryDF = homologyAssignments %>% group_by(taxid) %>% 
+        #summarise(ave = mean(Freq), sd = sd(Freq)) %>% 
+        #merge(abuDF, by="taxid", all=T) %>% rowwise %>% mutate(name = taxnam.sql(taxid)$name) %>%
+        #arrange(desc(abu)) %>% tbl_df
+
+    #summaryDF %<>% merge(wideDF, by="taxid") %>% arrange(desc(abu)) %>% tbl_df
+    #colnames(summaryDF) = make.names(colnames(summaryDF))
 
     ##################################################
     # Assembly
     message("Querying for Assembly information")
     ##################################################
     message("Reading newbler assembly readStatus; only considering pure contigs")
+    rs = rs %>% filter(ko %in% gsub("ko:", "", genesOfInterest)) %>% merge(thresholds, ., all=T)
     suppressMessages({
-    thresholds = rs$ko %>% unique %>% gsub("^", "ko:", .) %>% 
+    thresholds = genesOfInterest %>% 
         lapply(function(ko){dbquery("match (k:ko{ko:{ko}}) return k.ko as ko, k.threshold as threshold", list(ko = ko))}) %>%
         do.call(rbind,.)
     })
     thresholds$ko %<>% gsub("ko:", "", .)
 
-    rs = merge(thresholds, rs, all=T)
 
     ass = rs %>% filter(total > threshold, spanning == 1, status == 'pure') %>% mutate(ko = gsub("^", "ko:", ko)) %>%
         group_by(ko, readOrigin) %>% summarise(n=n()) %>%
@@ -100,24 +107,38 @@ lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the
     message("Who Matched")
     ##################################################
     df = data.table::fread("~/simulation_fr_the_beginning/out/template.csv") %>% as.data.frame
-    annotationDF = df %>% filter(ko %in% scg) %>% group_by(seqnames, ko) %>% summarise(Freq=n()) %>% setNames(c("taxid", "ko", "Freq")) %>% ungroup
-    wideDF_truth = df %>% filter(ko %in% scg) %>% group_by(ko, seqnames) %>% summarise(n=n()) %>% setNames(c("taxid", "ko", "Freq")) %>% spread(taxid, Freq, fill = 0)
+    annotationDF = df %>% filter(ko %in% genesOfInterest) %>% group_by(seqnames, ko) %>% summarise(Freq=n()) %>% setNames(c("taxid", "ko", "Freq")) %>% ungroup
+    wideDF_truth = df %>% filter(ko %in% genesOfInterest) %>% group_by(ko, seqnames) %>% summarise(n=n()) %>% setNames(c("taxid", "ko", "Freq")) %>% spread(taxid, Freq, fill = 0)
 
     makeLookup = function(input, annotationDF, abuDF, type=c("wide", "long"))
     {
         comp = merge(annotationDF, input,by=c("taxid", "ko"), suffix=c(".truth", ".assigned"), all=T) %>% tbl_df
         comp[is.na(comp)] = 0
         if(type == 'wide'){
-            wide = comp %>% rowwise %>% mutate(matched= ifelse(Freq.truth == Freq.assigned, 1, 0)) %>%
+            wide = comp %>% rowwise %>%
+                mutate(matched= case_when(
+                    Freq.truth == 0 && Freq.assigned == 0 ~ 0,
+                    Freq.truth == Freq.assigned ~ 1,
+                    TRUE ~ 0
+                )) %>%
+                #mutate(matched = Freq.truth + Freq.assigned)  %>%
                 select(taxid, ko, matched) %>% spread(ko, matched)
-            wide[is.na(wide)] = 1
+            #if missing should be
+            wide[is.na(wide)] = 0
             #Add abundanceInfo
             wide %<>% merge(abuDF, by="taxid", all.y=T) %>% rowwise %>% mutate(name = taxnam.sql(taxid)$name) %>%
             arrange(desc(abu)) %>% tbl_df %>% select(taxid, name, abu, everything())
             colnames(wide) = make.names(colnames(wide))
             wide
         }else if(type=='long'){
-            comp
+            comp %>%
+                rowwise %>%
+                mutate(matched= case_when(
+                    Freq.truth == 0 && Freq.assigned == 0 ~ 0,
+                    Freq.truth == Freq.assigned ~ 1,
+                    TRUE ~ 0
+                )) %>%
+                select(taxid,ko, matched)
         }else{
             warning("unknown type")
         }
@@ -126,38 +147,25 @@ lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the
     wideDF_comparison_assembly = makeLookup(ass, annotationDF, abuDF, "wide")
     wideDF_comparison_homology = makeLookup(homologyAssignments, annotationDF, abuDF, "wide")
 
-    comparison_assembly = makeLookup(ass, annotationDF, abuDF, "long") %>% 
-        rowwise %>% 
-        mutate(matched = ifelse(Freq.truth == Freq.assigned, 1, 0))  %>% 
-        select(taxid,ko, matched)
+    comparison_assembly = makeLookup(ass, annotationDF, abuDF, "long")
+    comparison_homology = makeLookup(homologyAssignments, annotationDF, abuDF, "long")
 
-    comparison_homology = makeLookup(homologyAssignments, annotationDF, abuDF, "long") %>% 
-        rowwise %>% 
-        mutate(matched = ifelse(Freq.truth == Freq.assigned, 1, 0)) %>% 
-        select(taxid,ko, matched)
+# need to change
 
-    twoTables = merge(comparison_assembly , comparison_homology , by=c("taxid", "ko"), suffix=c(".assembly", ".homology"))
-    twoTables %<>% rowwise %>% mutate(matched = ifelse(matched.assembly == matched.homology, 1, 0)) %>% select(taxid, ko, matched)
+    twoTables = merge(comparison_assembly , comparison_homology , by=c("taxid", "ko"), suffix=c(".assembly", ".homology")) %>%  rowwise %>%
+       mutate(matched= case_when(
+           matched.assembly == 0 && matched.homology == 0 ~ 0,
+           matched.assembly == matched.homology ~ 1,
+           TRUE ~ 0
+       ))  %>% select(taxid, ko, matched)
 
     #by filling with zero i'm saying dun look at this one
     superImposed = twoTables %>% spread(ko, matched, fill=0)
     superImposed %<>% merge(abuDF, by="taxid") %>% arrange(desc(abu)) #%>% head(n=1)
 
-    #write.csv(superImposed, "~/github/metamaps/superImposed_nr_full.csv", row.names=F)
-    #write.csv(superImposed, "~/github/metamaps/superImposed_nr_trimmed.csv", row.names=F)
-
-    # Simple diagnostic
-    ## Homology search
-
-    # thauera_full = filter(homologyAssignments, taxid == '33057')
-    # thauera_trimmed = filter(homologyAssignments, taxid == '33057')
-    # thauera_homology  = rbind(thauera_full %>% mutate(db="full"), thauera_trimmed %>% mutate(db="trimmed"))
-    # thauera_homology_wide = thauera_homology %>% select(-taxid) %>% spread(ko, Freq, fill=0)
-    # write.csv(thauera_homology_wide, file="thauera_homology.csv", row.names=F)
-
-    list(
-            homology    = homologyAssignments,
-            assembly    = ass,
+    allKOs = list(
+            homology    = wideDF_comparison_homology,
+            assembly    = wideDF_comparison_assembly,
             superImposed= superImposed
     )
 }
