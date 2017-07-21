@@ -9,6 +9,8 @@
 #' @param password password
 #' @param test to show connection success or failure
 #'
+#' @importFrom dplyr pull
+#' @importFrom magrittr %>%
 #' @export
 connect <- function(
 url = "192.168.100.1", ##<< URL hosting the neo4j database
