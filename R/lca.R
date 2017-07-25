@@ -45,3 +45,21 @@ lca <- function(   taxon1='10090', taxon2='9096',  recurse=TRUE,   ... ){
         }
     }
 }
+
+lca2 <- function(){
+query = "
+MATCH
+    (t1:Taxon {taxid: '51875'})-[:childof*]->(p1:Taxon)
+MATCH
+    (:Taxon {taxid: '37579'})-[:childof*]->(p2:Taxon)
+WHERE
+    p1.taxid = p2.taxid
+MATCH
+    path = (t1)-[:childof*]->(p1)
+RETURN p1.taxid
+ORDER BY length(path)
+LIMIT 1
+"
+dbquery(query)
+}
+
