@@ -34,7 +34,8 @@
 #' })
 #' }
 #' @export
-map <- function(reads, contigs, blatOutputFile){
+map <- function(reads, contigs){
+    blatOutputFile = tempfile(fileexit="m8")
     if(!"DNAStringSet" %in% class(reads)){
         filename = last(unlist(strsplit(reads, "/")))
         directory = paste(head(unlist(strsplit(reads, "/")), -1), collapse="/")
@@ -51,6 +52,7 @@ map <- function(reads, contigs, blatOutputFile){
                    "qstart", "qend", "sstart", "send",
                    "evalue", "bitscore")
     read.table(blatOutputFile, sep="\t", h=F, comment.char="") %>%
+    unlink(blatOutputFile)
     setNames(colNames) %>%
     mutate(
         newStart = ifelse(send - sstart > 0, sstart, send),
@@ -59,13 +61,15 @@ map <- function(reads, contigs, blatOutputFile){
 }
 
 #' grep.cDNA
-#' 
-#' takes the cDNA from the input file
-#' 
-#' reads a ShortRead object
-grep.cDNA = function(reads){
-    whichIsMRNA = ShortRead::id(reads) %>% as.character %>% grepl("cDNA", .)
+#'
+#' takes the cDNA from the input file (repeat of grepReads)
+#'
+#' @param reads
+#' @importFrom ShortRead id
+grep.cDNA = function(reads)
+{
+    whichIsMRNA = id(reads) %>% as.character %>% grepl("cDNA", .)
     r = reads[whichIsMRNA] %>% sread
-    names(r) = ShortRead::id(reads[whichIsMRNA])
+    names(r) = id(reads[whichIsMRNA])
     r
 }

@@ -4,7 +4,7 @@
 \alias{map}
 \title{map takes cDNA reads (fastQ format) and maps them onto contigs}
 \usage{
-map(reads, contigs, blatOutputFile)
+map(reads, contigs)
 }
 \arguments{
 \item{reads}{path to short reads file in fastq format}

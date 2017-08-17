@@ -36,7 +36,7 @@ mapContig = function(contigid, seq, s, e)
 #'
 #' @param ko the KO of interest
 #' @param passDir path to pAss outputs
-#' @importFrom GenomicRanges Granges
+#' @importFrom GenomicRanges GRanges
 #' @importFrom ShortRead id readFasta sread
 #' @examples
 #' \dontrun{
