@@ -90,7 +90,7 @@ blatting = function(ko, type, newblerInput)
 #' @param ko the ko of interest
 #' @importFrom GenomicRanges countOverlaps
 #' @export
-findOverlaps = function(ko, passDir, newblerInput)
+mapReads2MDR = function(ko, passDir, newblerInput)
 {
     ko = gsub("^ko:", "", ko)
     cDNA = blatting(ko, type="cDNA", newblerInput)
