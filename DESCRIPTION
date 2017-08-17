@@ -33,4 +33,4 @@ Imports:
     RSQLite,
     data.table
 Remotes: jjallaire/sigma
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

@@ -42,7 +42,7 @@ test = TRUE
                 yn = readline(prompt="Do you want to index now?")
                 if(yn == 'y'){
                     mapply(Metamaps::index, label = c("ko", "contigs", "contigs", "Taxon", "cpd"), property = c("ko", "contig", "bin", "taxid", "cpd"))
-                }if else (yn == 'n'){
+                }else if (yn == 'n'){
                     message("OK its your choice, the queries will be slower")
                 }else{
                     message("I do not recognise the command")
