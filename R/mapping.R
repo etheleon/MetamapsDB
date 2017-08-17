@@ -35,7 +35,7 @@
 #' }
 #' @export
 map <- function(reads, contigs){
-    blatOutputFile = tempfile(fileexit="m8")
+    blatOutputFile = tempfile(fileext="m8")
     if(!"DNAStringSet" %in% class(reads)){
         filename = last(unlist(strsplit(reads, "/")))
         directory = paste(head(unlist(strsplit(reads, "/")), -1), collapse="/")
