@@ -9,12 +9,11 @@
 #' @param password password
 #' @param test to show connection success or failure
 #'
-#' @importFrom dplyr pull
+#' @importFrom dplyr pull bind_rows
 #' @importFrom magrittr %>%
 #' @importFrom RCurl getURL
 #' @importFrom RJSONIO fromJSON
 #' @importFrom base64enc base64encode
-#' @importFrom tidyverse map bind_rows
 #' @export
 connect <- function(
 url = "192.168.100.1", ##<< URL hosting the neo4j database
@@ -49,7 +48,7 @@ test = TRUE
                 }
             }else{
                 message("Found these indices:")
-                fromJSON(indices) %>% map(as.data.frame) %>% bind_rows
+                fromJSON(indices) %>% purrr::map(as.data.frame) %>% bind_rows
             }
         }
     }
