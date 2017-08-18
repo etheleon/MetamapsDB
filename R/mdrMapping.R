@@ -24,7 +24,6 @@ mapContig = function(contigid, seq, s, e)
     matchStart = regexpr(mdr, full) %>% as.integer
     matchLength = regexpr(mdr, full) %>% attr("match.length")
     matchEnd = matchStart + matchLength
-
     data.frame(
         id = contigid,
         matchStart = matchStart,
@@ -73,6 +72,7 @@ mdrRanges = function(ko, passDir)
 #' \dontrun{
 #'
 #' }
+
 blatting = function(ko, type, newblerInput)
 {
     combined = lapply(c(1,2), function(readNum){
@@ -81,7 +81,7 @@ blatting = function(ko, type, newblerInput)
             read.fq = read %>% readFastq %>% grepReads(type)
     }) %>% do.call(c,.)
     contigs = sprintf("%s/%s/454AllContigs.fna", newblerInput, ko)
-    blast8 = combined %>% MetamapsDB::map(contigs) #map is a metamapsDB function
+    blast8 = combined %>% map(contigs) #map is a metamapsDB function
     blatRanges = GRanges(seqnames=blast8$subject, ranges=IRanges(blast8$newStart, blast8$newEnd), read=blast8$query)
 }
 
@@ -90,6 +90,11 @@ blatting = function(ko, type, newblerInput)
 #' @param ko the ko of interest
 #' @importFrom GenomicRanges countOverlaps
 #' @export
+#' @examples
+#' \dontrun{
+#' mapReads2MDR('K00927', passDir="./out", newblerInput="./newbler2")
+#' }
+
 mapReads2MDR = function(ko, passDir, newblerInput)
 {
     ko = gsub("^ko:", "", ko)

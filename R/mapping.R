@@ -51,13 +51,14 @@ map <- function(reads, contigs){
                    "alignLen", "mismatch", "gapOpenings",
                    "qstart", "qend", "sstart", "send",
                    "evalue", "bitscore")
-    read.table(blatOutputFile, sep="\t", h=F, comment.char="") %>%
-    unlink(blatOutputFile)
+    outputDF = read.table(blatOutputFile, sep="\t", h=F, comment.char="") %>%
     setNames(colNames) %>%
     mutate(
         newStart = ifelse(send - sstart > 0, sstart, send),
         newEnd   = ifelse(send - sstart > 0, send,sstart)
     ) %>% select(query:subject, qstart:send, bitscore:newEnd)
+    unlink(blatOutputFile)
+    outputDF
 }
 
 #' grep.cDNA
