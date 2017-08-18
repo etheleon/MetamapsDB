@@ -2,12 +2,11 @@
 #'
 #' @param reads the ShortRead class object
 #' @param type the pattern to look for
-#' @importFrom ShortRead id
 grepReads = function(reads, type="cDNA")
 {
-    whichIsMRNA = id(reads) %>% as.character %>% grepl(type, .)
+    whichIsMRNA = ShortRead::id(reads) %>% as.character %>% grepl(type, .)
     r = reads[whichIsMRNA] %>% sread
-    names(r) = id(reads[whichIsMRNA])
+    names(r) = ShortRead::id(reads[whichIsMRNA])
     r
 }
 
@@ -36,7 +35,6 @@ mapContig = function(contigid, seq, s, e)
 #' @param ko the KO of interest
 #' @param passDir path to pAss outputs
 #' @importFrom GenomicRanges GRanges
-#' @importFrom ShortRead id readFasta sread
 #' @examples
 #' \dontrun{
 #' locsMDR = mdrRanges('K00927')
@@ -46,17 +44,17 @@ mdrRanges = function(ko, passDir)
     mdrPath = sprintf("%s/pAss11/%s.fna", passDir, ko)
     msaPath = sprintf("%s/pAss03/%s.msa", passDir, ko)
 
-    info = id(readFasta(mdrPath)) %>% first %>% as.character
+    info = ShortRead::id(readFasta(mdrPath)) %>% first %>% as.character
     msa.starting = info %>% regexec("msaStart:(\\d+)",.) %>% regmatches(info, .) %>% unlist %>% last %>% as.integer
     msa.ending = info %>% regexec("msaEND:(\\d+)",.) %>% regmatches(info, .) %>% unlist %>% last %>% as.integer
 
     msa = readFasta(msaPath)
 
-    locs = mapply(mapContig, contigid = id(msa) %>% substr(1, 11), seq= lapply(sread(msa), function(x) x),
+    locs = mapply(mapContig, contigid = ShortRead::id(msa) %>% substr(1, 11), seq= lapply(sread(msa), function(x) x),
     MoreArgs = list(s = msa.starting, e = msa.ending),
     SIMPLIFY=FALSE
     ) %>% do.call(rbind,.) %>% tbl_df
-    mdrContigs = id(readFasta(mdrPath)) %>% as.character %>% substr(1, 11)
+    mdrContigs = ShortRead::id(readFasta(mdrPath)) %>% as.character %>% substr(1, 11)
     filter(locs, id %in% mdrContigs) %$% GRanges(seqnames = id, ranges = IRanges(matchStart, end=matchEnd))
 }
 
