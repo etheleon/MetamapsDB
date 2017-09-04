@@ -87,6 +87,7 @@ blatting = function(ko, type, newblerInput)
 #' overlaps
 #' @param ko the ko of interest
 #' @importFrom GenomicRanges countOverlaps
+#' @importFrom dplyr tbl_df
 #' @export
 #' @examples
 #' \dontrun{
@@ -104,5 +105,5 @@ mapReads2MDR = function(ko, passDir, newblerInput)
         count.gDNA = countOverlaps(komdrRanges, gDNA),
         count.cDNA = countOverlaps(komdrRanges, cDNA),
         ko = ko
-    )
+    ) %>% tbl_df
 }

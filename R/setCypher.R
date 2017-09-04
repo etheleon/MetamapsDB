@@ -32,7 +32,7 @@ test = TRUE
         ifelse(connected, "Connection Successful ✅", "Connection Unsuccessful ❌") %>% message
         #Check for indices
         if(connected){
-            key         = base64encode(charToRaw(paste(user, password, sep=":")))
+            key         = base64encode(charToRaw(paste(username, password, sep=":")))
             indexURL    = paste0(url, ":", port, "/db/data/schema/index/")
             header      = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key))
             indices     = getURL(indexURL, customrequest = "GET", httpheader = header)
