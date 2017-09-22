@@ -20,3 +20,4 @@ blastfile = "~/simulation_fr_the_beginning/reAssemble/everybodyelse/out/simBlast
 mappingInfo(blastfile, doBlast=FALSE)
 }
 }
+

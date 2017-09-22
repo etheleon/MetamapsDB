@@ -18,3 +18,4 @@ trio(KOI = "ko:K00001", toUnique = TRUE, withDetails = FALSE, ...)
 \description{
 Function to find trios.
 }
+

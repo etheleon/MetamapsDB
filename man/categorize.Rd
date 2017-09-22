@@ -14,3 +14,4 @@ Adds 2 more columns
 1. if the contig is chimeric or pure based on the read origins
 2. if the readOrigin aligns with annotations
 }
+

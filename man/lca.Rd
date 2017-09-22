@@ -18,3 +18,4 @@ lca(taxon1 = "10090", taxon2 = "9096", recurse = TRUE, ...)
 \description{
 Finds the lowest common ancestor
 }
+

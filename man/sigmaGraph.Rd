@@ -16,3 +16,4 @@ Takes mbgraph and outputs as a shinyApp Obj
 Users should encode the values into the igraph object
 Works with older version of IGraph, maybe someone can choose to upgrade this further
 }
+

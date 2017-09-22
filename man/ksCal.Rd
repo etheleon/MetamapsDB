@@ -19,3 +19,4 @@ data.frame with columns: ko, p.value and KS statistic (D)
 \description{
 runs a "two.sided" KS test and reports the KS and p value
 }
+

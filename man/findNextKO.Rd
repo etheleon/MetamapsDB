@@ -18,3 +18,4 @@ findNextKO(cpd, graph, originalKO, direction)
 \description{
 Given a specied KO, one is suppose to find the next adjacent KO.
 }
+

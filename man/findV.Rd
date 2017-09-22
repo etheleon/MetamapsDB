@@ -14,3 +14,4 @@ findV(name, g)
 \description{
 given the original graph find the vertiex ID of given name
 }
+

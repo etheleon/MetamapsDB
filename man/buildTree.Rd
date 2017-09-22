@@ -12,3 +12,4 @@ buildTree(taxids)
 \description{
 draws the taxonomic tree of the given leave nodes
 }
+

@@ -16,3 +16,4 @@ grepgraph.cpd(cpds, fullGraph = FALSE, ...)
 \description{
 Takes in a vector list of cpd ids and generates a subset of metabolic graph as a igraph object
 }
+

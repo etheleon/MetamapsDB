@@ -16,3 +16,4 @@ rolling(keptDF, wind = 15, interval = 10)
 \description{
 outputs a data.frame with 2 columns 1.) rollingMean 2.) meanDepth
 }
+

@@ -4,7 +4,7 @@
 #' blat was chosen for its ability to show multiple hits
 #' https://www.biostars.org/p/17613/
 #'
-#' @param reads path to short reads file in fastq format
+#' @param reads Shortread object or path to short reads file in fastq format
 #' @param contigs path to contig file in fa format
 #'
 #' @importFrom ShortRead writeFasta readFastq

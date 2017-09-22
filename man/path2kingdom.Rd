@@ -14,3 +14,4 @@ path2kingdom(taxID = "79255", ...)
 \description{
 Finds the superkingdom given the taxid
 }
+

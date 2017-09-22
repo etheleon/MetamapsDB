@@ -14,3 +14,4 @@ buildE(path, ma)
 \description{
 buildE sorts the tree into a data.frame
 }
+

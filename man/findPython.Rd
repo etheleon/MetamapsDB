@@ -2,7 +2,6 @@
 % Please edit documentation in R/sqlTaxid.R, R/utils.R
 \name{findPython}
 \alias{findPython}
-\alias{findPython}
 \title{findPython finds the path to the executable}
 \usage{
 findPython(python, verbose = "FALSE")
@@ -23,3 +22,4 @@ Code taken from R package gdata
 
 Code taken from R package gdata
 }
+

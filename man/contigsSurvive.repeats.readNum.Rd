@@ -14,3 +14,4 @@ contigsSurvive.repeats.readNum(rs, thresholds = seq(1, 50, 1), koi)
 \description{
 contigsSurvive.repeats.readNum
 }
+

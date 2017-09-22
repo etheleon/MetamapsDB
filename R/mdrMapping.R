@@ -2,6 +2,7 @@
 #'
 #' @param reads the ShortRead class object
 #' @param type the pattern to look for
+#' @export
 grepReads = function(reads, type="cDNA")
 {
     whichIsMRNA = ShortRead::id(reads) %>% as.character %>% grepl(type, .)
@@ -16,6 +17,7 @@ grepReads = function(reads, type="cDNA")
 #' @param seq character string of the contig from the MSA
 #' @param s starting loc
 #' @param e ending loc
+#' @export
 mapContig = function(contigid, seq, s, e)
 {
     mdr = seq %>% as.character %>% substr(s, e) %>% gsub("-", "", .)
@@ -32,21 +34,29 @@ mapContig = function(contigid, seq, s, e)
 
 #' Returns contig ranges for those captured within the MDR
 #'
+#' Header for contigs
+#' contig00026 ref|YP_002288046.1| (ntRev) ## spanning:123 msaStart:653 msaEND:944 max10BPwindow:205.4 contigStart: 221 contigEnd: 421
+#' Give GRanges output with seqname ko|contig00001
+#'
 #' @param ko the KO of interest
 #' @param passDir path to pAss outputs
 #' @importFrom GenomicRanges GRanges
+#' @importFrom ShortRead readFasta
+#' @export
 #' @examples
 #' \dontrun{
 #' locsMDR = mdrRanges('K00927')
 #' }
+
+
 mdrRanges = function(ko, passDir)
 {
     mdrPath = sprintf("%s/pAss11/%s.fna", passDir, ko)
     msaPath = sprintf("%s/pAss03/%s.msa", passDir, ko)
 
-    info = ShortRead::id(readFasta(mdrPath)) %>% first %>% as.character
-    msa.starting = info %>% regexec("msaStart:(\\d+)",.) %>% regmatches(info, .) %>% unlist %>% last %>% as.integer
-    msa.ending = info %>% regexec("msaEND:(\\d+)",.) %>% regmatches(info, .) %>% unlist %>% last %>% as.integer
+    info = ShortRead::id(readFasta(mdrPath)) %>% head(n=1) %>% as.character
+    msa.starting = info %>% regexec("msaStart:(\\d+)",.) %>% regmatches(info, .) %>% unlist %>% tail(n=1) %>% as.integer
+    msa.ending = info %>% regexec("msaEND:(\\d+)",.) %>% regmatches(info, .) %>% unlist %>% tail(n=1) %>% as.integer
 
     msa = readFasta(msaPath)
 
@@ -55,7 +65,7 @@ mdrRanges = function(ko, passDir)
     SIMPLIFY=FALSE
     ) %>% do.call(rbind,.) %>% tbl_df
     mdrContigs = ShortRead::id(readFasta(mdrPath)) %>% as.character %>% substr(1, 11)
-    filter(locs, id %in% mdrContigs) %$% GRanges(seqnames = id, ranges = IRanges(matchStart, end=matchEnd))
+    filter(locs, id %in% mdrContigs) %$% GRanges(seqnames = paste(ko, id, sep="|"), ranges = IRanges(matchStart, end=matchEnd))
 }
 
 #' blatting
@@ -63,6 +73,7 @@ mdrRanges = function(ko, passDir)
 #' @param type the
 #' @param newblerInput path to newbler dir eg. /root in /root/K0000X/input/K0000X.1.fq
 #' @param blatoutput path to store blat output in tabular blast format
+#' @export
 #'
 #' @importFrom ShortRead readFastq
 #' @importFrom GenomicRanges GRanges

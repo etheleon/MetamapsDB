@@ -18,3 +18,4 @@ ig2ggplot(g, dfOnly = TRUE, labels = FALSE, ...)
 \description{
 Converts a igraph obj into a ggplot plot
 }
+

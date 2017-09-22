@@ -16,3 +16,4 @@ ko2path(ko = "K00001", ...)
 ko2path Finds all pathways related to the KO
 Finds all associated pathways, and returns a data.frame with ko and pathway details
 }
+

@@ -25,3 +25,4 @@ Settings for connecting to neo4j database
 Function sets parameters such as the REST API URL, username and passwords
 In the newer versions of neo4j default requires username and password
 }
+

@@ -7,7 +7,7 @@
 map(reads, contigs)
 }
 \arguments{
-\item{reads}{path to short reads file in fastq format}
+\item{reads}{Shortread object or path to short reads file in fastq format}
 
 \item{contigs}{path to contig file in fa format}
 }
@@ -38,3 +38,4 @@ lapply(kois, function(ko){
 })
 }
 }
+

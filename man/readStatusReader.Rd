@@ -16,3 +16,4 @@ taken from /rootDir/ko/454ReadStatus.txt from newbler.
 We remove stray reads from other taxa if it only attributes to less than 10% of the contig, output
 data.frame has column spanning set to 0 1 to show if its spanning or not
 }
+

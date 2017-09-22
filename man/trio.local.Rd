@@ -17,3 +17,4 @@ data.frame containing all reactions
 \description{
 trio.local finds all trios surrounding a given KO
 }
+

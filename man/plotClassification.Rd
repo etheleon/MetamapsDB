@@ -14,3 +14,4 @@ plotClassification(matrix, ko)
 \description{
 Plot clustering
 }
+

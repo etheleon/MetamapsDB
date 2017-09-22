@@ -16,3 +16,4 @@ path2ko(pathway = "path:ko00010", ...)
 Finds all KOs in a given pathway
 Finds all KOs belonging to a Pathways
 }
+

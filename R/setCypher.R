@@ -60,7 +60,7 @@ test = TRUE
 #' indexes nodes based on the property
 #'
 #' @export
-#' @example
+#' @examples
 #' \dontrun{
 #' f = future({
 #'     dbquery(query="CREATE INDEX ON :contigs(contig)", justPost = TRUE)

@@ -16,3 +16,4 @@ contigInfo(ko, withAnnotation = FALSE, contig)
 \description{
 contigInfo function greps the contig related info such as whether its in the MDR
 }
+

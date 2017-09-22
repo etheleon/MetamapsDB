@@ -16,3 +16,4 @@ taxnam.sql(taxids, byID = TRUE, taxrank = "genus")
 \description{
 faster way of querying the taxid names using structured SQL then querying the graphDB
 }
+

@@ -17,3 +17,4 @@ vector which nodes are of the certain type
 \description{
 findType finds KOs/compounds ID in metabolic graph
 }
+
