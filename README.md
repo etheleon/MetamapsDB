@@ -44,7 +44,7 @@ Docker wrapper for generating a KEGG + Taxnoomy + Contig neo4j graph database
 
 R package for mapping reads onto contigs/MDR using Blat
 
-[mapBloat](https://github.com/etheleon/mapblat)
+[mapBlat](https://github.com/etheleon/mapblat)
 
 # Usage
 
