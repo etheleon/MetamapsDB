@@ -14,18 +14,18 @@ dynPlot Diagnostic plots
 }
 \examples{
 \dontrun{
-connect("yourDomain", password="yourPassword")
-newblerDir= "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
-dynList = scg  \%>\% gsub("ko:", "", .) \%>\% mclapply(dynamicThreshold, root=newblerDir, mc.cores=20)
-dynList = scg  \%>\% gsub("ko:", "", .) \%>\% head(n=1) \%>\% lapply(dynamicThreshold, root=newblerDir)
-pdf("thresholdPlots.pdf", width=10)
-plotDF = dynPlots(dynList, F)         
-dev.off()                          
-pdf("abundance.pdf", width=10)
-lapply(plotDF$details,"[[", 1)      
-dev.off()                           
-plotDF$p \%>\% ggsave(file="summaryPlot.pdf", w=10)
-plotDF$violin \%>\% ggsave(file="violin.pdf", w=10, h=4)
+    connect("yourDomain", password="yourPassword")
+    newblerDir= "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
+    dynList = scg  \%>\% gsub("ko:", "", .) \%>\% mclapply(dynamicThreshold, root=newblerDir, mc.cores=20)
+    dynList = scg  \%>\% gsub("ko:", "", .) \%>\% head(n=1) \%>\% lapply(dynamicThreshold, root=newblerDir)
+    pdf("thresholdPlots.pdf", width=10)
+    plotDF = dynPlots(dynList, F)
+    dev.off()
+    pdf("abundance.pdf", width=10)
+    lapply(plotDF$details,"[[", 1)
+    dev.off()
+    plotDF$p \%>\% ggsave(file="summaryPlot.pdf", w=10)
+    plotDF$violin \%>\% ggsave(file="violin.pdf", w=10, h=4)
 }
 }
-
+\keyword{internal}

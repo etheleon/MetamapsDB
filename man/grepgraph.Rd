@@ -16,4 +16,3 @@ grepgraph(kos, fullGraph = FALSE, ...)
 \description{
 Takes in a vector list of KO ids and generates a metabolic graph as a igraph object
 }
-

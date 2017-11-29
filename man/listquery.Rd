@@ -23,4 +23,3 @@ listquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
 \description{
 Takes variable queries with table output ie. no nodes no rels (simpler version of DBquery gives a list)
 }
-

@@ -16,4 +16,3 @@ taxname(taxon = 5062, name = FALSE, ...)
 \description{
 Lists the taxonomic id's details
 }
-

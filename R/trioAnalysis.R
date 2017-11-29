@@ -28,15 +28,15 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
         if(is.na(trioDF)){
                message(sprintf("%s is not a metabolic KO", midKO))
             data.frame(
-                    rxnNum = integer(),
-                    before.x = numeric(), 
-                    middle.x = numeric(), 
-                    after.x = numeric(),
-                    cluster = integer(), 
-                    before.y = character(),
-                    middle.y = character(),
-                    after.y = character(),
-                    selected = integer()
+                    rxnNum    =  integer(),
+                    before.x  =  numeric(),
+                    middle.x  =  numeric(),
+                    after.x   =  numeric(),
+                    cluster   =  integer(),
+                    before.y  =  character(),
+                    middle.y  =  character(),
+                    after.y   =  character(),
+                    selected  =  integer()
                        )
         }else{
             trioDF %<>% mutate(rxnNum = 1:n())
@@ -130,6 +130,7 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
 #' @importFrom magrittr "%>%"
 #' @importFrom magrittr "%<>%"
 #' @importFrom magrittr "%$%"
+#' @keywords internal
 #' @return optimum number of Ks to choose
 findK <- function(theMatrix, kmax = 10, ko){
         clusTab = theMatrix %>% dplyr::select(before, after) 
@@ -152,8 +153,11 @@ findK <- function(theMatrix, kmax = 10, ko){
 
 #' Plot clustering
 #'
+#' clusters the graph
+#'
 #' @param matrix    input matrix for plotting needs before and after column
 #' @param ko        the koID for printing the KO name and ID to the diagnostic plot
+#' @keywords internal
 plotClassification = function(matrix, ko){
 tm = 
     matrix                               %>%
@@ -191,6 +195,7 @@ tm =
 #' @return data.frame with columns: ko, p.value and KS statistic (D)
 #'
 #' @export
+#' @keywords internal
 ksCal <- function(contigDF, baseDistribution, cores){
 
     group1 = baseDistribution$rpkm_cDNA %>% as.numeric

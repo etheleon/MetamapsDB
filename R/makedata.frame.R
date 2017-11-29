@@ -6,7 +6,7 @@
 #' @param string2factor to store strings as factor
 #'
 #' @importFrom magrittr "%>%"
-#'
+#' @keywords internal
 #' @export
 make.data.frame <- function(
 df, string2factor = FALSE){

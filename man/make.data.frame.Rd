@@ -14,4 +14,4 @@ make.data.frame(df, string2factor = FALSE)
 \description{
 Certain dbquerys will return data.frames with columns having lists, this function reduces this
 }
-
+\keyword{internal}

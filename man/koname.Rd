@@ -16,4 +16,3 @@ koname(ko = "K00001", minimal = TRUE, ...)
 \description{
 Gives KO details when supplied with KO id
 }
-

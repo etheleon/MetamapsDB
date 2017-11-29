@@ -15,4 +15,3 @@ new non-redundant (gene) metabolic graph
 \description{
 Constracts KOs which share the same cpd product and substrates.
 }
-

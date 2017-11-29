@@ -19,4 +19,3 @@ vector of surrounding nodes if all is TRUE, if all is FALSE returns list of in a
 \description{
 surrNODES finds nodes which are surrounding the given node
 }
-

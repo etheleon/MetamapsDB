@@ -10,4 +10,3 @@ lhs \%$\% rhs
 with Pipe operator
 }
 \keyword{internal}
-

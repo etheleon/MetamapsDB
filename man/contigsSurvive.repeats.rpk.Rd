@@ -16,4 +16,4 @@ contigsSurvive.repeats.rpk(rs, rpk = seq(0, 2, 0.01), koi = "K00927")
 \description{
 contigsSurvive.repeats.rpk
 }
-
+\keyword{internal}

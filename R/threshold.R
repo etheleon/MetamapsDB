@@ -181,20 +181,21 @@ lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the
 #' @importFrom gridExtra grid.arrange
 #' @importFrom magrittr "%<>%"
 #' @importFrom forcats fct_rev
+#' @keywords internal
 #' @examples
 #' \dontrun{
-#' connect("yourDomain", password="yourPassword")
-#' newblerDir= "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
-#' dynList = scg  %>% gsub("ko:", "", .) %>% mclapply(dynamicThreshold, root=newblerDir, mc.cores=20)
-#' dynList = scg  %>% gsub("ko:", "", .) %>% head(n=1) %>% lapply(dynamicThreshold, root=newblerDir)
-#' pdf("thresholdPlots.pdf", width=10)
-#' plotDF = dynPlots(dynList, F)         
-#' dev.off()                          
-#' pdf("abundance.pdf", width=10)
-#' lapply(plotDF$details,"[[", 1)      
-#' dev.off()                           
-#' plotDF$p %>% ggsave(file="summaryPlot.pdf", w=10)
-#' plotDF$violin %>% ggsave(file="violin.pdf", w=10, h=4)
+#'     connect("yourDomain", password="yourPassword")
+#'     newblerDir= "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
+#'     dynList = scg  %>% gsub("ko:", "", .) %>% mclapply(dynamicThreshold, root=newblerDir, mc.cores=20)
+#'     dynList = scg  %>% gsub("ko:", "", .) %>% head(n=1) %>% lapply(dynamicThreshold, root=newblerDir)
+#'     pdf("thresholdPlots.pdf", width=10)
+#'     plotDF = dynPlots(dynList, F)
+#'     dev.off()
+#'     pdf("abundance.pdf", width=10)
+#'     lapply(plotDF$details,"[[", 1)
+#'     dev.off()
+#'     plotDF$p %>% ggsave(file="summaryPlot.pdf", w=10)
+#'     plotDF$violin %>% ggsave(file="violin.pdf", w=10, h=4)
 #' }
 #' @export
 dynPlots = function(dynList, indivPlots=T){
@@ -432,6 +433,7 @@ dynPlots = function(dynList, indivPlots=T){
 #' @param root folder to find
 #' @import dplyr
 #' @importFrom zoo rollapply
+#' @keywords internal
 #' @export
 dynamicThreshold <- function(koi, root){
     message(sprintf("Processing %s", koi))
@@ -456,7 +458,7 @@ dynamicThreshold <- function(koi, root){
 #' @param keptDF dataframe for the #repeats left after thresholding, columnnames thresholds, repeats
 #' @param wind window size
 #' @param interval interval size
-#'
+#' @keywords internal
 rolling <- function(keptDF, wind=15, interval = 10){
         data.frame(
             #should rename to rolling diff basically the averaged gradient change
@@ -471,7 +473,7 @@ rolling <- function(keptDF, wind=15, interval = 10){
 #' simpleThres
 #'
 #' internal cluster
-# 
+#
 #' @param keptDF internal function
 simpleThres = function(keptDF){
     #browser()
@@ -484,7 +486,7 @@ simpleThres = function(keptDF){
 #' @param rs data.frame read.status, contig, readOrigin (taxid)
 #' @param thresholds the threshold window
 #' @importFrom tidyr spread
-#'
+#' @keywords internal
 contigsSurvive.repeats.readNum <- function(rs, thresholds = seq(1, 50, 1), koi){
     sim = simulated(koi)
     thresholds %>% lapply(function(readDepth){
@@ -499,13 +501,26 @@ contigsSurvive.repeats.readNum <- function(rs, thresholds = seq(1, 50, 1), koi){
     }) %>% do.call(rbind,.)
 }
 
-#' simulated 
+#' finds all simulated genera for that particular KO
 #'
-#' pull all simulated genomes
+#' `simulated` pull all simulated genomes
 #'
 #' @param ko koi
 #'
 #' @export
+#' @examples
+#' @keywords internal
+#' /dontrun{
+#' df = simulated('ko:K00001)
+#' df %>% head
+#' #          ko  taxid Freq
+#' # 1 ko:K00001    896    1
+#' # 2 ko:K00001 120961    1
+#' # 3 ko:K00001     13    1
+#' # 4 ko:K00001     64    1
+#' # 5 ko:K00001    528    1
+#' # 6 ko:K00001  33981    2
+#' }
 simulated <- function(ko){
     message(sprintf("Universal truth: How many genes were simulated for %s", ko))
     simulated = dbquery("
@@ -526,7 +541,7 @@ simulated <- function(ko){
 #' @param rs data.frame read.status, contig, readOrigin (taxid)
 #' @param rpk reads per kilo
 #' @param koi the KO of interest
-#'
+#' @keywords internal
 contigsSurvive.repeats.rpk <- function(rs, rpk = seq(0, 2, 0.01), koi='K00927'){
     query = "
         MATCH
@@ -551,7 +566,7 @@ contigsSurvive.repeats.rpk <- function(rs, rpk = seq(0, 2, 0.01), koi='K00927'){
 
 #' readStatusReader stores read assignment details from the simulation and assigns the contig a genome of origin
 #'
-#' taken from /rootDir/ko/454ReadStatus.txt from newbler. 
+#' taken from /rootDir/ko/454ReadStatus.txt from newbler.
 #' We remove stray reads from other taxa if it only attributes to less than 10% of the contig, output
 #' data.frame has column spanning set to 0 1 to show if its spanning or not
 #'
@@ -559,6 +574,7 @@ contigsSurvive.repeats.rpk <- function(rs, rpk = seq(0, 2, 0.01), koi='K00927'){
 #' @param koi the ko directory
 #' @importFrom data.table as.data.table
 #' @export
+#' @keywords internal
 readStatusReader <- function(root, koi, mdr=FALSE)
 {
     message("Reading in read assignment data from NEWBLER output")
@@ -598,15 +614,16 @@ readStatusReader <- function(root, koi, mdr=FALSE)
 #' 2. if the readOrigin aligns with annotations
 #'
 #' @param rs output from readStatusReader
-#'
+#' @param ko the ko of interest
+#' @keywords internal
 categorize <- function(rs, ko){
-	chimeric = rs$X5..Contig %>% table %>% as.data.frame %>% arrange(desc(Freq)) %>% filter(Freq > 1) %$% . %>% as.character
-	rs$status = "pure"
-	rs[rs$X5..Contig %in% chimeric,]$status="chimeric"
-	rs$origin = "unknown"
-	pure = rs %>% filter(!X5..Contig %in% chimeric)
+    chimeric = rs$X5..Contig %>% table %>% as.data.frame %>% arrange(desc(Freq)) %>% filter(Freq > 1) %$% . %>% as.character
+    rs$status = "pure"
+    rs[rs$X5..Contig %in% chimeric,]$status="chimeric"
+    rs$origin = "unknown"
+    pure = rs %>% filter(!X5..Contig %in% chimeric)
     simulatedDF = simulated(ko)
     rs[which(rs$readOrigin %in% simulatedDF$taxid),]$origin= "inSimulation"
-	rs[which(!rs$readOrigin %in% simulatedDF$taxid),]$origin= "outsideSimulation"
+    rs[which(!rs$readOrigin %in% simulatedDF$taxid),]$origin= "outsideSimulation"
     rs
 }

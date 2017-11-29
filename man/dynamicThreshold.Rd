@@ -20,4 +20,4 @@ dynamicThreshold(koi, root)
 dynamicThreshold tries to identify the lower bound converage value in order to remove low quality contigs.
 Number of contigs tend to stablize at a value when removing reads below a certain readnum and we try to identify the min read required for that region of stability
 }
-
+\keyword{internal}

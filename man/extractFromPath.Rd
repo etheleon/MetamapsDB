@@ -14,4 +14,4 @@ extractFromPath(edges, type = "cpd")
 \description{
 given a set of edgelists extract out the CPD / KO node ids
 }
-
+\keyword{internal}

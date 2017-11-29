@@ -1,5 +1,5 @@
 #' Given a igraph object, adjacentPairs finds
-#' adjacent pairs of KOs 
+#' adjacent pairs of KOs
 #'
 #' @param g graph object
 #' @param ko2ko kos to find adjacent pairs for
@@ -41,6 +41,7 @@ adjacentPairs<- function (g, ko2ko =  FALSE, ...){
 #' @param originalKO KO of interest
 #' @param direction the direction in which to find
 #'
+#' @export
 findNextKO = function(cpd, graph, originalKO, direction){
     connectedKO = igraph::neighborhood(graph = graph, nodes = cpd, order = 1, mode=direction)
     #removes nodes without outgoing/incoming connections

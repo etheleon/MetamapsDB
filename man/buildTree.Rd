@@ -4,12 +4,19 @@
 \alias{buildTree}
 \title{buildTree - a taxonomic tree display function}
 \usage{
-buildTree(taxids)
+buildTree(taxids = c(287, 280), standardisedRanks = c("superkingdom",
+  "phylum", "class", "order", "family", "genus", "species"))
 }
 \arguments{
 \item{taxids}{vector of leave nodes}
+
+\item{standardisedRanks}{the ranks to report. superkingdom phylum class order family genus species}
 }
 \description{
-draws the taxonomic tree of the given leave nodes
+Returns taxonomic tree of the taxids up to phylum.
 }
+\examples{
+/dontrun{
 
+}
+}

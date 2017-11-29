@@ -1,13 +1,15 @@
 #' Convert igraph to ggplot2 object
 #'
-#' Converts a igraph obj into a ggplot plot
+#' Converts a metabolic igraph obj into a ggplot plot
+#'
 #' @param g igraph object
 #' @param dfOnly outputs the data.frame and not draw using ggvis 
 #' @param labels to show labels or not
 #' @param ... additional dbquery parameters
 #' @importFrom magrittr "%>%"
+#' @importFrom ggplot2 ggplot
 #' @export
-ig2ggplot <- function(g, dfOnly = TRUE, labels=FALSE,...){
+ig2ggplot <- function(g, dfOnly = TRUE, labels=FALSE, metab = TRUE, ...){
         layoutDF    = setNames(data.frame(layout.norm(g$layout, xmax=1, xmin=0, ymin=0, ymax=1)), c("x", "y"))
         vertexDF    = data.frame(id = unlist(V(g)$name), name = unlist(V(g)$label))
         edgeDF      = get.edgelist(g)
@@ -22,7 +24,12 @@ ig2ggplot <- function(g, dfOnly = TRUE, labels=FALSE,...){
         }) %>% do.call(rbind,.)
 
         vertexDF2$id = 1:nrow(vertexDF2)
-        vertexDF2$type = do.call(c,lapply(strsplit(x=as.character(vertexDF2$name), split=":"), function(x) x[[1]]))
+        if(metab){
+            vertexDF2$type = do.call(c,lapply(strsplit(x=as.character(vertexDF2$name), split=":"), function(x) x[[1]]))
+        }else{
+            vertexDF2$type = 1
+            vertexDF2$type = as.factor(vertexDF2$type)
+        }
         edgelists = 1:nrow(edgeDF) %>% lapply(function(row) {
             rbind(
             vertexDF2 %>% dplyr::select(x,y,name) %>% unique %>% dplyr::filter(name == edgeDF[row,1]) %>% dplyr::select(x,y) %>% dplyr::mutate(group=row),

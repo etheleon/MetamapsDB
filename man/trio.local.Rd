@@ -2,7 +2,7 @@
 % Please edit documentation in R/trio.local.R
 \name{trio.local}
 \alias{trio.local}
-\title{back2enz contracts and simplifies a metabolic subgraph (ie. neighborhood of a given}
+\title{trio.local}
 \usage{
 trio.local(koi, contracted = FALSE)
 }
@@ -15,6 +15,10 @@ trio.local(koi, contracted = FALSE)
 data.frame containing all reactions
 }
 \description{
-trio.local finds all trios surrounding a given KO
+`trio.local` finds all trios surrounding a given KO
 }
+\examples{
+/dontrun{
 
+}
+}

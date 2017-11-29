@@ -1,13 +1,15 @@
-#' Settings for connecting to neo4j database
-#' Function sets parameters such as the REST API URL, username and passwords
-#' In the newer versions of neo4j default requires username and password
-#' 
+#' Connecting to NEO4J Graph Database.
 #'
-#' @param url url to graphDB
+#' `connect` sets params such as the REST API URL, port, db username and password,
+#' In the newer versions of neo4j default requires username and password. If this 
+#' is the first time connecting to a new neo4jDB, please index the nodes else the queries
+#' will be very slow.
+#'
+#' @param url url to running instance of neo4j
 #' @param port port
 #' @param username username
 #' @param password password
-#' @param test to show connection success or failure
+#' @param test run test to show connection success or failure
 #'
 #' @importFrom dplyr pull bind_rows
 #' @importFrom magrittr %>%
@@ -15,12 +17,31 @@
 #' @importFrom RJSONIO fromJSON
 #' @importFrom base64enc base64encode
 #' @export
+#' @examples
+#' \dontrun{
+#' connect(url="127.0.0.1", port=7474, username="neo4j", password="neo4j")
+#'
+#' If this is your first time connecting to omics DB please index the nodes, using `index`
+#' else query speed will be very slow.
+#'
+#' Sending test query: Searching for K00001
+#' #A successful connection will give the following
+#' Connection Successful
+#'
+#' Found these indices:
+#'   property_keys   label
+#' 1        contig contigs
+#' 2           bin contigs
+#' 3           cpd     cpd
+#' 4            ko      ko
+#' 5         taxid   Taxon
+#' }
 connect <- function(
-url = "192.168.100.1", ##<< URL hosting the neo4j database
-port = 7474,            ##<< Port
-username = 'neo4j',   ##<< authorization username and password
-password = 'neo4j', ##<< authorization username and password
-test = TRUE
+    url = "127.0.0.1", ##<< URL hosting the neo4j database
+    port = 7474,            ##<< Port
+    username = 'neo4j',   ##<< authorization username and password
+    password = 'neo4j', ##<< authorization username and password
+    test = TRUE
 ){
     assign("cacheEnv",new.env(), envir = baseenv())
     cacheEnv$cypher   <- paste0(url, ":", port, "/db/data/cypher")
@@ -57,7 +78,11 @@ test = TRUE
 
 #' Indexes the database for faster retrieval
 #'
-#' indexes nodes based on the property
+#' `index` indexes nodes based on the given property. Lets you do fast search 
+#' for a node using a property field.
+#'
+#' @param label label of the nodes you want to index
+#' @param property the property key on which you would like to index on
 #'
 #' @export
 #' @examples
@@ -70,8 +95,8 @@ test = TRUE
 #'     message
 #' }) %plan% multiprocess
 #' }
-index <- function(label, property){
-    post = RJSONIO::toJSON(list(property_keys= "contig"))
+index <- function(label, property="contig"){
+    post = RJSONIO::toJSON(list(property_keys= property))
     key         = base64encode(charToRaw(paste(cacheEnv$user, cacheEnv$password, sep=":")))
     header      = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key))
     addindex = paste(gsub("cypher", "schema/index", cacheEnv$cypher), label, sep="/")

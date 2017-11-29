@@ -19,4 +19,4 @@ optimum number of Ks to choose
 \description{
 using cluster::clusGap
 }
-
+\keyword{internal}

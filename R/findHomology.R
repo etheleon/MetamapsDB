@@ -1,6 +1,9 @@
-#' findHomology searches the neo4j db for the KO binned contigs' homology assignments
+#' searches for KO's homology assignments
 #'
+#' `findHomology` seeks contigs which have been assigned via to 
+#' the given KO of interest
 #' used after homology search data has been uploaded into the db
+#' @param koi the ko of interest
 #'
 #' @export
 findHomology <- function(koi){

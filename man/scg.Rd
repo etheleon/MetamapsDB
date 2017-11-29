@@ -12,4 +12,3 @@ scg
 Vector list showing Single Copy Genes
 }
 \keyword{datasets}
-

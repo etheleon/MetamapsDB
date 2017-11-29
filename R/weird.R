@@ -1,9 +1,9 @@
 #' mappingInfo sequence analysis of contigs (for SIMULATION only)
 #'
-#' And
+#' Used for mapping short reads against contigs using blast
 #'
-#' @param blastdf
-#' @param koi
+#' @param blastdf the tabular blast output
+#' @param koi the KO of interest
 #' @param ... root, outputDir, query, rangesFile, genomesFile, blastFile
 #' @param doBlast read from file or carry out blast
 #'

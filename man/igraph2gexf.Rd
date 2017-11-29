@@ -14,4 +14,3 @@ igraph2gexf(mbgraph)
 Converts igraph obj two gexf
 Function for converting igraph 2 gexf
 }
-

@@ -39,6 +39,7 @@ taxnam.sql <- function(taxids, byID = TRUE, taxrank = "genus")
 #'
 #' @param perl full path to perl executable
 #' @param verbose print extra
+#' @keywords internal
 findPerl <- function(perl, verbose = "FALSE")
 {
   errorMsg <- "perl executable not found. Use perl= argument to specify the correct path."
@@ -72,6 +73,7 @@ findPerl <- function(perl, verbose = "FALSE")
 #'
 #' @param python full path to perl executable
 #' @param verbose print extra
+#' @keywords internal
 findPython <- function(perl, verbose = "FALSE")
 {
   errorMsg <- "Python executable not found. Use python= argument to specify the correct path."

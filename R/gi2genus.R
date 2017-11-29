@@ -8,10 +8,12 @@
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom data.table "fread"
+#'
 #' @export
 gi2rank <- function(blastTab, koi, sqlite3 = "sql3db")
 {
-    tempFile = paste0(getwd(), "/tempFile")
+    #tempFile = paste0(getwd(), "/tempFile")
+    tempFile = tempfile("gi2rank_")
     #print(tempFile)
     koi = gsub("^ko:", "", koi) %>% paste(collapse=" ")
 
@@ -30,7 +32,6 @@ gi2rank <- function(blastTab, koi, sqlite3 = "sql3db")
     print(cmd)
     try(system(cmd))
     df = fread(tempFile)
-
 }
 
 

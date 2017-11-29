@@ -30,4 +30,3 @@ empirical distribution against all genes in all contigs
 
 In addition it also identifies reactions where flanking KOs have high gene diversity, given by low KS (<= 0.5)
 }
-

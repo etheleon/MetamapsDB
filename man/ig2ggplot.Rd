@@ -4,7 +4,7 @@
 \alias{ig2ggplot}
 \title{Convert igraph to ggplot2 object}
 \usage{
-ig2ggplot(g, dfOnly = TRUE, labels = FALSE, ...)
+ig2ggplot(g, dfOnly = TRUE, labels = FALSE, metab = TRUE, ...)
 }
 \arguments{
 \item{g}{igraph object}
@@ -16,6 +16,5 @@ ig2ggplot(g, dfOnly = TRUE, labels = FALSE, ...)
 \item{...}{additional dbquery parameters}
 }
 \description{
-Converts a igraph obj into a ggplot plot
+Converts a metabolic igraph obj into a ggplot plot
 }
-

@@ -18,4 +18,3 @@ adjacentPairs(g, ko2ko = FALSE, ...)
 Given a igraph object, adjacentPairs finds
 adjacent pairs of KOs
 }
-

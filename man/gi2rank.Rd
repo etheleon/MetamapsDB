@@ -16,4 +16,3 @@ gi2rank(blastTab, koi, sqlite3 = "sql3db")
 \description{
 Parse tabular blast format of contigs from DIAMOND for their respective genusIDs
 }
-

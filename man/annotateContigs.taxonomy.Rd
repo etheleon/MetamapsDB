@@ -12,4 +12,3 @@ annotateContigs.taxonomy(csv)
 \description{
 After loading into the graphDB contigs information we annotate contigs with their taxonomy sequences
 }
-

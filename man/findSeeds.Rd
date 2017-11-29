@@ -14,4 +14,3 @@ Function finds strongly connected components within a bipartite metabolic networ
 And selects for components with at least 1 outgoing edge and no inbound edges.
 This is an implementation of Large-scale reconstruction and phylogenetic analysis of metabolic environments by Borenstein et al
 }
-

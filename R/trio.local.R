@@ -1,14 +1,15 @@
-#' back2enz contracts and simplifies a metabolic subgraph (ie. neighborhood of a given 
+#' trio.local
 #'
-#' trio.local finds all trios surrounding a given KO
+#' `trio.local` finds all trios surrounding a given KO
 #'
 #' @param koi              the KO of interest
 #' @param contracted        conditional for contracting and simplifying graph ie. merging subunits
 #' @return data.frame containing all reactions
-#' @importFrom magrittr "%>%"
-#' @importFrom magrittr "%$%"
+#' @importFrom magrittr "%>%" "%$%"
+#' @examples
+#' /dontrun{
 #'
-#' @export
+#' }
 trio.local <- function(koi, contracted=FALSE){
 
     #If you have the full metabolic graph
@@ -126,6 +127,7 @@ trio.local <- function(koi, contracted=FALSE){
 #' @param edges the edgelist
 #' @param type the type of nodes to extract
 #' @importFrom magrittr "%>%"
+#' @keywords internal
 #' @export
 extractFromPath <- function(edges, type='cpd') {
     if(type == 'cpd'){
@@ -140,16 +142,17 @@ extractFromPath <- function(edges, type='cpd') {
 #'
 #' given the original graph find the vertiex ID of given name
 #
-#' @param name  name of the vertex
-#' @param g     igraph object
+#' @param name name of the vertex
+#' @param g igraph object
 #'
 #' @export
+#' @keywords internal
 findV = function(name, g){
     which(sapply(V(g)$name, function(x) sum(grepl(name, x))) > 0)
 }
 
 #' surrNODES finds nodes which are surrounding the given node 
-#' 
+#'
 #' @param noi       node of interest; the compound/ko ID not the vertex ID of the node in the graph
 #' @param graph     igraph object
 #' @param all       conditional to return all nodes regardless of direction

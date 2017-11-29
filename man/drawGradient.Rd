@@ -14,4 +14,4 @@ drawGradient(values, colors)
 \description{
 sets the middle color at the median
 }
-
+\keyword{internal}

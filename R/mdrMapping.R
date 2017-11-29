@@ -3,6 +3,7 @@
 #' @param reads the ShortRead class object
 #' @param type the pattern to look for
 #' @export
+#' @keyword internal
 grepReads = function(reads, type="cDNA")
 {
     whichIsMRNA = ShortRead::id(reads) %>% as.character %>% grepl(type, .)
@@ -11,8 +12,10 @@ grepReads = function(reads, type="cDNA")
     r
 }
 
-#' mapContig finds the location of the MDR on the contig
-#
+#' finds the location of the MDR on the contig
+#'
+#' finds the location of the MDR on the contig
+#'
 #' @param contigid the id of the contig
 #' @param seq character string of the contig from the MSA
 #' @param s starting loc
@@ -47,8 +50,6 @@ mapContig = function(contigid, seq, s, e)
 #' \dontrun{
 #' locsMDR = mdrRanges('K00927')
 #' }
-
-
 mdrRanges = function(ko, passDir)
 {
     mdrPath = sprintf("%s/pAss11/%s.fna", passDir, ko)
@@ -69,6 +70,9 @@ mdrRanges = function(ko, passDir)
 }
 
 #' blatting
+#'
+#'
+#'
 #' @param ko the ko of interest
 #' @param type the
 #' @param newblerInput path to newbler dir eg. /root in /root/K0000X/input/K0000X.1.fq

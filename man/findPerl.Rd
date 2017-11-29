@@ -14,4 +14,4 @@ findPerl(perl, verbose = "FALSE")
 \description{
 Code taken from R package gdata
 }
-
+\keyword{internal}

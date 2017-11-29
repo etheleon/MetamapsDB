@@ -12,4 +12,3 @@ nitrogenMetab
 Igraph object containing KOs and compounds involved in nitrogen metabolism
 }
 \keyword{datasets}
-

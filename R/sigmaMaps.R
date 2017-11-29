@@ -89,6 +89,7 @@ columnBar <- shiny::absolutePanel(
 #'
 #' @param values the score
 #' @param colors the color
+#' @keywords internal
 drawGradient = function(values, colors) {
     mvalue = median(values, na.rm=T)
 

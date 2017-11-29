@@ -8,10 +8,12 @@ categorize(rs, ko)
 }
 \arguments{
 \item{rs}{output from readStatusReader}
+
+\item{ko}{the ko of interest}
 }
 \description{
 Adds 2 more columns
 1. if the contig is chimeric or pure based on the read origins
 2. if the readOrigin aligns with annotations
 }
-
+\keyword{internal}

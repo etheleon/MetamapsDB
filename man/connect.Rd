@@ -2,15 +2,13 @@
 % Please edit documentation in R/setCypher.R
 \name{connect}
 \alias{connect}
-\title{Settings for connecting to neo4j database
-Function sets parameters such as the REST API URL, username and passwords
-In the newer versions of neo4j default requires username and password}
+\title{Connecting to NEO4J Graph Database.}
 \usage{
-connect(url = "192.168.100.1", port = 7474, username = "neo4j",
+connect(url = "127.0.0.1", port = 7474, username = "neo4j",
   password = "neo4j", test = TRUE)
 }
 \arguments{
-\item{url}{url to graphDB}
+\item{url}{url to running instance of neo4j}
 
 \item{port}{port}
 
@@ -18,11 +16,31 @@ connect(url = "192.168.100.1", port = 7474, username = "neo4j",
 
 \item{password}{password}
 
-\item{test}{to show connection success or failure}
+\item{test}{run test to show connection success or failure}
 }
 \description{
-Settings for connecting to neo4j database
-Function sets parameters such as the REST API URL, username and passwords
-In the newer versions of neo4j default requires username and password
+`connect` sets params such as the REST API URL, port, db username and password,
+In the newer versions of neo4j default requires username and password. If this 
+is the first time connecting to a new neo4jDB, please index the nodes else the queries
+will be very slow.
 }
+\examples{
+\dontrun{
+connect(url="127.0.0.1", port=7474, username="neo4j", password="neo4j")
 
+If this is your first time connecting to omics DB please index the nodes, using `index`
+else query speed will be very slow.
+
+Sending test query: Searching for K00001
+#A successful connection will give the following
+Connection Successful
+
+Found these indices:
+  property_keys   label
+1        contig contigs
+2           bin contigs
+3           cpd     cpd
+4            ko      ko
+5         taxid   Taxon
+}
+}

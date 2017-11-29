@@ -12,6 +12,6 @@ plotClassification(matrix, ko)
 \item{ko}{the koID for printing the KO name and ID to the diagnostic plot}
 }
 \description{
-Plot clustering
+clusters the graph
 }
-
+\keyword{internal}

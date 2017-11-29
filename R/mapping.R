@@ -15,10 +15,10 @@
 #' @examples
 #' \dontrun{
 #' # newbler2/K00927
-#' # ├── 454AllContigs.fna
-#' # └── input
-#' #     ├── K00927.1.fq
-#' #     └── K00927.2.fq
+#' #    454AllContigs.fna
+#' #    input
+#' #        K00927.1.fq
+#' #        K00927.2.fq
 #'
 #' lapply(kois, function(ko){
 #'     read1 = sprintf("./newbler2/%s/input/%s.2.fq", ko, ko)
@@ -65,8 +65,9 @@ map <- function(reads, contigs){
 #'
 #' takes the cDNA from the input file (repeat of grepReads)
 #'
-#' @param reads
+#' @param reads Shortreads object from bioconductor
 #' @importFrom ShortRead id
+#' @keywords internal
 grep.cDNA = function(reads)
 {
     whichIsMRNA = id(reads) %>% as.character %>% grepl("cDNA", .)

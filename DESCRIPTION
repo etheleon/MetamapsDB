@@ -1,36 +1,15 @@
 Package: MetamapsDB
-Maintainer: uesu <wesley@bic.nus.edu.sg>
-Author: uesu
+Maintainer: Wesley GOI <wesley@bic.nus.edu.sg>
+Author: Wesley GOI
 Version: 0.0.2
-License: file LICENSE
+License: GNU2
 Depends:
     R (>= 3.1.1)
-Title: MetamapsDB R interface for accessing integrated omics data of microbial
-    communities
-Description: Prototype package storing essential functional analyses used for
-    the thesis of wesley goi. Includes integration layer with neo4j graph database
-    etheleon/omics and sqlite for relational data
+Title: MetamapsDB: R package for querying Metagenomics data against Metabolic Pathways and Gene Centric Assemblies
+Description: Essential functions for querying OMICS db and functional analyses used for
+    the thesis of Wesley GOI. Includes integration layer with neo4j graph database
+    https://github.com/etheleon/omics.
 LazyData: TRUE
-Imports:
-    magrittr,
-    stats,
-    utils,
-    grDevices,
-    parallel,
-    RJSONIO,
-    RCurl,
-    igraph,
-    rgexf,
-    ggvis,
-    sigma,
-    dplyr,
-    stringr,
-    tidyr,
-    shiny,
-    base64enc,
-    cluster,
-    DBI,
-    RSQLite,
-    data.table
+Imports: magrittr, stats, utils, grDevices, parallel, RJSONIO, RCurl, igraph, rgexf, ggvis, sigma, dplyr, stringr, tidyr, shiny, base64enc, cluster, DBI, RSQLite, data.table
 Remotes: jjallaire/sigma
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

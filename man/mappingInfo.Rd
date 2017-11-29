@@ -7,12 +7,16 @@
 mappingInfo(koi = "K00927", doBlast = FALSE, ...)
 }
 \arguments{
+\item{koi}{the KO of interest}
+
 \item{doBlast}{read from file or carry out blast}
 
 \item{...}{root, outputDir, query, rangesFile, genomesFile, blastFile}
+
+\item{blastdf}{the tabular blast output}
 }
 \description{
-And
+Used for mapping short reads against contigs using blast
 }
 \examples{
 \dontrun{
@@ -20,4 +24,3 @@ blastfile = "~/simulation_fr_the_beginning/reAssemble/everybodyelse/out/simBlast
 mappingInfo(blastfile, doBlast=FALSE)
 }
 }
-

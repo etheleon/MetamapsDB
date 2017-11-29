@@ -1,36 +1,35 @@
 #' buildTree - a taxonomic tree display function
 #'
-#' draws the taxonomic tree of the given leave nodes
+#' Returns taxonomic tree of the taxids up to phylum.
 #'
 #' @param taxids vector of leave nodes
+#' @param standardisedRanks the ranks to report. superkingdom phylum class order family genus species
 #' @importFrom magrittr "%>%"
+#' @importFrom dplyr mutate
+#' @importFrom igraph graph_from_data_frame
+#' @examples
+#' /dontrun{
+#' 
+#' }
 #' @export
-buildTree <- function(taxids){
+
+buildTree <- function(
+        taxids = c(287, 280),
+        standardisedRanks  = c("superkingdom", "phylum", "class", "order","family", "genus", "species")
+    ){
     edgelists = taxids %>% lapply(function(x) path2kingdom(as.character(x)))
-
-    #because the trees are of uneven length we deal with that
-    #superkingdom phylum class order family genus species
-    #"dear king phillip came over for good soup"
-
-    standardisedRanks  = c("phylum", "class", "order","family", "genus", "species")
-
-    es[1,]$rank == 'no rank'
-    rankInfo = data.frame(standard = standardisedRanks)
-    mDF = merge(rankInfo, es, all.x=T, by.y="rank", by.x="standard")
-    which(is.na(mDF$name)) %>% sapply
-
-    #whichever that's missing I merge together,
-
-
-    es= edgelists[[1]]
-
+    rankInfo = data.frame(standard = standardisedRanks) %>% mutate(order=1:n())
     trueEdgelist = edgelists       %>%
-        lapply(function(x) x$taxid %>%
-               as.character        %>%
-               as.integer          %>%
-               buildE)             %>%
-        do.call(rbind,.)
-    unique(as.data.frame(trueEdgelist)) %>% as.matrix
+        lapply(function(x){
+           merge(rankInfo, x, all.x=T, by.y="rank", by.x="standard") %>%
+               arrange(order) %>%
+           .$taxid %>%
+           as.character        %>%
+           as.integer          %>%
+           buildE})            %>%
+        do.call(rbind,.) %>% as.data.frame %>% unique %>% as.matrix
+    nodeDetails = as.vector(trueEdgelist) %>% purrr::map_df(taxnam.sql) %>% dplyr::arrange(taxid) %>% unique
+    list(edgelist = trueEdgelist, nodeDetails = nodeDetails, graph=graph_from_data_frame(trueEdgelist, v=nodeDetails))
 }
 
 
@@ -39,6 +38,7 @@ buildTree <- function(taxids){
 #'
 #' @param path vector of integers representing taxid to common ancestor
 #' @param ma matrix rbind with
+#' @keywords internal
 buildE <- function(path, ma){
 
 
@@ -54,3 +54,4 @@ buildE <- function(path, ma){
         mm
     }
 }
+

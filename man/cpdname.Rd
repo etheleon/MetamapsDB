@@ -14,4 +14,3 @@ cpdname(cpd = "C00022", ...)
 \description{
 Finds the details of the CPD when given its ID
 }
-

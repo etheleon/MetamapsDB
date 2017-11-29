@@ -8,7 +8,7 @@
 #' @param ... additional parameters for dbquery
 #' @importFrom magrittr "%>%"
 #' @importFrom magrittr "%<>%"
-#' @export
+#' @keywords internal
 grepgraph_cpd<- function(cpds, fullGraph=FALSE, ...){
 if(fullGraph){
 

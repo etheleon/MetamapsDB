@@ -17,4 +17,3 @@ addContigProperty(contig, ko, property, all = FALSE, batchSize = 10000,
 \description{
 Adds property to contig node
 }
-
