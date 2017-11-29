@@ -3,7 +3,7 @@
 #' @param reads the ShortRead class object
 #' @param type the pattern to look for
 #' @export
-#' @keyword internal
+#' @keywords internal
 grepReads = function(reads, type="cDNA")
 {
     whichIsMRNA = ShortRead::id(reads) %>% as.character %>% grepl(type, .)

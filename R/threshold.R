@@ -509,6 +509,9 @@ contigsSurvive.repeats.readNum <- function(rs, thresholds = seq(1, 50, 1), koi){
 #'
 #' @export
 #' @examples
+#' /dontrun{
+#'
+#' }
 #' @keywords internal
 #' /dontrun{
 #' df = simulated('ko:K00001)
