@@ -39,6 +39,7 @@ It is the final step of the 5 preprocessing steps used in carrying out our gene 
 Docker wrapper for generating a KEGG + Taxnoomy + Contig neo4j graph database
 
 [![MetamapsDB](./thumbnail.png)](https://github.com/etheleon/omics).
+RMD at /export2/home/uesu/simulation_fr_the_beginning/reAssemble/everybodyelse/script/
 
 # MapBloat
 
