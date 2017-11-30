@@ -8,9 +8,13 @@ mapReads2MDR(ko, passDir, newblerInput)
 }
 \arguments{
 \item{ko}{the ko of interest}
+
+\item{passDir}{the directory of the pass project folder}
+
+\item{newblerInput}{directory for newbler output files}
 }
 \description{
-overlaps
+calculates overlaps
 }
 \examples{
 \dontrun{

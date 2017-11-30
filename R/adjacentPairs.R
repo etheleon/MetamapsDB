@@ -5,13 +5,14 @@
 #' @param ko2ko kos to find adjacent pairs for
 #' @param ... ellipise pass in other arguments which are required
 #' @importFrom magrittr "%>%"
+#' @importFrom igraph V neighborhood
 #'
 #' @export
 adjacentPairs<- function (g, ko2ko =  FALSE, ...){
-        kos         =  grepl("ko:", igraph::V(g)$name) %>% which
+        kos         =  grepl("ko:", V(g)$name) %>% which
         #TODO:  non-ko2ko direction is still not configured
         do.call(rbind,lapply(c("out","in"), function(direction){
-            kopairs     =   igraph::neighborhood(graph=g, nodes=kos, order=1, mode = direction)   #immediate pairs
+            kopairs     =   neighborhood(graph=g, nodes=kos, order=1, mode = direction)   #immediate pairs
             kopairs     =   kopairs[sapply(kopairs, length) != 1]
 
         #function to find the connected KOs given intermediate cpds
@@ -27,7 +28,7 @@ adjacentPairs<- function (g, ko2ko =  FALSE, ...){
         }))
         pairDF[
         apply(pairDF, 1, function(x) paste0(sort(x), collapse=""))                         %>%
-        duplicated                                                                                %>%
+        duplicated                                                                         %>%
         ifelse(FALSE, TRUE),]                                           # this inverses the list
         }))
 }
@@ -40,10 +41,10 @@ adjacentPairs<- function (g, ko2ko =  FALSE, ...){
 #' @param graph metabolic graph
 #' @param originalKO KO of interest
 #' @param direction the direction in which to find
-#'
+#' @importFrom igraph neighborhood
 #' @export
 findNextKO = function(cpd, graph, originalKO, direction){
-    connectedKO = igraph::neighborhood(graph = graph, nodes = cpd, order = 1, mode=direction)
+    connectedKO = neighborhood(graph = graph, nodes = cpd, order = 1, mode=direction)
     #removes nodes without outgoing/incoming connections
     connectedKO = connectedKO[sapply(connectedKO, length) != 1]
 

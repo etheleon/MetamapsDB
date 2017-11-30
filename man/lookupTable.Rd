@@ -19,8 +19,11 @@ returns three tables, 1. gene centric assembly readOrigin identities, 2. homolog
 }
 \examples{
 \dontrun{
-rs = lapply(dynList, function(x) x$rs \%>\% mutate(ko = x$ko)) \%>\% do.call(rbind,.)
-output = lookupTable(genesOfInterest = scg, annotations = "~/simulation_fr_the_beginning/out/template.csv", rs)
+anno = "~/simulation_fr_the_beginning/out/template.csv"
+rs = lapply(dynList, function(x) x$rs \%>\% mutate(ko = x$ko)) \%>\%
+   do.call(rbind,.)
+output = lookupTable(genesOfInterest = scg,
+   annotations = anno, rs)
 e
 }
 }

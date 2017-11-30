@@ -2,14 +2,15 @@
 #'
 #' Takes in a vector list of cpd ids and generates a subset of metabolic graph as a igraph object
 #'
-#' @param cpd vector of cpds
+#' @param cpds vector of cpds
 #' @param fullGraph to output the full metabolic graph (yet to be implemented)
 #' @param ... additional dbquery parameters
-#' @import igraph
+#' @importFrom igraph V simplify graph.data.frame layout.fruchterman.reingold
 #' @importFrom magrittr "%>%"
 #' @importFrom magrittr "%<>%"
 #' @export
 grepgraph.cpd <-function(cpds, fullGraph=FALSE, ...){
+    . = 'shutup'
 if(fullGraph){
 
 }else{
@@ -54,7 +55,7 @@ if(fullGraph){
             name = c(as.character(childName), as.character(parentName))
             )), c("Vertex","Definition"))
          )
-    g=igraph::simplify(igraph::graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
+    g=simplify(graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
     g$layout = layout.fruchterman.reingold(g)
     g
     }

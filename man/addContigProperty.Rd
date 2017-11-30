@@ -8,11 +8,17 @@ addContigProperty(contig, ko, property, all = FALSE, batchSize = 10000,
   add = FALSE)
 }
 \arguments{
+\item{contig}{the contigID}
+
+\item{ko}{the KO the contig belongs to}
+
 \item{property}{list containing the property which you would want to insert, name of property in list is the name of the property in the}
 
-\item{CONTIG}{the contigID}
+\item{all}{add all}
 
-\item{KO}{the KO the contig belongs to}
+\item{batchSize}{the size of number of entries}
+
+\item{add}{if to add property}
 }
 \description{
 Adds property to contig node

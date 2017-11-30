@@ -4,6 +4,7 @@
 #' @importFrom magrittr "%>%"
 #' @export
 cpdname<- function (cpd='C00022', ... ){
+    .='shutup'
     cpd = gsub("^(cpd:)*","cpd:",cpd)
     params = cpd %>% lapply(function(x) list(cpdname=x)) %>% list(cpds=.)
     query = "

@@ -2,10 +2,10 @@
 #'
 #' Used for mapping short reads against contigs using blast
 #'
-#' @param blastdf the tabular blast output
 #' @param koi the KO of interest
-#' @param ... root, outputDir, query, rangesFile, genomesFile, blastFile
 #' @param doBlast read from file or carry out blast
+#' @param ... root, outputDir, query, rangesFile, genomesFile, blastFile
+#' @importFrom magrittr "%T>%"
 #'
 #' @examples
 #' \dontrun{
@@ -14,6 +14,17 @@
 #' }
 #' @export
 mappingInfo <- function(koi = 'K00927', doBlast=FALSE, ...){
+    . = 'shutup'
+    root = NULL
+    outputDir = NULL
+    query = NULL
+    rangesFile  = NULL
+    genomesFile = NULL
+    alignment.length = NULL
+    perc.identity = NULL
+    alignPerc = NULL
+    readnum = NULL
+    subject = NULL
     if(doBlast){
         path <- paste(system.file(package="MetamapsDB"), "python", "simBlast.py", sep="/")
         cmd = paste(findPython(), path, root, koi, outputDir, query, rangesFile, genomesFile)

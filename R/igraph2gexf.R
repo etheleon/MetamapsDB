@@ -6,6 +6,10 @@
 #' @importFrom magrittr "%>%"
 #' @export
 igraph2gexf <- function(mbgraph){
+    name = NULL
+    Definition = NULL
+    from = NULL
+    to = NULL
     gdata     = igraph::get.data.frame(mbgraph, what="both")
     tmpedges  = gdata$edges
     tmpnodes  = gdata$vertices

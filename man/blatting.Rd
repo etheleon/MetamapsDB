@@ -12,14 +12,7 @@ blatting(ko, type, newblerInput)
 \item{type}{the}
 
 \item{newblerInput}{path to newbler dir eg. /root in /root/K0000X/input/K0000X.1.fq}
-
-\item{blatoutput}{path to store blat output in tabular blast format}
 }
 \description{
-blatting
-}
-\examples{
-\dontrun{
-
-}
+performs blat
 }

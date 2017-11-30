@@ -9,7 +9,7 @@
 #' @param password database password
 #' @param ... accepts additional parameters from external function calls
 #' @export
-listquery<-function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, password = cacheEnv$password,...){
+listquery<-function(query,params = FALSE, cypherurl, user, password,...){
     #Checks if the params is given
     if(is.list(params)){
         post = RJSONIO::toJSON(list(query = query, params = params))

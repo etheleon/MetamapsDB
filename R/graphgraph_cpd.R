@@ -8,8 +8,10 @@
 #' @param ... additional parameters for dbquery
 #' @importFrom magrittr "%>%"
 #' @importFrom magrittr "%<>%"
+#' @importFrom stats complete.cases
 #' @keywords internal
 grepgraph_cpd<- function(cpds, fullGraph=FALSE, ...){
+    . = 'shutup'
 if(fullGraph){
 
 }else{

@@ -13,13 +13,13 @@ prettifyGraph(g, vsize = c(1, 2), vcolor = c("grey", "red"),
 
 \item{vsize}{the vertex size}
 
-\item{vcolor}{length 2 vector for KO and compoundsprettifyGraph<- function}
+\item{vcolor}{length 2 vector for KO and compounds}
 
-\item{withText}{Conditional to include labels in plot(g,}
+\item{withText}{Conditional to include labels in}
 
-\item{vtext}{two vector text valuevsize    = c(1,2),}
+\item{vtext}{two vector text valuevsize}
 
-\item{layout}{Whether to calculate the layoutvcolor   = c("grey", "red"),}
+\item{layout}{Whether to calculate the layoutvcolor}
 }
 \description{
 returns metabolic graph with all the ornaments set

@@ -13,6 +13,8 @@ ig2ggplot(g, dfOnly = TRUE, labels = FALSE, metab = TRUE, ...)
 
 \item{labels}{to show labels or not}
 
+\item{metab}{it is a metabolic graph}
+
 \item{...}{additional dbquery parameters}
 }
 \description{

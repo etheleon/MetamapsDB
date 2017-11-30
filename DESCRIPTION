@@ -2,7 +2,7 @@ Package: MetamapsDB
 Maintainer: Wesley GOI <wesley@bic.nus.edu.sg>
 Author: Wesley GOI
 Version: 0.0.2
-License: GNU2
+License: GPL (>= 2)
 Depends:
     R (>= 3.1.1)
 Title: MetamapsDB: R package for querying Metagenomics data against Metabolic Pathways and Gene Centric Assemblies
@@ -10,6 +10,6 @@ Description: Essential functions for querying OMICS db and functional analyses u
     the thesis of Wesley GOI. Includes integration layer with neo4j graph database
     https://github.com/etheleon/omics.
 LazyData: TRUE
-Imports: magrittr, stats, utils, grDevices, parallel, RJSONIO, RCurl, igraph, rgexf, ggvis, sigma, dplyr, stringr, tidyr, shiny, base64enc, cluster, DBI, RSQLite, data.table
+Imports: IRanges, ShortRead, future, GenomicRanges, forcats, ggplot2, purrr, gridExtra, lubridate, zoo, magrittr, stats, utils, grDevices, parallel, RJSONIO, RCurl, igraph, rgexf, ggvis, sigma, dplyr, stringr, tidyr, shiny, base64enc, cluster, DBI, RSQLite, data.table
 Remotes: jjallaire/sigma
 RoxygenNote: 6.0.1

@@ -9,7 +9,7 @@ addKOProperty(ko, property)
 \arguments{
 \item{ko}{the koID}
 
-\item{property}{}
+\item{property}{the property which you want to add}
 }
 \description{
 Adds property to ko node

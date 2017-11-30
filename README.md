@@ -38,8 +38,6 @@ It is the final step of the 5 preprocessing steps used in carrying out our gene 
 
 Docker wrapper for generating a KEGG + Taxnoomy + Contig neo4j graph database
 
-[![MetamapsDB](./thumbnail.png)](https://github.com/etheleon/omics).
-
 # MapBloat
 
 R package for mapping reads onto contigs/MDR using Blat

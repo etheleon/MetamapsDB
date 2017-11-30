@@ -4,8 +4,7 @@
 \alias{dbquery}
 \title{Function for querying metamaps DB}
 \usage{
-dbquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
-  user = cacheEnv$user, password = cacheEnv$password, justPost = FALSE,
+dbquery(query, params = FALSE, cypherurl, user, password, justPost = FALSE,
   verbose = FALSE, ...)
 }
 \arguments{
@@ -20,6 +19,8 @@ dbquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
 \item{password}{database password}
 
 \item{justPost}{its just a POST request}
+
+\item{verbose}{to print details out}
 
 \item{...}{allows for additional arguments to be passed into dbquery}
 }

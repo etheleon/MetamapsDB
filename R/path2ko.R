@@ -23,6 +23,7 @@ path2ko<-function(pathway='path:ko00010',  ...){
 #' @export
 ko2path = function (ko = "K00001", ...)
 {
+    . = 'shutup'
     ko = gsub("^(ko:)*", "ko:", ko)
     query = "
     UNWIND

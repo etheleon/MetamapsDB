@@ -5,16 +5,34 @@
 #' @param genesOfInterest the kos of interest defaults to scg must be in the ko:KXXXXX format
 #' @param annotations table containing the number of KOs for each taxID
 #' @param rs processed readStatuses from newbler output
-#'
+#' @importFrom stats complete.cases
+#' @importFrom dplyr rowwise case_when desc everything
 #' @examples
 #' \dontrun{
-#' rs = lapply(dynList, function(x) x$rs %>% mutate(ko = x$ko)) %>% do.call(rbind,.)
-#' output = lookupTable(genesOfInterest = scg, annotations = "~/simulation_fr_the_beginning/out/template.csv", rs)
+#' anno = "~/simulation_fr_the_beginning/out/template.csv"
+#' rs = lapply(dynList, function(x) x$rs %>% mutate(ko = x$ko)) %>%
+#'    do.call(rbind,.)
+#' output = lookupTable(genesOfInterest = scg,
+#'    annotations = anno, rs)
 #' e
 #' }
 #' @export
 lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the_beginning/out/template.csv", rs)
 {
+    . ='shutup'
+    scg = NULL
+    taxid = NULL
+    matched = NULL
+    Freq = NULL
+    ko = NULL
+    total = NULL
+    threshold = NULL
+    spanning = NULL
+    status = NULL
+    readOrigin = NULL
+    makeLookup = NULL
+    abu = NULL
+    name = NULL
     # in fact there's 2 lookup tables
     # 1. for homology search - the homology search + LCA has correctly identified the contigs to the correct ID
     # 2. for assembly - the assembly process has successfuly put together reads to form the correct contig
@@ -176,18 +194,20 @@ lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the
 #' @param dyn output from dynamicThreshold
 #'
 #' @import ggplot2
-#' @import tidyr
-#' @import dplyr
+#' @importFrom tidyr gather
+#' @importFrom dplyr filter mutate select group_by do ungroup summarise
 #' @importFrom gridExtra grid.arrange
 #' @importFrom magrittr "%<>%"
-#' @importFrom forcats fct_rev
+#' @importFrom forcats fct_rev fct_relevel
 #' @keywords internal
 #' @examples
 #' \dontrun{
 #'     connect("yourDomain", password="yourPassword")
 #'     newblerDir= "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
-#'     dynList = scg  %>% gsub("ko:", "", .) %>% mclapply(dynamicThreshold, root=newblerDir, mc.cores=20)
-#'     dynList = scg  %>% gsub("ko:", "", .) %>% head(n=1) %>% lapply(dynamicThreshold, root=newblerDir)
+#'     dynList = scg  %>% gsub("ko:", "", .) %>% 
+#'        mclapply(dynamicThreshold, root=newblerDir, mc.cores=20)
+#'     dynList = scg  %>% gsub("ko:", "", .) %>% head(n=1) %>%
+#'        lapply(dynamicThreshold, root=newblerDir)
 #'     pdf("thresholdPlots.pdf", width=10)
 #'     plotDF = dynPlots(dynList, F)
 #'     dev.off()
@@ -199,6 +219,31 @@ lookupTable = function(genesOfInterest = scg, annotations = "~/simulation_fr_the
 #' }
 #' @export
 dynPlots = function(dynList, indivPlots=T){
+    .='shutup'
+    MDR = NULL
+    readnum = NULL
+    threshold = NULL
+    ko = NULL
+    remaining = NULL
+	cutoff = NULL
+	perc = NULL
+    remaining.cutoff = NULL
+    spanning = NULL
+    total = NULL
+    name = NULL
+    cumsum.perc = NULL
+    scg = NULL
+    taxid = NULL
+    inSimulation = NULL
+    outsideSimulation = NULL
+    newtype = NULL
+    annotation =NULL
+    g.taxid = NULL
+    abu = NULL
+    type = NULL
+    value = NULL
+    bin = NULL
+    status = NULL
     repeats = function(df, oneSCG, cutoff, indivPlots=TRUE, spanning=TRUE){
         message(sprintf("Processing KO of interest: %s", oneSCG))
         #recovered = rs %>% filter(origin == 'inSimulation') %>% nrow
@@ -232,7 +277,7 @@ dynPlots = function(dynList, indivPlots=T){
             ylab("#genes (total)")
 
         # shows the number of simulated & not simulated upon thresholding
-        p3 = df %>% gather(type, value, -threshold) %>% filter(type != 'repeats') %>% mutate(type = fct_rev(as.factor(type))) %>%
+        p3 = df %>% gather(type, value, -threshold) %>% filter(type != 'repeats') %>% mutate(type = fct_rev(as.factor(type)))
             ggplot() +
                 geom_line(aes(x=threshold, y=value, color=type, group=type))                                               +
                 facet_wrap(~type, scales="free", nrow=3)+
@@ -431,11 +476,12 @@ dynPlots = function(dynList, indivPlots=T){
 #' @param mode two options either readnum or coverage; coverage is experimental, use readnum
 #' @param thresholding which type of thresholding method to use
 #' @param root folder to find
-#' @import dplyr
+#' @importFrom dplyr filter mutate select group_by do
 #' @importFrom zoo rollapply
 #' @keywords internal
 #' @export
 dynamicThreshold <- function(koi, root){
+	spanning = NULL
     message(sprintf("Processing %s", koi))
     rs = readStatusReader(root, koi, mdr=TRUE)
 
@@ -460,6 +506,8 @@ dynamicThreshold <- function(koi, root){
 #' @param interval interval size
 #' @keywords internal
 rolling <- function(keptDF, wind=15, interval = 10){
+        repeats = NULL
+        threshold = NULL
         data.frame(
             #should rename to rolling diff basically the averaged gradient change
             #in the number of repeats
@@ -477,6 +525,9 @@ rolling <- function(keptDF, wind=15, interval = 10){
 #' @param keptDF internal function
 simpleThres = function(keptDF){
     #browser()
+	threshold=NULL
+	repeats = NULL
+    . = 'shutup'
     myRLE = keptDF %>% filter(threshold <=50) %$% rollapply(repeats, width=2, by=1, FUN = function(e){ abs(e[2] - e[1]) }) %>% rle %>% .$length
     ceiling(mean(which(rep(myRLE == max(myRLE), myRLE))))
 }
@@ -488,6 +539,14 @@ simpleThres = function(keptDF){
 #' @importFrom tidyr spread
 #' @keywords internal
 contigsSurvive.repeats.readNum <- function(rs, thresholds = seq(1, 50, 1), koi){
+    count = NULL
+    readOrigin = NULL
+    repeats = NULL
+    perc = NULL
+    X5..Contig = NULL
+    origin = NULL
+    types = NULL
+    .='shutup'
     sim = simulated(koi)
     thresholds %>% lapply(function(readDepth){
         df1 = rs %>% filter(count > readDepth) %>% group_by(readOrigin) %>% 
@@ -506,24 +565,8 @@ contigsSurvive.repeats.readNum <- function(rs, thresholds = seq(1, 50, 1), koi){
 #' `simulated` pull all simulated genomes
 #'
 #' @param ko koi
-#'
 #' @export
-#' @examples
-#' /dontrun{
-#'
-#' }
 #' @keywords internal
-#' /dontrun{
-#' df = simulated('ko:K00001)
-#' df %>% head
-#' #          ko  taxid Freq
-#' # 1 ko:K00001    896    1
-#' # 2 ko:K00001 120961    1
-#' # 3 ko:K00001     13    1
-#' # 4 ko:K00001     64    1
-#' # 5 ko:K00001    528    1
-#' # 6 ko:K00001  33981    2
-#' }
 simulated <- function(ko){
     message(sprintf("Universal truth: How many genes were simulated for %s", ko))
     simulated = dbquery("
@@ -546,6 +589,10 @@ simulated <- function(ko){
 #' @param koi the KO of interest
 #' @keywords internal
 contigsSurvive.repeats.rpk <- function(rs, rpk = seq(0, 2, 0.01), koi='K00927'){
+    . = 'shutup'
+    readOrigin = NULL
+    repeats = NULL
+    node = NULL
     query = "
         MATCH
             (c:contigs{bin:{koi}})
@@ -580,6 +627,17 @@ contigsSurvive.repeats.rpk <- function(rs, rpk = seq(0, 2, 0.01), koi='K00927'){
 #' @keywords internal
 readStatusReader <- function(root, koi, mdr=FALSE)
 {
+    Accno = NULL
+    Read.Status = NULL
+    X5..Contig = NULL
+    MDR = NULL
+    spanning = NULL
+    contig = NULL
+    readOrigin = NULL
+    count = NULL
+    total = NULL
+    perc = NULL
+    .='shutup'
     message("Reading in read assignment data from NEWBLER output")
     readStatus = as.data.table(read.csv(sprintf("%s/%s/454ReadStatus.txt", root, koi), sep="\t"))
     message(sprintf("%s reads read", nrow(readStatus)))
@@ -620,6 +678,9 @@ readStatusReader <- function(root, koi, mdr=FALSE)
 #' @param ko the ko of interest
 #' @keywords internal
 categorize <- function(rs, ko){
+	Freq = NULL
+	X5..Contig = NULL
+    .="shutup"
     chimeric = rs$X5..Contig %>% table %>% as.data.frame %>% arrange(desc(Freq)) %>% filter(Freq > 1) %$% . %>% as.character
     rs$status = "pure"
     rs[rs$X5..Contig %in% chimeric,]$status="chimeric"

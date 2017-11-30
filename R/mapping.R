@@ -35,6 +35,14 @@
 #' }
 #' @export
 map <- function(reads, contigs){
+    filname = NULL
+    send = NULL
+    sstart = NULL
+    query = NULL
+    subject = NULL
+    qstart = NULL
+    bitscore = NULL
+    newEnd = NULL
     blatOutputFile = tempfile(fileext="m8")
     if(!"DNAStringSet" %in% class(reads)){
         filename = last(unlist(strsplit(reads, "/")))
@@ -51,7 +59,7 @@ map <- function(reads, contigs){
                    "alignLen", "mismatch", "gapOpenings",
                    "qstart", "qend", "sstart", "send",
                    "evalue", "bitscore")
-    outputDF = read.table(blatOutputFile, sep="\t", h=F, comment.char="") %>%
+    outputDF = read.table(blatOutputFile, sep="\t", header=F, comment.char="") %>%
     setNames(colNames) %>%
     mutate(
         newStart = ifelse(send - sstart > 0, sstart, send),
@@ -66,10 +74,11 @@ map <- function(reads, contigs){
 #' takes the cDNA from the input file (repeat of grepReads)
 #'
 #' @param reads Shortreads object from bioconductor
-#' @importFrom ShortRead id
+#' @importFrom ShortRead id sread
 #' @keywords internal
 grep.cDNA = function(reads)
 {
+    .='shtup'
     whichIsMRNA = id(reads) %>% as.character %>% grepl("cDNA", .)
     r = reads[whichIsMRNA] %>% sread
     names(r) = id(reads[whichIsMRNA])

@@ -2,11 +2,22 @@
 #'
 #' Adds property to contig node
 #'
-#' @param CONTIG the contigID
-#' @param KO the KO the contig belongs to
+#' @param contig the contigID
+#' @param ko the KO the contig belongs to
 #' @param property list containing the property which you would want to insert, name of property in list is the name of the property in the
+#' @param all add all
+#' @param batchSize the size of number of entries
+#' @param add if to add property
+#' @importFrom future "%plan%"
 #' @export
-addContigProperty <- function(contig, ko, property, all=FALSE, batchSize=10000, add=FALSE){
+addContigProperty <- function(
+    contig,
+    ko,
+    property,
+    all=FALSE,
+    batchSize=10000, 
+    add=FALSE
+    ){
     name = names(property)
     if(all){
         if(add){
@@ -24,8 +35,8 @@ addContigProperty <- function(contig, ko, property, all=FALSE, batchSize=10000, 
                 RETURN
                     count(c) as COUNT
                 ", name, batchSize, name, name)
-            flog.info("The query")
-            flog.info(query)
+            #flog.info("The query")
+            #flog.info(query)
         }else{
             query   = sprintf("
                 MATCH
@@ -39,17 +50,17 @@ addContigProperty <- function(contig, ko, property, all=FALSE, batchSize=10000, 
                 RETURN
                     count(c) as COUNT
                 ", batchSize, name, name)
-            flog.info("The query")
-            flog.info(query)
+            #flog.info("The query")
+            #flog.info(query)
         }
-        future({
+        future::future({
                 unfinished = TRUE
                 while(unfinished){
                     df = dbquery(query=query, params=property)
-                    flog.info(sprintf("Returned: %s", df$COUNT))
+                    #flog.info(sprintf("Returned: %s", df$COUNT))
                     if (df$COUNT != batchSize) unfinished = FALSE
                 }
-            }) %plan% multiprocess
+            }) %plan% future::multiprocess
     }else{
         property$contigID = sprintf("%s:%s", ko, contig)
         query   = sprintf("
@@ -69,7 +80,7 @@ addContigProperty <- function(contig, ko, property, all=FALSE, batchSize=10000, 
 #' Adds property to ko node
 #'
 #' @param ko the koID
-#' @param property 
+#' @param property the property which you want to add
 #' @export
 addKOProperty <- function(ko, property){
     name = names(property)

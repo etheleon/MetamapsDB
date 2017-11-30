@@ -17,11 +17,24 @@
 #' @param plotDir the location to save the diagnostics plots to
 #' @return data.frame of all reactions, corresponding clusters and the KS statistics for each KO and the selected Cluster
 #'
-#' @importFrom magrittr "%>%"
-#' @importFrom magrittr "%<>%"
-#' @importFrom magrittr "%$%"
+#' @importFrom magrittr "%>%" "%<>%" "%$%"
+#' @importFrom dplyr arrange filter group_by select n
+#' @importFrom tidyr spread
+#' @importFrom grDevices colorRampPalette dev.off pdf
+#' @importFrom stats median
 #' @export
 findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
+    .='shutup'
+    cluster = NULL
+    trio = NULL
+    rxntype = NULL
+    ko = NULL
+    rxnNum = NULL
+    d = NULL
+    k = NULL
+    before.median = NULL
+    after.median = NULL
+    value = NULL
    file.remove(outputFile) 
     lapply(KOI, function(midKO){
         trioDF = trio(midKO)
@@ -44,11 +57,10 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
             #removes rxns where the KOs have no expression
             NArxns = lineLong[lineLong %>% apply(1, function(x) is.na(x) %>% sum ) > 0 ,]$rxnNum
             lineLong = filter(lineLong, !rxnNum %in% NArxns)
-            
             #input matrix of KS values of the before and after KOs for to cluster the reactions.
             m        =  lineLong                                %>%
-                        dplyr::select(rxnNum, rxntype, d)       %>%
-                        tidyr::spread(key = rxntype, value = d)
+                        select(rxnNum, rxntype, d)       %>%
+                        spread(key = rxntype, value = d)
             clusteredM = findK(theMatrix = m, ko=midKO)
 
 
@@ -59,13 +71,12 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
             }
 
             within.ksDF <-   1:clusteredM$k %>% lapply(function(cl){
-                clusteredM %$% 
-                    filter(matrix, cluster == cl) %$%
+                    df = filter(clusteredM$matrix, cluster == cl)
                     data.frame(
-                       k             = cl,
-                       value         = ks.test(before, after, alternative = "two.sided") %$% statistic,
-                       before.median = median(before),
-                       after.median  = median(after)
+                       k             = df$cl,
+                       value         = ks.test(df$before, df$after, alternative = "two.sided")$statistic,
+                       before.median = median(df$before),
+                       after.median  = median(df$after)
                        )
             })  %>%
             do.call(rbind,.) %>% arrange(k)
@@ -127,12 +138,18 @@ findTrios <- function(KOI, ks, toPrint = TRUE, outputFile, plotDir){
 #' @param kmax         the max number of Ks to test for; defaults to 10
 #' @param ko           the ko of interest
 #'
-#' @importFrom magrittr "%>%"
-#' @importFrom magrittr "%<>%"
-#' @importFrom magrittr "%$%"
+#' @importFrom magrittr "%>%" "%<>%" "%$%"
+#' @importFrom stats kmeans
 #' @keywords internal
 #' @return optimum number of Ks to choose
 findK <- function(theMatrix, kmax = 10, ko){
+    gap = NULL
+    before = NULL
+    after = NULL
+    Tab = NULL
+    SE.sim = NULL
+    cluster = NULL
+
         clusTab = theMatrix %>% dplyr::select(before, after) 
         n = nrow(clusTab)
         if(n < kmax){
@@ -159,7 +176,13 @@ findK <- function(theMatrix, kmax = 10, ko){
 #' @param ko        the koID for printing the KO name and ID to the diagnostic plot
 #' @keywords internal
 plotClassification = function(matrix, ko){
-tm = 
+    . = 'shutup'
+    middle = NULL
+    rxnNum = NULL
+    rxntype = NULL
+    ks = NULL
+    cluster = NULL
+    tm =
     matrix                               %>%
     select(-middle, -rxnNum)             %>%
     tidyr::gather(rxntype, ks, -cluster)
@@ -193,11 +216,12 @@ tm =
 #' @param cores             number of cores to use
 #'
 #' @return data.frame with columns: ko, p.value and KS statistic (D)
-#'
+#' @importFrom stats ks.test
 #' @export
 #' @keywords internal
 ksCal <- function(contigDF, baseDistribution, cores){
-
+    . = 'shutup'
+    ko = NULL
     group1 = baseDistribution$rpkm_cDNA %>% as.numeric
 
     contigDF %$%

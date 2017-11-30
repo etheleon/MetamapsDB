@@ -10,6 +10,7 @@
 #' @export
 make.data.frame <- function(
 df, string2factor = FALSE){
+    .= 'shutup'
     1:ncol(df)               %>%
     lapply(function(column){
         sapply(df[,column], function(x) {ifelse(is.null(x), NA, as.character(x))})

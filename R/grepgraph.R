@@ -5,16 +5,17 @@
 #' @param kos vector of kos
 #' @param fullGraph to output the full metabolic graph (yet to be implemented)
 #' @param ... additional dbquery parameters
-#' @import igraph
+#' @importFrom igraph simplify layout.fruchterman.reingold
 #' @importFrom magrittr "%>%"
 #' @importFrom magrittr "%<>%"
+#' @importFrom stats complete.cases
 #' @export
 grepgraph <- function(kos,fullGraph=FALSE,...){
 if(fullGraph){
 
 }else{
-        kos = gsub("^(ko:)*","ko:",kos)
-        params = list(kos = kos %>% lapply(function(x) list(ko=x)))
+    kos = gsub("^(ko:)*","ko:",kos)
+    params = list(kos = kos %>% lapply(function(x) list(ko=x)))
 
     query_cpd2ko = "
     UNWIND 
@@ -59,8 +60,8 @@ if(fullGraph){
             sym = c(as.character(childSym), as.character(parentSym))
             )), c("Vertex","Definition", "Symbol"))
          )
-    g=igraph::simplify(igraph::graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
-    g$layout = igraph::layout.fruchterman.reingold(g)
+    g=simplify(graph.data.frame(d=unique(fulldata2[,1:2]),vertices=vertex.data))
+    g$layout = layout.fruchterman.reingold(g)
     g
     }
 }

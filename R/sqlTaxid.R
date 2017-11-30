@@ -11,6 +11,7 @@
 #' @export
 taxnam.sql <- function(taxids, byID = TRUE, taxrank = "genus")
 {
+    .='shutup'
     dbloc   =   find.package('MetamapsDB') %>%
                     file.path('taxonomy')  %>%
                     file.path('taxidSQL')

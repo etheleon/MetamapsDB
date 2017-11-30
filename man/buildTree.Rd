@@ -16,7 +16,8 @@ buildTree(taxids = c(287, 280), standardisedRanks = c("superkingdom",
 Returns taxonomic tree of the taxids up to phylum.
 }
 \examples{
-/dontrun{
-
+\dontrun{
+standardisedRanks  = c("superkingdom", "phylum", "class", "order","family", "genus", "species")
+buildTree(taxids = c(287, 280), standardisedRanks )
 }
 }

@@ -6,6 +6,7 @@
 #' @keywords internal
 grepReads = function(reads, type="cDNA")
 {
+    . ='shutup'
     whichIsMRNA = ShortRead::id(reads) %>% as.character %>% grepl(type, .)
     r = reads[whichIsMRNA] %>% sread
     names(r) = ShortRead::id(reads[whichIsMRNA])
@@ -23,6 +24,7 @@ grepReads = function(reads, type="cDNA")
 #' @export
 mapContig = function(contigid, seq, s, e)
 {
+    . = 'shutup'
     mdr = seq %>% as.character %>% substr(s, e) %>% gsub("-", "", .)
     full = seq %>% gsub("-", "", .)
     matchStart = regexpr(mdr, full) %>% as.integer
@@ -44,7 +46,8 @@ mapContig = function(contigid, seq, s, e)
 #' @param ko the KO of interest
 #' @param passDir path to pAss outputs
 #' @importFrom GenomicRanges GRanges
-#' @importFrom ShortRead readFasta
+#' @importFrom ShortRead readFasta sread
+#' @importFrom utils head read.csv read.table tail write.table
 #' @export
 #' @examples
 #' \dontrun{
@@ -52,6 +55,7 @@ mapContig = function(contigid, seq, s, e)
 #' }
 mdrRanges = function(ko, passDir)
 {
+    . = 'shutup'
     mdrPath = sprintf("%s/pAss11/%s.fna", passDir, ko)
     msaPath = sprintf("%s/pAss03/%s.msa", passDir, ko)
 
@@ -66,28 +70,24 @@ mdrRanges = function(ko, passDir)
     SIMPLIFY=FALSE
     ) %>% do.call(rbind,.) %>% tbl_df
     mdrContigs = ShortRead::id(readFasta(mdrPath)) %>% as.character %>% substr(1, 11)
-    filter(locs, id %in% mdrContigs) %$% GRanges(seqnames = paste(ko, id, sep="|"), ranges = IRanges(matchStart, end=matchEnd))
+    locs = filter(locs, id %in% mdrContigs) %$% 
+    GRanges(seqnames = paste(ko, id, sep="|"), ranges = IRanges::IRanges(locs$matchStart, end=locs$matchEnd))
 }
 
 #' blatting
 #'
-#'
+#' performs blat
 #'
 #' @param ko the ko of interest
 #' @param type the
 #' @param newblerInput path to newbler dir eg. /root in /root/K0000X/input/K0000X.1.fq
-#' @param blatoutput path to store blat output in tabular blast format
 #' @export
 #'
 #' @importFrom ShortRead readFastq
 #' @importFrom GenomicRanges GRanges
-#' @examples
-#' \dontrun{
-#'
-#' }
-
 blatting = function(ko, type, newblerInput)
 {
+    . = 'shutup'
     combined = lapply(c(1,2), function(readNum){
         read = sprintf("%s/%s/input/%s.%s.fq", newblerInput, ko, ko, readNum)
         if(file.exists(read))
@@ -95,13 +95,18 @@ blatting = function(ko, type, newblerInput)
     }) %>% do.call(c,.)
     contigs = sprintf("%s/%s/454AllContigs.fna", newblerInput, ko)
     blast8 = combined %>% map(contigs) #map is a metamapsDB function
-    blatRanges = GRanges(seqnames=blast8$subject, ranges=IRanges(blast8$newStart, blast8$newEnd), read=blast8$query)
+    blatRanges = GRanges(seqnames=blast8$subject, ranges=IRanges::IRanges(blast8$newStart, blast8$newEnd), read=blast8$query)
 }
 
 
 #' overlaps
+#'
+#' calculates overlaps
+#'
 #' @param ko the ko of interest
-#' @importFrom GenomicRanges countOverlaps
+#' @param passDir the directory of the pass project folder
+#' @param newblerInput directory for newbler output files
+#' @importFrom GenomicRanges countOverlaps seqnames
 #' @importFrom dplyr tbl_df
 #' @export
 #' @examples

@@ -16,8 +16,10 @@ dynPlot Diagnostic plots
 \dontrun{
     connect("yourDomain", password="yourPassword")
     newblerDir= "~/simulation_fr_the_beginning/reAssemble/everybodyelse/data/newbler/"
-    dynList = scg  \%>\% gsub("ko:", "", .) \%>\% mclapply(dynamicThreshold, root=newblerDir, mc.cores=20)
-    dynList = scg  \%>\% gsub("ko:", "", .) \%>\% head(n=1) \%>\% lapply(dynamicThreshold, root=newblerDir)
+    dynList = scg  \%>\% gsub("ko:", "", .) \%>\% 
+       mclapply(dynamicThreshold, root=newblerDir, mc.cores=20)
+    dynList = scg  \%>\% gsub("ko:", "", .) \%>\% head(n=1) \%>\%
+       lapply(dynamicThreshold, root=newblerDir)
     pdf("thresholdPlots.pdf", width=10)
     plotDF = dynPlots(dynList, F)
     dev.off()

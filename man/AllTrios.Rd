@@ -4,11 +4,13 @@
 \alias{AllTrios}
 \title{Find all trios surrounding the KO of interest}
 \usage{
-AllTrios(KOI = "ko:K00001", toUnique = TRUE, withDetails = FALSE,
-  local = TRUE, contracted = TRUE, ...)
+AllTrios(KOI = "ko:K00001", koi = "ko:K00001", toUnique = TRUE,
+  withDetails = FALSE, local = TRUE, contracted = TRUE, ...)
 }
 \arguments{
-\item{KOI}{the ko id}
+\item{KOI}{the ko id (for remote)}
+
+\item{koi}{the ko id (for local)}
 
 \item{toUnique}{if to return only unique (only applicable for remote)}
 

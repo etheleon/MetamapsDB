@@ -17,7 +17,7 @@ contigInfo(ko, contig, withAnnotation = FALSE)
 contigInfo function greps the contig related info such as whether its in the MDR
 }
 \examples{
-/dontrun{
+\dontrun{
 To query a specific contig
 contigInfo(ko = "K00001", contig="contig00001")
 # Sending query

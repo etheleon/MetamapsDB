@@ -7,10 +7,11 @@
 #' @param user database username
 #' @param password database password
 #' @param justPost its just a POST request
+#' @param verbose to print details out
 #' @param ... allows for additional arguments to be passed into dbquery
 #'
 #' @export
-dbquery <- function(query,params = FALSE, cypherurl = cacheEnv$cypher, user = cacheEnv$user, password = cacheEnv$password, justPost=FALSE, verbose=FALSE,...){
+dbquery <- function(query, params = FALSE, cypherurl, user, password, justPost=FALSE, verbose=FALSE,...){
     #Checks if the params is given
     tryCatch({
         message("Sending query\n")

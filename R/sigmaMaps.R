@@ -6,10 +6,9 @@
 #'
 #' @import shiny sigma
 #' @importFrom magrittr "%>%"
-#'
 #' @export
 sigmaGraph <- function(igraphObj){
-originalColor = V(igraphObj)$color
+originalColor = igraph::V(igraphObj)$color
 colorType <- c("centrality", "betweeness", "none") %>%
         setNames(c("Centrality", "Betweeness", "none"))
 
@@ -59,23 +58,22 @@ columnBar <- shiny::absolutePanel(
 
 ##################################################
     server <- function(input, output){
-       
 #        color.bar(colorRampPalette(c("#e41a1c", "#377eb8", "#4daf4a"))(100), -1)
         reactiveGraph = reactive({
             if(input$color == "betweeness"){
             values = sqrt(igraph::betweenness(igraphObj))
-            V(igraphObj)$color = drawGradient(values, colors = c("#e41a1c", "#377eb8", "#4daf4a"))
+            igraph::V(igraphObj)$color = drawGradient(values, colors = c("#e41a1c", "#377eb8", "#4daf4a"))
             }else if(input$color == "centrality"){
                 values = sqrt(igraph::closeness(igraphObj))
-                V(igraphObj)$color = drawGradient(values, colors = c("#e41a1c", "#377eb8", "#4daf4a"))
+                igraph::V(igraphObj)$color = drawGradient(values, colors = c("#e41a1c", "#377eb8", "#4daf4a"))
             }else{
-                V(igraphObj)$color = originalColor
+                igraph::V(igraphObj)$color = originalColor
             }
             igraphObj
         })
 
         output$network <- renderSigma({
-            agexf <- reactiveGraph() %>% igraph2gexf %$% graph
+            agexf <- reactiveGraph() %>% igraph2gexf$graph
             sigma::sigma(gexf = agexf, drawLabels = TRUE, labelThreshold = 8)
         })
     }

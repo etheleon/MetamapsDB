@@ -7,8 +7,11 @@
 #' @param mbgraph igraph object representing the metabolic graph of interest
 #'
 #' @importFrom magrittr "%>%"
+#' @importFrom igraph clusters neighborhood membership
 #' @export
 findSeeds <- function(mbgraph){
+        . = 'shutup'
+        nonmember = NULL
         #allCompounds
         cpdNodes        = which(grepl("cpd:", V(mbgraph)$name))
        #Find all strongly connected components (SCC)
@@ -36,6 +39,7 @@ findSeeds <- function(mbgraph){
         sourceCompDF = merge(merge(sourceCompDF, clusterNSize, by="membership", all=T), clusterNSize_cpdOnly, by="membership", all=T)
 
         # Note in the PNAS paper, the nodes were purely just compounds
+        clusterSize.cpd = NULL
         possibleSCC =
             sourceCompDF                                                                     %>%
             filter(

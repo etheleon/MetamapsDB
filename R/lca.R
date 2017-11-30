@@ -16,7 +16,7 @@ lca <- function(   taxon1='10090', taxon2='9096',  recurse=TRUE,   ... ){
         common.taxid   AS taxid,
         labels(common) AS rank"
 
-    result = listquery(query=query, params=params)
+    result = listquery(query=query, params=params, ...)
 
     if(length(result$data)>0){
         df = dbquery(query=query, params=params, ...)

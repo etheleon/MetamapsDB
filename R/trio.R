@@ -2,23 +2,31 @@
 #'
 #' Searches graphDB for all cases of trios surroudnign the KO of interest
 #'
-#' @param KOI the ko id
+#' @param KOI the ko id (for remote)
+#' @param koi the ko id (for local)
 #' @param toUnique  if to return only unique (only applicable for remote)
 #' @param withDetails with details (only applicable for remote)
 #' @param local for doing the search locally, faster
 #' @param contracted to contract anot (only applicable for local)
 #' @param ... the other args for dbquery
 #' @importFrom magrittr "%>%" "%<>%" "%$%"
+#' @importFrom dplyr anti_join filter select arrange group_by
+#' @importFrom igraph as_ids
+#' @importFrom utils combn
+#' @importFrom stats complete.cases
+#' @importFrom igraph shortest_paths "%->%"
 #'
 #' @export
 AllTrios <- function(
     KOI         = 'ko:K00001',
+    koi         = 'ko:K00001',
     toUnique    = TRUE,
     withDetails = FALSE,
     local = TRUE,
     contracted = TRUE,
     ...
 ){
+    . = 'shutup'
     if(local){
 ##################################################
         #If you have the full metabolic graph
@@ -42,15 +50,14 @@ AllTrios <- function(
         surrKOs_id <- sapply(surrKOs, findV, g=meta)
 
         #Shortest Paths which passes through the KO of Interest
-        spaths = surrKOs %>% grep(koi, ., invert=T, value=T) %>% 
+        spaths = surrKOs %>% grep(koi, ., invert=T, value=T) %>%
                  combn(2) %>%
                  apply(2, function(pair){
-                    list(
+                    alist = list(
                        one = findV(pair[[1]], meta),
                        two = findV(pair[[2]], meta)
-                       ) %$%
-                    shortest_paths(meta, from = one, to = two) %$%
-                    lapply(vpath ,function(x){
+                       )
+                    lapply(shortest_paths(meta, from = alist$one, to = alist$two)$vpath,function(x){
                         x = as.integer(x)
                     #there may be multiple paths
                     isInside = koID %in% x
@@ -73,25 +80,19 @@ AllTrios <- function(
         allTrios= lapply(surrKOs_id,
             function(ko1){
                 #ko1 -a-> cpd1
-                E(meta)[ko1 %->% surrCPD_id] %>% extractFromPath %>%
+                igraph::E(meta)[ko1 %->% surrCPD_id] %>% extractFromPath %>%
                 #ko1 -a-> cpd1 -b-> koi
                 lapply(function(cpd1){
-                       isC2K = E(meta)[cpd1 %->% koID] %>% as_ids %>% length > 0 #valid
+                       isC2K = igraph::E(meta)[cpd1 %->% koID] %>% as_ids %>% length > 0 #valid
                        if(isC2K){
                 #ko1 -> cpd1 -> koi -> cpd2
-                           E(meta)[koID %->% surrCPD_id] %>% extractFromPath %>%
+                           igraph::E(meta)[koID %->% surrCPD_id] %>% extractFromPath %>%
                             #ko1 -> cpd1 -> koi -> cpd2 -> ko2
                            lapply(function(cpd2){
-                                    isC2K2 = E(meta)[cpd2 %->% surrKOs_id] %>% length  > 0
+                                    isC2K2 = igraph::E(meta)[cpd2 %->% surrKOs_id] %>% length  > 0
                                     if(isC2K2){
-                                    ko2 = E(meta)[cpd2 %->% surrKOs_id] %>% extractFromPath(type="ko")
-                                    data.frame(
-                                         Kminus = ko1,
-                                         Cminus = cpd1,
-                                         K      = koID,
-                                         Cplus  = cpd2,
-                                         Kplus = ko2
-                                         )
+                                    ko2 = igraph::E(meta)[cpd2 %->% surrKOs_id] %>% extractFromPath(type="ko")
+                                    setNames(data.frame(ko1, cpd1, koID, cpd2, ko2), c("Kminus","Cminus","K", "Cplus","Kplus"))
                                   }else{
                                       message("Failed")
                                   }
@@ -101,7 +102,11 @@ AllTrios <- function(
                        }
                        }) %>% do.call(rbind,.)
             }) %>% do.call(rbind,.)
-        allTrios %<>% filter(Kminus != Kplus & Cminus != Cplus)
+        Kminus = NULL
+        Kplus = NULL
+        Cminus= NULL
+        Cplus= NULL
+        allTrios = filter(allTrios, Kminus != Kplus & Cminus != Cplus)
         allTrios = apply(allTrios,1, function(x) matrix(unlist(V(meta)[x]$name), nrow=1)) %>% t %>% as.data.frame %>% setNames(colnames(allTrios))
 
         notshortest = anti_join(allTrios,spaths, by=colnames(allTrios))
@@ -128,7 +133,9 @@ AllTrios <- function(
         trioDF$after  %<>% as.character
 
         # not uturn type reactions (redundant KOs)
-        trioDF %<>% dplyr::filter(before != after) %>% unique
+        before=NULL
+        after=NULL
+        trioDF = unique(filter(trioDF,before != after))
         if(toUnique){
             #remove reverse rxns
             trioDF = trioDF[!duplicated(
@@ -155,7 +162,7 @@ AllTrios <- function(
                 inputko.ko          AS koID,
                 inputko.contigCount AS ContigCount,
                 inputko.expression  AS Expression
-        ", 
+        ",
         params = lapply(kos,function(x) list(ko=x)) %>% list(kos=.), ...) %>% make.data.frame
         contigInfo <- contigInfo[complete.cases(contigInfo),]
         list(trioDF, contigInfo)

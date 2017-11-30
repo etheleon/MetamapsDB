@@ -14,6 +14,7 @@
 #' @importFrom dplyr pull bind_rows
 #' @importFrom magrittr %>%
 #' @importFrom RCurl getURL
+#' @importFrom purrr map
 #' @importFrom RJSONIO fromJSON
 #' @importFrom base64enc base64encode
 #' @export
@@ -43,6 +44,7 @@ connect <- function(
     password = 'neo4j', ##<< authorization username and password
     test = TRUE
 ){
+	ko.name = NULL
     assign("cacheEnv",new.env(), envir = baseenv())
     cacheEnv$cypher   <- paste0(url, ":", port, "/db/data/cypher")
     cacheEnv$user     <- username
@@ -50,7 +52,7 @@ connect <- function(
     if(test){
         message("Sending test query: Searching for K00001")
         connected = suppressMessages(koname('K00001')) %>% pull(ko.name) == 'E1.1.1.1, adh'
-        ifelse(connected, "Connection Successful ✅", "Connection Unsuccessful ❌") %>% message
+        ifelse(connected, "Connection Successful", "Connection Unsuccessful") %>% message
         #Check for indices
         if(connected){
             key         = base64encode(charToRaw(paste(username, password, sep=":")))
@@ -61,7 +63,7 @@ connect <- function(
                 warning("No indices found; Database is not indexed")
                 yn = readline(prompt="Do you want to index now?")
                 if(yn == 'y'){
-                    mapply(Metamaps::index, label = c("ko", "contigs", "contigs", "Taxon", "cpd"), property = c("ko", "contig", "bin", "taxid", "cpd"))
+                    mapply(index, label = c("ko", "contigs", "contigs", "Taxon", "cpd"), property = c("ko", "contig", "bin", "taxid", "cpd"))
                 }else if (yn == 'n'){
                     message("OK its your choice, the queries will be slower")
                 }else{
@@ -69,7 +71,7 @@ connect <- function(
                 }
             }else{
                 message("Found these indices:")
-                fromJSON(indices) %>% purrr::map(as.data.frame) %>% bind_rows
+                fromJSON(indices) %>% map(as.data.frame) %>% bind_rows
             }
         }
     }
@@ -83,7 +85,7 @@ connect <- function(
 #'
 #' @param label label of the nodes you want to index
 #' @param property the property key on which you would like to index on
-#'
+#' @param cacheEnv stores details
 #' @export
 #' @examples
 #' \dontrun{
@@ -95,7 +97,7 @@ connect <- function(
 #'     message
 #' }) %plan% multiprocess
 #' }
-index <- function(label, property="contig"){
+index <- function(label, property="contig", cacheEnv){
     post = RJSONIO::toJSON(list(property_keys= property))
     key         = base64encode(charToRaw(paste(cacheEnv$user, cacheEnv$password, sep=":")))
     header      = c('Content-Type' = 'application/json', 'Authorization' = paste('Basic', key))

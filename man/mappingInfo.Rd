@@ -12,8 +12,6 @@ mappingInfo(koi = "K00927", doBlast = FALSE, ...)
 \item{doBlast}{read from file or carry out blast}
 
 \item{...}{root, outputDir, query, rangesFile, genomesFile, blastFile}
-
-\item{blastdf}{the tabular blast output}
 }
 \description{
 Used for mapping short reads against contigs using blast

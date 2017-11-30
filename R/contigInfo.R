@@ -6,7 +6,7 @@
 #' @param contig contigID (optional)
 #' @param withAnnotation 0j/
 #' @examples
-#' /dontrun{
+#' \dontrun{
 #' To query a specific contig
 #' contigInfo(ko = "K00001", contig="contig00001")
 #' # Sending query

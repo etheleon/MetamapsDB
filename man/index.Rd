@@ -4,12 +4,14 @@
 \alias{index}
 \title{Indexes the database for faster retrieval}
 \usage{
-index(label, property = "contig")
+index(label, property = "contig", cacheEnv)
 }
 \arguments{
 \item{label}{label of the nodes you want to index}
 
 \item{property}{the property key on which you would like to index on}
+
+\item{cacheEnv}{stores details}
 }
 \description{
 `index` indexes nodes based on the given property. Lets you do fast search 

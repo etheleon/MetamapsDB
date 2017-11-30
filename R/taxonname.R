@@ -7,7 +7,8 @@
 #' @export
 taxname<-function(taxon=5062,name=FALSE,... ){
 #    params=list(taxonname=as.character(taxon))  
-params <- taxon %>% 
+    . = 'shutup'
+    params <- taxon %>% 
             lapply(function(x){list(name=as.character(x))}) %>% list(taxonname =.)
 tryCatch({
     if(name)

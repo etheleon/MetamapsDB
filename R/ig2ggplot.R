@@ -5,11 +5,21 @@
 #' @param g igraph object
 #' @param dfOnly outputs the data.frame and not draw using ggvis 
 #' @param labels to show labels or not
+#' @param metab it is a metabolic graph
 #' @param ... additional dbquery parameters
 #' @importFrom magrittr "%>%"
-#' @importFrom ggplot2 ggplot
+#' @importFrom stats setNames
+#' @importFrom igraph layout.norm get.edgelist
+#' @import ggplot2
 #' @export
 ig2ggplot <- function(g, dfOnly = TRUE, labels=FALSE, metab = TRUE, ...){
+        . = 'shutup'
+        x=NULL
+        y=NULL
+        name = NULL
+        type=NULL
+        group=NULL
+        label=NULL
         layoutDF    = setNames(data.frame(layout.norm(g$layout, xmax=1, xmin=0, ymin=0, ymax=1)), c("x", "y"))
         vertexDF    = data.frame(id = unlist(V(g)$name), name = unlist(V(g)$label))
         edgeDF      = get.edgelist(g)

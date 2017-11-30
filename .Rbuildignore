@@ -1,0 +1,7 @@
+^misc$
+^\.travis\.yml$
+^\./thumbnail\.png$
+^thumbnail\.png$
+^inst/taxonomy/taxidSQL$
+^\.git$
+^\.gitignore$

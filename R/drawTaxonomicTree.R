@@ -6,17 +6,20 @@
 #' @param standardisedRanks the ranks to report. superkingdom phylum class order family genus species
 #' @importFrom magrittr "%>%"
 #' @importFrom dplyr mutate
+#' @importFrom purrr map_df
 #' @importFrom igraph graph_from_data_frame
 #' @examples
-#' /dontrun{
-#' 
+#' \dontrun{
+#' standardisedRanks  = c("superkingdom", "phylum", "class", "order","family", "genus", "species")
+#' buildTree(taxids = c(287, 280), standardisedRanks )
 #' }
 #' @export
-
 buildTree <- function(
         taxids = c(287, 280),
         standardisedRanks  = c("superkingdom", "phylum", "class", "order","family", "genus", "species")
     ){
+    .="shutup"
+    taxid = NULL
     edgelists = taxids %>% lapply(function(x) path2kingdom(as.character(x)))
     rankInfo = data.frame(standard = standardisedRanks) %>% mutate(order=1:n())
     trueEdgelist = edgelists       %>%
@@ -28,8 +31,8 @@ buildTree <- function(
            as.integer          %>%
            buildE})            %>%
         do.call(rbind,.) %>% as.data.frame %>% unique %>% as.matrix
-    nodeDetails = as.vector(trueEdgelist) %>% purrr::map_df(taxnam.sql) %>% dplyr::arrange(taxid) %>% unique
-    list(edgelist = trueEdgelist, nodeDetails = nodeDetails, graph=graph_from_data_frame(trueEdgelist, v=nodeDetails))
+    nodeDetails = as.vector(trueEdgelist) %>% map_df(taxnam.sql) %>% dplyr::arrange(taxid) %>% unique
+    list(edgelist = trueEdgelist, nodeDetails = nodeDetails, graph=graph_from_data_frame(trueEdgelist, vertices=nodeDetails))
 }
 
 

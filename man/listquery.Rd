@@ -4,8 +4,7 @@
 \alias{listquery}
 \title{Function for querying metamaps DB}
 \usage{
-listquery(query, params = FALSE, cypherurl = cacheEnv$cypher,
-  user = cacheEnv$user, password = cacheEnv$password, ...)
+listquery(query, params = FALSE, cypherurl, user, password, ...)
 }
 \arguments{
 \item{query}{cypher query}

@@ -7,6 +7,7 @@
 #' @importFrom magrittr "%>%"
 #' @export
 koname <- function(ko='K00001', minimal=TRUE,...){
+    .='shutup'
         ko = gsub("^(ko:)*","ko:",ko)
         if(!minimal){
             query = "
