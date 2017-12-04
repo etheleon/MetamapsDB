@@ -1,6 +1,6 @@
 #' Find all trios surrounding the KO of interest
 #'
-#' Searches graphDB for all cases of trios surroudnign the KO of interest
+#' Searches graphDB for all cases of trios surrounding the KO of interest
 #'
 #' @param KOI the ko id (for remote)
 #' @param koi the ko id (for local)
@@ -17,7 +17,7 @@
 #' @importFrom igraph shortest_paths "%->%"
 #'
 #' @export
-AllTrios <- function(
+allTrios <- function(
     KOI         = 'ko:K00001',
     koi         = 'ko:K00001',
     toUnique    = TRUE,

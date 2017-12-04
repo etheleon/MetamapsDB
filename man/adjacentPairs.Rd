@@ -10,11 +10,22 @@ adjacentPairs(g, ko2ko = FALSE, ...)
 \arguments{
 \item{g}{graph object}
 
-\item{ko2ko}{kos to find adjacent pairs for}
+\item{ko2ko}{if true returns data.frame of ko pairs, if false returns the compound which its connected with}
 
 \item{...}{ellipise pass in other arguments which are required}
 }
 \description{
 Given a igraph object, adjacentPairs finds
 adjacent pairs of KOs
+}
+\examples{
+# gives ko 2 ko pairs
+adjacentPairs(nitrogenMetab, ko2ko=TRUE)
+#        ko1       ko2 direction
+#1 ko:K18246 ko:K01725       out
+#2 ko:K18245 ko:K01725       out
+#3 ko:K17877 ko:K17877       out
+#4 ko:K17877 ko:K15876       out
+#5 ko:K17877 ko:K15371       out
+#6 ko:K17877 ko:K10946       out
 }

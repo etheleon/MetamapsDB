@@ -44,14 +44,13 @@ connect <- function(
     password = 'neo4j', ##<< authorization username and password
     test = TRUE
 ){
-	ko.name = NULL
     assign("cacheEnv",new.env(), envir = baseenv())
     cacheEnv$cypher   <- paste0(url, ":", port, "/db/data/cypher")
     cacheEnv$user     <- username
     cacheEnv$password <- password
     if(test){
         message("Sending test query: Searching for K00001")
-        connected = suppressMessages(koname('K00001')) %>% pull(ko.name) == 'E1.1.1.1, adh'
+        connected = koname('K00001')$ko.name == 'E1.1.1.1, adh'
         ifelse(connected, "Connection Successful", "Connection Unsuccessful") %>% message
         #Check for indices
         if(connected){
@@ -71,7 +70,7 @@ connect <- function(
                 }
             }else{
                 message("Found these indices:")
-                fromJSON(indices) %>% map(as.data.frame) %>% bind_rows
+                fromJSON(indices) %>% purrr::map(as.data.frame) %>% bind_rows
             }
         }
     }

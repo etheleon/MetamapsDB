@@ -25,3 +25,7 @@ prettifyGraph(g, vsize = c(1, 2), vcolor = c("grey", "red"),
 returns metabolic graph with all the ornaments set
 Adds details into the igraph object
 }
+\examples{
+p = nitrogenMetab \%>\% prettifyGraph \%>\% ig2ggplot(., dfOnly=FALSE)
+p
+}

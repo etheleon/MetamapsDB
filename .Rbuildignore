@@ -5,3 +5,4 @@
 ^inst/taxonomy/taxidSQL$
 ^\.git$
 ^\.gitignore$
+^cran-comments\.md$

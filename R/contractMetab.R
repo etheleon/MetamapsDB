@@ -3,19 +3,22 @@
 #' Constracts KOs which share the same cpd product and substrates.
 #'
 #' @param g metabolic graph, igraph object. vertices must have the Symbol property
-#'
 #' @return new non-redundant (gene) metabolic graph
 #'
 #' @importFrom magrittr "%>%" "%<>%"
 #' @importFrom stats "cutree" "hclust" "dist"
+#' @importFrom dplyr filter summarise group_by
+#' @importFrom igraph get.adjacency
 #' @export
+#' @examples
+#' contactedMetab <- contractMetab(nitrogenMetab)
 contractMetab <- function(g){
     . = 'shutup'
     node = NULL
     cluster = NULL
     Symbol = NULL
 #Cluster
-    m                  = igraph::get.adjacency(g)
+    m                  = get.adjacency(g)
     clustersInfo       = cutree(hclust(dist(m)), h=0)
     clustersInfo       = as.data.frame(clustersInfo) %>% setNames("cluster")
     clustersInfo$node  = rownames(clustersInfo)
@@ -37,12 +40,12 @@ contractMetab <- function(g){
         )
     )
 
-    cl = igraph::V(g)$name %>% 
-            lapply(function(x) dplyr::filter(cl, node == x)) %>% 
+    cl = igraph::V(g)$name %>%
+            lapply(function(x) filter(cl, node == x)) %>% 
             do.call(rbind,.)
 
     cl$Symbol = igraph::V(g)$Symbol
-    symDF = cl %>% dplyr::group_by(cluster) %>% dplyr::summarise(combSym = paste0(Symbol, collapse=" | "))
+    symDF = cl %>% group_by(cluster) %>% summarise(combSym = paste0(Symbol, collapse=" | "))
 
 #Contract & Simplify
     g2 = igraph::contract.vertices(g, cl$cluster)

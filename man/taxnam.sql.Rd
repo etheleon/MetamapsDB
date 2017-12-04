@@ -14,5 +14,12 @@ taxnam.sql(taxids, byID = TRUE, taxrank = "genus")
 \item{taxrank}{any of the common taxonomic ranks eg. genus}
 }
 \description{
-faster way of querying the taxid names using structured SQL then querying the graphDB
+Faster way of querying the taxid names using structured SQL then querying the graphDB.
+Downloads a copy of NCBI's taxdump.tar.gz from ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
+and builds a taxid, name, rank table in sqlite3
+}
+\examples{
+\donttest{
+ taxnam.sql(287)
+}
 }

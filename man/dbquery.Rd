@@ -4,8 +4,9 @@
 \alias{dbquery}
 \title{Function for querying metamaps DB}
 \usage{
-dbquery(query, params = FALSE, cypherurl, user, password, justPost = FALSE,
-  verbose = FALSE, ...)
+dbquery(query, params = FALSE, cypherurl = NULL, user = NULL,
+  password = NULL, justPost = FALSE, verbose = FALSE, test = FALSE,
+  jsonresponse = "", ...)
 }
 \arguments{
 \item{query}{char string with cypher Query, rmbr to escape double quotes if any; read LUCENE}
@@ -21,6 +22,10 @@ dbquery(query, params = FALSE, cypherurl, user, password, justPost = FALSE,
 \item{justPost}{its just a POST request}
 
 \item{verbose}{to print details out}
+
+\item{test}{for testing, function takes a given json response in the form of a character string provided in argument jsonresponse}
+
+\item{jsonresponse}{string equivalent to the json response from querying the database}
 
 \item{...}{allows for additional arguments to be passed into dbquery}
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/drawTaxonomicTree.R
 \name{buildTree}
 \alias{buildTree}
-\title{buildTree - a taxonomic tree display function}
+\title{Taxonomic tree of the taxons}
 \usage{
 buildTree(taxids = c(287, 280), standardisedRanks = c("superkingdom",
   "phylum", "class", "order", "family", "genus", "species"))
@@ -13,7 +13,7 @@ buildTree(taxids = c(287, 280), standardisedRanks = c("superkingdom",
 \item{standardisedRanks}{the ranks to report. superkingdom phylum class order family genus species}
 }
 \description{
-Returns taxonomic tree of the taxids up to phylum.
+`buildTree` Returns taxonomic tree as a igraphObject of the taxids up to phylum
 }
 \examples{
 \dontrun{

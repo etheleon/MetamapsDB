@@ -3,7 +3,7 @@
 #' Converts a metabolic igraph obj into a ggplot plot
 #'
 #' @param g igraph object
-#' @param dfOnly outputs the data.frame and not draw using ggvis 
+#' @param dfOnly outputs the data.frame
 #' @param labels to show labels or not
 #' @param metab it is a metabolic graph
 #' @param ... additional dbquery parameters
@@ -11,6 +11,9 @@
 #' @importFrom stats setNames
 #' @importFrom igraph layout.norm get.edgelist
 #' @import ggplot2
+#' @examples
+#' p = nitrogenMetab %>% prettifyGraph %>% ig2ggplot(., dfOnly=FALSE)
+#' p
 #' @export
 ig2ggplot <- function(g, dfOnly = TRUE, labels=FALSE, metab = TRUE, ...){
         . = 'shutup'

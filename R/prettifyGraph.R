@@ -9,6 +9,9 @@
 
 #' @importFrom igraph vcount layout.fruchterman.reingold
 #' @export
+#' @examples
+#' p = nitrogenMetab %>% prettifyGraph %>% ig2ggplot(., dfOnly=FALSE)
+#' p
 prettifyGraph<- function
 (g,
 vsize    = c(1,2),

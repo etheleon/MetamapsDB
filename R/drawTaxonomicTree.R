@@ -1,6 +1,6 @@
-#' buildTree - a taxonomic tree display function
+#' Taxonomic tree of the taxons
 #'
-#' Returns taxonomic tree of the taxids up to phylum.
+#' `buildTree` Returns taxonomic tree as a igraphObject of the taxids up to phylum
 #'
 #' @param taxids vector of leave nodes
 #' @param standardisedRanks the ranks to report. superkingdom phylum class order family genus species

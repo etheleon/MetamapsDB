@@ -4,15 +4,29 @@
 \alias{koname}
 \title{Gives KO details when supplied with KO id}
 \usage{
-koname(ko = "K00001", minimal = TRUE, ...)
+koname(ko = "K00001", minimal = TRUE, test = FALSE, ...)
 }
 \arguments{
 \item{ko}{the koid}
 
 \item{minimal}{return minimal details}
 
+\item{test}{if it should be run as a example}
+
 \item{...}{additional dbquery parameters}
 }
 \description{
 Gives KO details when supplied with KO id
+}
+\examples{
+koname(test=TRUE)
+# JSON response from DB
+# {
+#  "columns" : [ "ko.ko", "ko.name", "ko.definition"  ],
+#    "data" : [ [ "ko:K00001", "E1.1.1.1, adh", "alcohol dehydrogenase [EC:1.1.1.1]"  ]  ]
+#
+#}
+#
+#       ko.ko       ko.name                      ko.definition
+# 1 ko:K00001 E1.1.1.1, adh alcohol dehydrogenase [EC:1.1.1.1]
 }

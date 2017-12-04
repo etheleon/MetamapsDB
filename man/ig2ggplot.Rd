@@ -9,7 +9,7 @@ ig2ggplot(g, dfOnly = TRUE, labels = FALSE, metab = TRUE, ...)
 \arguments{
 \item{g}{igraph object}
 
-\item{dfOnly}{outputs the data.frame and not draw using ggvis}
+\item{dfOnly}{outputs the data.frame}
 
 \item{labels}{to show labels or not}
 
@@ -19,4 +19,8 @@ ig2ggplot(g, dfOnly = TRUE, labels = FALSE, metab = TRUE, ...)
 }
 \description{
 Converts a metabolic igraph obj into a ggplot plot
+}
+\examples{
+p = nitrogenMetab \%>\% prettifyGraph \%>\% ig2ggplot(., dfOnly=FALSE)
+p
 }
