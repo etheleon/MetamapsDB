@@ -38,6 +38,16 @@ MetamapsDB is a R package used for interfacing with such a database for Gene cen
 
 # Dependencies
 
+## R Bioconductor packages
+
+If you're installing this package from from a conda installation of R, it's very likely you'll face some issues with installing ShortRead. 
+
+> Packages from `bioconda` may depend on packages from `conda-forge`.
+
+```
+conda install -c bioconda -c conda-forge bioconductor-shortread
+```
+
 ## OMICS
 
 [Graph based database](https://github.com/etheleon/omics/issues) combining KEGG + Taxnoomy + Sequencing data (contig) .
